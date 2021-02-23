@@ -32,7 +32,7 @@ describe('Test the factorial of a number N:', function () {
   });
 });
 
-
+/*
 // TEST FIBONACCI SERIES
 describe('Test the fibonacci series of a number N:', function () {
   it('should return fibonacci series of 1', function () {
@@ -42,13 +42,13 @@ describe('Test the fibonacci series of a number N:', function () {
     assert.strictEqual(program.fibonacci(2), (1, 1));
   });
   it('should return fibonacci series of 3', function () {
-    //assert.strictEqual(program.fibonacci(3), (1, 1, 2));
+    assert.strictEqual(program.fibonacci(3), (1, 1, 2));
   });
   it('should return fibonacci series of 6', function () {
-    //assert.strictEqual(program.fibonacci(6), (1, 1, 2, 3, 5, 8));
+    assert.strictEqual(program.fibonacci(6), (1, 1, 2, 3, 5, 8));
   });
 });
-
+*/
 
 // TEST VALIDATOR
 describe('Test the validity of a number N:', () => {
