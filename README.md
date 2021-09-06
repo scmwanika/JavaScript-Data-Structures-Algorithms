@@ -1,2 +1,2 @@
 # Test Driven Development
-Continuous Integration, Continuous Delivery, Continuous Deployment
+Test Driven Development.
