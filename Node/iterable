@@ -1,0 +1,270 @@
+const iterable = [10, 20, 30];
+
+for (let value of iterable) {
+  value += 1;
+  console.log(value);
+}
+// 11
+// 21
+// 31
+Copy to Clipboard
+Note: Each iteration creates a new variable. Reassigning the variable inside the loop body does not affect the original value in the iterable (an array, in this case).
+
+You can use destructuring or an object property like for (x.y of iterable) as well.
+
+However, a special rule forbids using async as the variable name. This is invalid syntax:
+
+let async;
+for (async of [1, 2, 3]); // SyntaxError: The left-hand side of a for-of loop may not be 'async'.
+This is to avoid syntax ambiguity with the valid code for (async of => {};;), which is a for loop.
+
+Examples
+Iterating over an Array
+const iterable = [10, 20, 30];
+
+for (const value of iterable) {
+  console.log(value);
+}
+// 10
+// 20
+// 30
+Copy to Clipboard
+Iterating over a string
+Strings are iterated by Unicode code points.
+
+const iterable = "boo";
+
+for (const value of iterable) {
+  console.log(value);
+}
+// "b"
+// "o"
+// "o"
+Copy to Clipboard
+Iterating over a TypedArray
+const iterable = new Uint8Array([0x00, 0xff]);
+
+for (const value of iterable) {
+  console.log(value);
+}
+// 0
+// 255
+Copy to Clipboard
+Iterating over a Map
+const iterable = new Map([
+  ["a", 1],
+  ["b", 2],
+  ["c", 3],
+]);
+
+for (const entry of iterable) {
+  console.log(entry);
+}
+// ['a', 1]
+// ['b', 2]
+// ['c', 3]
+
+for (const [key, value] of iterable) {
+  console.log(value);
+}
+// 1
+// 2
+// 3
+Copy to Clipboard
+Iterating over a Set
+const iterable = new Set([1, 1, 2, 2, 3, 3]);
+
+for (const value of iterable) {
+  console.log(value);
+}
+// 1
+// 2
+// 3
+Copy to Clipboard
+Iterating over the arguments object
+You can iterate over the arguments object to examine all parameters passed into a function.
+
+function foo() {
+  for (const value of arguments) {
+    console.log(value);
+  }
+}
+
+foo(1, 2, 3);
+// 1
+// 2
+// 3
+Copy to Clipboard
+Iterating over a NodeList
+The following example adds a read class to paragraphs that are direct descendants of the <article> element by iterating over a NodeList DOM collection.
+
+const articleParagraphs = document.querySelectorAll("article > p");
+for (const paragraph of articleParagraphs) {
+  paragraph.classList.add("read");
+}
+Copy to Clipboard
+Iterating over a user-defined iterable
+Iterating over an object with an @@iterator method that returns a custom iterator:
+
+const iterable = {
+  [Symbol.iterator]() {
+    let i = 1;
+    return {
+      next() {
+        if (i <= 3) {
+          return { value: i++, done: false };
+        }
+        return { value: undefined, done: true };
+      },
+    };
+  },
+};
+
+for (const value of iterable) {
+  console.log(value);
+}
+// 1
+// 2
+// 3
+Copy to Clipboard
+Iterating over an object with an @@iterator generator method:
+
+const iterable = {
+  *[Symbol.iterator]() {
+    yield 1;
+    yield 2;
+    yield 3;
+  },
+};
+
+for (const value of iterable) {
+  console.log(value);
+}
+// 1
+// 2
+// 3
+Copy to Clipboard
+Iterable iterators (iterators with a [@@iterator]() method that returns this) are a fairly common technique to make iterators usable in syntaxes expecting iterables, such as for...of.
+
+let i = 1;
+
+const iterator = {
+  next() {
+    if (i <= 3) {
+      return { value: i++, done: false };
+    }
+    return { value: undefined, done: true };
+  },
+  [Symbol.iterator]() {
+    return this;
+  },
+};
+
+for (const value of iterator) {
+  console.log(value);
+}
+// 1
+// 2
+// 3
+Copy to Clipboard
+Iterating over a generator
+function* source() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const generator = source();
+
+for (const value of generator) {
+  console.log(value);
+}
+// 1
+// 2
+// 3
+Copy to Clipboard
+Early exiting
+Execution of the break statement in the first loop causes it to exit early. The iterator is not finished yet, so the second loop will continue from where the first one stopped at.
+
+const source = [1, 2, 3];
+
+const iterator = source[Symbol.iterator]();
+
+for (const value of iterator) {
+  console.log(value);
+  if (value === 1) {
+    break;
+  }
+  console.log("This string will not be logged.");
+}
+// 1
+
+// Another loop using the same iterator
+// picks up where the last loop left off.
+for (const value of iterator) {
+  console.log(value);
+}
+// 2
+// 3
+
+// The iterator is used up.
+// This loop will execute no iterations.
+for (const value of iterator) {
+  console.log(value);
+}
+// [No output]
+Copy to Clipboard
+Generators implement the return() method, which causes the generator function to early return when the loop exits. This makes generators not reusable between loops.
+
+function* source() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const generator = source();
+
+for (const value of generator) {
+  console.log(value);
+  if (value === 1) {
+    break;
+  }
+  console.log("This string will not be logged.");
+}
+// 1
+
+// The generator is used up.
+// This loop will execute no iterations.
+for (const value of generator) {
+  console.log(value);
+}
+// [No output]
+Difference between for...of and for...in
+Both for...in and for...of statements iterate over something. The main difference between them is in what they iterate over.
+
+The for...in statement iterates over the enumerable string properties of an object, while the for...of statement iterates over values that the iterable object defines to be iterated over.
+
+The following example shows the difference between a for...of loop and a for...in loop when used with an Array.
+
+Object.prototype.objCustom = function () {};
+Array.prototype.arrCustom = function () {};
+
+const iterable = [3, 5, 7];
+iterable.foo = "hello";
+
+for (const i in iterable) {
+  console.log(i);
+}
+// "0", "1", "2", "foo", "arrCustom", "objCustom"
+
+for (const i in iterable) {
+  if (Object.hasOwn(iterable, i)) {
+    console.log(i);
+  }
+}
+// "0" "1" "2" "foo"
+
+for (const i of iterable) {
+  console.log(i);
+}
+// 3 5 7
