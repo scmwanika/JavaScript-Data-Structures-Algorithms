@@ -1,2 +1,2 @@
-# JavaScript Data Structures & Algorithms
-JavaScript Data Structures & Algorithms
+# The JavaScript Programming Environment and Model
+Data Structures & Algorithms With JavaScript 

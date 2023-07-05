@@ -1,7 +1,7 @@
 {
-  "name": "tdd",
+  "name": "data-structures-and-algorithms",
   "version": "1.0.0",
-  "description": "CICDCD",
+  "description": "The JavaScript Programming Environment and Model",
   "main": "program.js",
   "scripts": {
     "test": "mocha"
