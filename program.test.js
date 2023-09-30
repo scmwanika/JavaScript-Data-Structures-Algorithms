@@ -1,6 +1,6 @@
 const program = require("./program");
 
-console.log("TESTING FUNCTIONALtestY OF THE PROGRAM");
+console.log("TESTING FUNCTIONALITY OF THE PROGRAM");
 
 // TEST A STRING
 describe("Basic Jest String Test", () => {

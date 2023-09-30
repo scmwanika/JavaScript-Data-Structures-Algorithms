@@ -345,8 +345,8 @@ console.log(nums); // 5,4,3,2,1
 /* We often need to sort the elements of an array into order. The mutator function for this
 task, sort(), works very well with strings: */
 var names = ["David", "Mike", "Cynthia", "Clayton", "Bryan", "Raymond"];
-nums.sort();
-console.log(nums); // Bryan,Clayton,Cynthia,David,Mike,Raymond
+names.sort();
+console.log(names); // Bryan,Clayton,Cynthia,David,Mike,Raymond
 
 // But sort() does not work so well with numbers:
 var nums = [3, 1, 2, 100, 4, 200];
@@ -433,6 +433,7 @@ if (someEven) {
 } else {
   console.log("no numbers are even");
 }
+
 nums = [1, 3, 5, 7, 9];
 someEven = nums.some(isEven);
 if (someEven) {
