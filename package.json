@@ -2,7 +2,7 @@
   "name": "data-structures-and-algorithms",
   "version": "1.0.0",
   "description": "The JavaScript Programming Environment and Model",
-  "main": "programs.js",
+  "main": "code.js",
   "scripts": {
     "test": "jest",
     "start": "nodemon"

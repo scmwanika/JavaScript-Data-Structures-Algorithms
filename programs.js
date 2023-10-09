@@ -1,50 +1,109 @@
-// Check if a string contains another string:
+// CHECK IF A STRING CONTAINS ANOTHER STRING
 console.log("Programming language".includes("programming")); // false
 console.log(["Programming", "language"].includes("Programming")); // true
 console.log("Programming language".includes("Programming")); // true
 console.log("Programming".includes("Programming language")); // false
 
-// // Find the not common characters in str1:
-// function commonElements(str1, str2) {
-//   return str1.split("-").filter((el) => !str2.split("-").includes(el));
-// }
-// // invoke the function
-// console.log(commonElements("programming-CCC", "programming-ccc")); // ['CCC']
+// FIND THE COMMON CHARACTERS IN TWO STRINGS
+function commonCharacters(str1, str2) {
+  let comCha = [];
 
-// // Find the common elements in two arrays:
-// function commonElements(arr1, arr2) {
-//   return arr1.filter((el) => arr2.includes(el));
-// }
-// // invoke the function
-// console.log(commonElements([1, 2, 3], [2, 3, 4])); // [2, 3]
-
-// Find the sum of common elements in two arrays:
-function commonElements(arr1, arr2) {
-  let comElements = arr1.filter((el) => arr2.includes(el));
-  let sum = comElements.reduce(function (e1, e2) {
-    return +e1 + +e2;
-  }, 0);
-  return sum;
-}
-// invoke the function
-console.log(commonElements([1, 2, 3], [2, 3, 4])); // [2, 3] // 5
-
-// Find the common elements in two arrays:
-function commonElementss(str) {
-  let alphabet = "abcdefghijklmnopqrstuvwxyz";
-  return alphabet
+  str1
+    .toLowerCase()
     .split("")
-    .filter((el) => str.toLowerCase().split("").includes(el));
+    .filter((el) => {
+      str2
+        .toLowerCase()
+        .split("")
+        .filter((item) => {
+          if (item.includes(el)) {
+            comCha.push(el);
+          }
+        });
+    });
+
+  return comCha.join("");
 }
 // invoke the function
-var str = " M@wa'n'ik$a 'Step&&hen' #3-|Crisp|in ";
-console.log(commonElementss(str));
-/* [
-   'a', 'c', 'e', 'h',
-   'i', 'k', 'm', 'n',
-   'p', 'r', 's', 't',
-   'w'
-] */
+console.log(commonCharacters("pale", "ple")); // ple
+console.log(commonCharacters("pales", "pale")); // pale
+console.log(commonCharacters("pale", "bale")); // ale
+console.log(commonCharacters("pale", "bae")); // ae
+
+// FIND THE NOT COMMON CHARACTERS IN TWO STRINGS
+var notCommonCharacters = function (str1, str2) {
+  let notComCha = [];
+  // not common characters in str1
+  str1.split("").filter((el) => {
+    if (!str2.split("").includes(el)) {
+      notComCha.push(el);
+    }
+  });
+  // not common characters in str2
+  str2.split("").filter((el) => {
+    if (!str1.split("").includes(el)) {
+      notComCha.push(el);
+    }
+  });
+
+  return notComCha.join("");
+};
+// invoke the function
+console.log(notCommonCharacters("pale", "ple")); // a
+console.log(notCommonCharacters("pales", "pale")); // s
+console.log(notCommonCharacters("pale", "bale")); // pb
+console.log(notCommonCharacters("pale", "bae")); // plb
+
+/* ONE AWAY: There are three types of edits that can be performed on strings: 
+insert a character, remove a character, or replace a character. Given two 
+strings, write a function to check if they are one edit (or zero edits) away.
+EXAMPLE
+pale, ple -> true
+pales, pale -> true
+pale, bale -> true
+pale, bae -> false */
+
+// FIND THE NOT COMMON CHARACTERS IN STR1
+var isOneAway = function (str1, str2) {
+  let notComCha = [];
+  str1.split("").filter((el) => {
+    if (!str2.split("").includes(el)) {
+      notComCha.push(el);
+    }
+  });
+
+  if (notComCha.length === 1) {
+    return [true, notComCha].flat();
+  }
+
+  return [false, notComCha].flat();
+};
+// invoke the function
+console.log(isOneAway("pale", "ple")); // [true, 'a']
+console.log(isOneAway("pales", "pale")); // [true, 's']
+console.log(isOneAway("pale", "bale")); // [true, 'p']
+console.log(isOneAway("pale", "bae")); // [false, 'p', 'l']
+console.log(isOneAway("programming-CCC", "programming-ccc")); // [false, 'C', 'C', 'C']
+
+// FIND THE SUM OF COMMON ELEMENTS IN TWO ARRAYS
+function commonElements(arr1, arr2) {
+  let comElements = [];
+  let sum = 0;
+
+  arr1.filter((el) => {
+    arr2.filter((item) => {
+      if (item == el) {
+        comElements.push(el);
+      }
+    });
+  });
+
+  return comElements.reduce((e1, e2) => {
+    return +e1 + +e2;
+  }, sum);
+}
+// invoke the function
+console.log(commonElements([1, "2", 3], [2, "3", 4])); // [2, 3] // 5
 
 // REMOVE THE FIRST TWO ELEMENTS OF AN ARRAY USING ARRAY DESTRUCTURING
 function removeFirstTwoElements(arr) {
@@ -265,60 +324,79 @@ console.log(even_squares(0, 10)); // [0, 4, 16, 36, 64, 100]
 
 // Return an array of first and last character of each word
 var solution = function (words_array) {
-  function first_last_character(word) {
-    return word[0] + word[word.length - 1];
-  }
+  let res = [];
+  words_array.filter((item) => {
+    res.push(item[0] + item[item.length - 1]);
+  });
 
-  return words_array.map(first_last_character);
+  return res;
 };
 // invoke the function
 var words = ["for", "your", "information"];
 console.log(solution(words)); // ['fr', 'yr', 'in']
 
-// Check if a String is a Substring or Subsequence of Another String:
-// Check if an Array is a Subarray or Subsequence of Another Array:
-var isSubsequence = function (str, substr) {
-  let idx = 0;
-  arr = str.toLowerCase().split(""); // convert string to an array
-  for (var el of arr) {
-    if (el === substr.toLowerCase()[idx]) idx++;
-    if (idx === substr.length) return true;
+// CHECK IF A STRING IS A SUBSTRING OF ANOTHER STRING
+// CHECK IF AN ARRAY IS A SUBARRAY OF ANOTHER ARRAY
+var issubStringArray = function (str, substr) {
+  var result = [];
+  var res = [];
+  for (i = 0; i < str.length; i++) {
+    for (j = i + 1; j < str.length + 1; j++) {
+      result.push(str.slice(i, j));
+    }
   }
+
+  result.filter((item) => {
+    if (item.includes(substr.toLowerCase())) {
+      res.push(item);
+    }
+  });
+
+  if (res.length > 0) return "Valid Substring";
+  return "Invalid";
+};
+// invoke the function
+console.log(issubStringArray("stephen", "Hen")); // Valid Substring
+
+// CHECK IF A STRING IS A SEQUENCE OF ANOTHER STRING
+// CHECK IF AN ARRAY IS A SEQUENCE OF ANOTHER ARRAY
+var subSequence = function (arr, subSeq) {
+  let result = [];
+  let res = [];
+  var subs = (subsets, value) =>
+    subsets.concat(subsets.map((set) => [...set, value]));
+  result = arr.reduce(subs, [result]);
+
+  result.filter((el) => {
+    if (el.join("").includes(subSeq.join(""))) {
+      res.push(el);
+    }
+  });
+
+  if (res.length > 0) return true;
   return false;
 };
 // invoke the function
-console.log(isSubsequence("stephen", "Hen")); // true
-if (isSubsequence("stephen", "Hen") === true)
-  console.log("Valid Subsequence"); // Valid Subsequence
-else console.log("Invalid");
+console.log(subSequence([1, 2, 3], [1, 3])); // true
 
-// Check if an Array is a Subset of Another Array:
-var isSubset = function (arr, subsetarr) {
-  return subsetarr.every((el) => {
-    return arr.includes(el);
+// CHECK IF AN ARRAY IS A SUBSET OF ANOTHER ARRAY
+var isSubset = function (arr, subset) {
+  let state;
+  subset.filter((el) => {
+    if (arr.includes(el)) {
+      state = true;
+    } else state = false;
   });
+
+  if (state === true) return "Valid Subset";
+  return "Invalid";
 };
 // invoke the function
-let arr1 = ["a", "b", "c"];
-let arr2 = ["b", "c"];
-let arr3 = ["c", "d"];
-
-console.log(isSubset(arr1, arr2)); // true
-console.log(isSubset(arr1, arr3)); // false
-if (isSubset(arr1, arr3) === true) console.log("Valid Subset");
-else console.log("Invalid"); // Invalid
-
-// Count the Number of Substring Occurrences in a String:
-var countSubstrings = function (str, word) {
-  let regexp = new RegExp(word, "gi");
-  let count = str.match(regexp).length;
-  return count;
-};
-// invoke the function
-var str =
-  "John Doe has 5 oranges while Jane Doe has only 2 oranges, Jane \
-  gave Mike 1 of her orange so she is now left with only 1 Orange.";
-console.log(countSubstrings(str, "ORaNGe")); // 4
+var arr1 = ["a", "b", "c"];
+var arr2 = ["b", "c"];
+var arr3 = ["c", "d"];
+console.log(isSubset(arr1, arr2)); // Valid Subset
+console.log(isSubset(arr1, arr3)); // Invalid
 
 /* Sorted Matrix Search:
 Given an M x N matrix in which each row and each column is sorted in ascending order, 
@@ -326,9 +404,11 @@ write a method to find an element.
 If the element is found, prints its position and returns true, otherwise prints 
 "element not found" and returns false */
 const findElement = (matrix, el) => {
-  let row = 0;
-  let col = matrix.length - 1;
-  while (row < matrix.length && col >= 0) {
+  for (
+    let row = 0, col = matrix.length - 1;
+    row < matrix.length && col >= 0;
+
+  ) {
     if (matrix[row][col] === el) {
       return [[row, col], true];
     }
@@ -401,13 +481,13 @@ var subSequence = function (arr) {
   }
 
   // filter subsequences from new_array
-  for (var item of new_array) {
+  new_array.filter((item) => {
     if (item.length % 2 === 0) {
       even_subsequence.push(item);
     } else {
       old_subsequence.push(item);
     }
-  }
+  });
 
   // sum even subsequences
   function sum(e1, e2) {
@@ -448,10 +528,10 @@ a subset is any possible combination of the original set. for example;
 [1,3,2] is a subset of [1,2,3,4,5]. a subset may not maintain relative position
 and order of elements. */
 var subSets = function (arr) {
+  let result = [];
   var subs = (subsets, value) =>
     subsets.concat(subsets.map((set) => [...set, value]));
-
-  return arr.reduce(subs, [[]]);
+  return arr.reduce(subs, [result]);
 };
 // invoke the function
 console.log(subSets([1, 2, 3])); // [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
@@ -480,7 +560,7 @@ console.log(rotateString("JavaScript", 2, "right")); // ptjavaScri
 
 // ROTATE ARRAY
 // Return an array that holds the indices of a searched element in the rotated array.
-function rotateArray(array, k, direction, el) {
+function rotateArray(array, k, direction, element) {
   // rotate clockwise(right)
   if (direction === "right") {
     var merge_array = null;
@@ -491,10 +571,10 @@ function rotateArray(array, k, direction, el) {
 
     // get indices of a searched element in the rotated array
     let indices = [];
-    for (var idx = 0; idx < merge_array.length; idx++) {
-      idx = merge_array.indexOf(el, idx); // find index
-      if (idx === -1) break; // if nothing found, break.
-      indices.push(idx); // else, store the idx in indices
+    for (let [idx, ele] of merge_array.entries()) {
+      if (ele === element) {
+        indices.push(idx);
+      }
     }
 
     return { merge_array, indices };
@@ -509,17 +589,18 @@ function rotateArray(array, k, direction, el) {
 
     // get indices of a searched element in the rotated array
     let indices = [];
-    for (var idx = 0; idx < merge_array.length; idx++) {
-      idx = merge_array.indexOf(el, idx); // find index
-      if (idx === -1) break; // if nothing found, break.
-      indices.push(idx); // else, store the idx in indices
+    for (let [idx, ele] of merge_array.entries()) {
+      if (ele === element) {
+        indices.push(idx);
+      }
     }
 
     return { merge_array, indices };
   }
 }
 // invoke the function
-console.log(rotateArray([1, 2, 3, 4, 5], 2, "right", 2)); // [4, 5, 1, 2, 3] // [3]
+console.log(rotateArray([1, 2, 3, 4, 5], 2, "right", 2));
+// { merge_array: [ 4, 5, 1, 2, 3 ], indices: [3] }
 
 // ROTATE MATRIX (2D Array)
 // Rotate Matrix Right
@@ -635,8 +716,8 @@ var s = "turing";
 var n = 2;
 console.log(wordWeight(s, n)); // 8
 
-// APPLY SPELLING RULE TO FILTER() STRINGS
-// “i before e except after c” -> cie
+// APPLY SPELLING RULE TO FILTER() STRINGS -> cie
+// method 1
 var spellingRule = function (words_array) {
   function misspelled(word) {
     if (word.indexOf("cie") > -1) {
@@ -650,6 +731,23 @@ var spellingRule = function (words_array) {
 // invoke the function
 var words = ["recieve", "deceive", "percieve", "deceit", "concieve"];
 console.log(spellingRule(words)); // ['recieve', 'percieve', 'concieve']
+
+// method 2
+// APPLY SPELLING RULE TO FILTER() STRINGS -> cie
+var spellingRule = function (words_array, str) {
+  filtered_array = [];
+
+  words_array.filter((item) => {
+    if (item.includes(str)) {
+      filtered_array.push(item);
+    }
+  });
+
+  return filtered_array;
+};
+// invoke the function
+var words = ["recieve", "deceive", "percieve", "deceit", "concieve"];
+console.log(spellingRule(words, "cie")); // ['recieve', 'percieve', 'concieve']
 
 // UPPERCASE AND LOWERCASE LETTERS TRANSFORMED, AND SWAPED DURING TRAVERSING
 var swapCase = function (str) {
@@ -686,23 +784,72 @@ var date1 = "12/25/2022";
 var date2 = "12/31/2022";
 console.log(daysBetweenDates(date1, date2)); // 6
 
-// TIME (convert time to 24hours)
-const convertTime = (timeStr) => {
-  const [time, modifier] = timeStr.split(" ");
+// SUBTRACT DAYS
+function subtractDays(date, days) {
+  date = new Date(date);
+
+  date.setDate(date.getDate() - days); // add + 1 if date format is: 12/31/2022 or 12-31-2022
+
+  return date;
+}
+// invoke the function
+const date = new Date("2022-12-31");
+console.log(subtractDays(date, 6)); // 2022-12-25T00:00:00.000Z
+
+// TIME (convert 12hours to 24hours)
+var convertTime = (timeStr) => {
+  let [time, modifier] = timeStr.split(" ");
   let [hours, minutes] = time.split(":");
   if (hours === "12") {
     hours = "00";
   }
   if (modifier === "PM") {
-    hours = parseInt(hours, 10) + 12;
+    hours = +hours + 12;
+    //same as
+    //hours = parseInt(hours, 10) + 12;
   }
   return `${hours}:${minutes}`;
+  //return parseInt(`${hours}${minutes}`);
 };
 // invoke the function
-let time1 = "05:00 PM";
-let time2 = "11:42 PM";
+var time1 = "5:00 PM";
+var time2 = "11:42 PM";
+var time3 = "12:00 PM";
+var time4 = "12:00 AM";
 console.log(convertTime(time1)); // 17:00
 console.log(convertTime(time2)); // 23:42
+console.log(convertTime(time3)); // 12:00
+console.log(convertTime(time4)); // 00:00
+
+/* Explanation
+console.log(time1.split(" ")) // ['5:00', 'PM']
+let str = '5:00'
+console.log(str.split(":")) // ['5', '00'] */
+
+// TIME (convert 24hours to 12hours)
+var convertTime = (timeStr) => {
+  let [hours, minutes] = timeStr.split(":");
+  if (hours === "12") {
+    hours = "12";
+    return `${hours}:${minutes} PM`;
+  }
+  if (hours > "12") {
+    hours = +hours - 12;
+    return `${hours}:${minutes} PM`;
+  }
+  if (hours < "12") {
+    return `${hours}:${minutes} AM`;
+  }
+};
+// invoke the function
+var time1 = "17:00";
+var time2 = "23:42";
+var time3 = "12:00";
+var time4 = "11:00";
+console.log(convertTime(time1)); // 5:00 PM
+console.log(convertTime(time2)); // 11:42 PM
+console.log(convertTime(time3)); // 12:00 PM
+console.log(convertTime(time4)); // 11:00 AM
 
 // SORTING ALPHABET AND NUMBERS THE RIGHT WAY
 var sortAlpsNums = function (a) {
@@ -800,13 +947,16 @@ console.log(firstNumsSecondAlps(arr)); // [4, 33, 222, 1111, 'ant', 'Bug', 'cat'
 
 // OBJECT STORE (Dictionary)
 // Sorting Objects:
-let employees = [
+var employees = [
+  { name: "John", salary: 90000, hireDate: "July 1, 2010" },
+  { name: "David", salary: 75000, hireDate: "August 15, 2009" },
+  { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
   { name: "John", salary: 90000, hireDate: "July 1, 2010" },
   { name: "David", salary: 75000, hireDate: "August 15, 2009" },
   { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
 ];
 
-// sort the object by salary
+// SORT THE OBJECT BY SALARY
 const sortEmployeesBySalary = (employees) => {
   return employees.sort((obj1, obj2) => obj1.salary - obj2.salary);
   // same as
@@ -819,158 +969,62 @@ console.table(sortEmployeesBySalary(employees));
 │ (index) │  name   │ salary │      hireDate       │
 ├─────────┼─────────┼────────┼─────────────────────┤
 │    0    │ 'David' │ 75000  │  'August 15, 2009'  │
-│    1    │  'Ana'  │ 80000  │ 'December 12, 2011' │
-│    2    │ 'John'  │ 90000  │   'July 1, 2010'    │
+│    1    │ 'David' │ 75000  │  'August 15, 2009'  │
+│    2    │  'Ana'  │ 80000  │ 'December 12, 2011' │
+│    3    │  'Ana'  │ 80000  │ 'December 12, 2011' │
+│    4    │ 'John'  │ 90000  │   'July 1, 2010'    │
+│    5    │ 'John'  │ 90000  │   'July 1, 2010'    │
 └─────────┴─────────┴────────┴─────────────────────┘
 */
 
-// Keys, Values, Entries:
-let myKeys = Object.keys(employees);
-console.log(myKeys); // ['0', '1', '2']
+// UNIQUE OBJECT ARRAY
+var uniqueObjectArray = function (array) {
+  const result = [];
+  const map = new Map();
+  array.filter((item) => {
+    if (!map.has(item.name)) {
+      map.set(item.name, true); // set any value to Map
+      result.push({
+        name: item.name,
+        salary: item.salary,
+        hireDate: item.hireDate,
+      });
+    }
+  });
+  //
+  var res = [];
+  result.forEach((item) => {
+    res.push(item.name, item.salary);
+  });
 
-let myValues = Object.values(employees);
-console.log(myValues);
-/*
-[
-  { name: 'David', salary: 75000, hireDate: 'August 15, 2009' },
-  { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' },
-  { name: 'John', salary: 90000, hireDate: 'July 1, 2010' }
-]
-*/
+  return result;
+  //return res;
+};
+// invoke the function
+console.log(uniqueObjectArray(employees));
 
-let myEntries = Object.entries(employees);
-console.log(myEntries);
-/*
-[
-  [
-    '0',
-    { name: 'David', salary: 75000, hireDate: 'August 15, 2009' }
-  ],
-  [
-    '1',
-    { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' }
-  ],
-  [ '2', { name: 'John', salary: 90000, hireDate: 'July 1, 2010' } ]
-]
-*/
-
-// same as
-let output = Object.keys(employees).map((key) => [String(key), employees[key]]);
-console.log(output);
-/*
-[
-  [
-    '0',
-    { name: 'David', salary: 75000, hireDate: 'August 15, 2009' }
-  ],
-  [
-    '1',
-    { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' }
-  ],
-  [ '2', { name: 'John', salary: 90000, hireDate: 'July 1, 2010' } ]
-]
-*/
-
-// Object.entries + Destructuring:
-let myObjArr = [];
-
-myEntries.forEach(([key, val]) => {
-  myObjArr.push(key);
-  myObjArr.push(val);
-});
-console.log(myObjArr);
-/*
-[
-  '0',
-  { name: 'David', salary: 75000, hireDate: 'August 15, 2009' },
-  '1',
-  { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' },
-  '2',
-  { name: 'John', salary: 90000, hireDate: 'July 1, 2010' }
-]
-*/
-
-// Converting an array to an object:
-let newObj = Object.fromEntries(myEntries);
-console.log(newObj);
-/*
-{
-  '0': { name: 'David', salary: 75000, hireDate: 'August 15, 2009' },
-  '1': { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' },
-  '2': { name: 'John', salary: 90000, hireDate: 'July 1, 2010' }
-}
-*/
-
-// Extract the values of a given property from an array of objects:
-// extract names from the array employees
-
-const extractValues = (arr, property) => {
+// EXTRACT THE VALUES OF A GIVEN PROPERTY FROM AN ARRAY OF OBJECTS
+// extract (names, salaries) from employees array
+const extractValues = (arr, prop1, prop2) => {
   let output = [];
 
-  // ES5 -> method 1
-  for (let i = 0; i < arr.length; i++) {
-    output.push(arr[i][property]);
-  }
-
-  // // ES6 -> method 2
-  // arr.forEach((item) => {
-  //   output.push(item[property]);
-  // });
+  arr.forEach((item) => {
+    output.push(item[prop1], item[prop2]);
+  });
 
   return output;
 };
 // invoke the function
-console.log(extractValues(employees, "name")); // ['David', 'Ana', 'John']
-
-// // ES6 -> method 3
-// const extractValues = (arr, property) => {
-//   let output = arr.map((element) => element[property]);
-
-//   return output;
-// };
-// // invoke the function
-// console.log(extractValues(employees, "name"));
-
-// Lists as Objects -> push()
-// Return an array that holds the indexes of the enumerable properties of an obj.
-const propIndexes = (employees) => {
-  if (typeof employees !== "object") throw TypeError(); // Object argument required
-  var [props, indexes] = [[], []]; // Return these arrays
-  for (var prop of employees) {
-    props.push(prop); // add it to the array.
-  }
-
-  for (var prop in props) {
-    indexes.push(prop); // add it to the array.
-  }
-  return { indexes, props }; // Return indexes.
-};
-// invoke the function
-console.log(propIndexes(employees));
+console.log(extractValues(employees, "name", "salary"));
 /*
-{
-  indexes: [ '0', '1', '2' ],
-  props: [
-    { name: 'David', salary: 75000, hireDate: 'August 15, 2009' },
-    { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' },
-    { name: 'John', salary: 90000, hireDate: 'July 1, 2010' }
-  ]
-}
-*/
+[
+  'John', 90000, 'David',
+  75000,  'Ana', 80000,
+  'John', 90000, 'David',
+  75000,  'Ana', 80000
+] */
 
-// Invert Key Value of an Object:
-const flipKeyValue = (obj) =>
-  Object.fromEntries(Object.entries(obj).map(([key, value]) => [value, key]));
-console.log(flipKeyValue({ x: 1, y: 2 })); // { '1': 'x', '2': 'y' }
-
-// Object transformations:
-let obj = { a: 1, b: 2, c: 3 };
-obj = Object.fromEntries(
-  Object.entries(obj).map(([key, val]) => [key, val * val])
-);
-console.log(obj); // { a: 1, b: 4, c: 9 }
-
-// -------------------------------------------------------------------------------- //
+// ------------------------------------------------------------------------------------ //
 
 /* Is Unique: Implement an algorithm to determine if a string has all unique characters. 
    What if you cannot use additional data structures? 
@@ -1038,39 +1092,6 @@ console.log(isPalindromePermutation("refer")); // true
 console.log(isPalindromePermutation("rrfee")); // true
 console.log(isPalindromePermutation("taco cat")); // true
 console.log(isPalindromePermutation("atco cta")); // true
-
-/* ONE AWAY: There are three types of edits that can be performed on strings: 
-insert a character, remove a character, or replace a character. Given two 
-strings, write a function to check if they are one edit (or zero edits) away.
-EXAMPLE
-pale, ple -> true
-pales, pale -> true
-pale, bale -> true
-pale, bae -> false */
-
-// Find the not common characters in str1: -> arr1
-var isOneAway = function (str1, str2) {
-  arr1 = str1.split("").filter((el) => !str2.split("").includes(el));
-
-  for (let el of arr1) {
-    if (arr1.length === 1) {
-      // return true: isOneAway
-      //dup.push(prop);
-      return true;
-    }
-  }
-
-  // else return false:
-  return false;
-  //return dup;
-
-  //return str1.split("").filter((el) => !str2.split("").includes(el));
-};
-// invoke the function
-console.log(isOneAway("pale", "ple")); // true: ['a']
-console.log(isOneAway("pales", "pale")); // true: ['s']
-console.log(isOneAway("pale", "bale")); // true: ['p']
-console.log(isOneAway("pale", "bae")); // false: ['p', 'l']
 
 /* STRING COMPRESSION: Implement a method to perform basic string compression using the 
 counts of repeated characters. For example, the string aabcccccaaa would become a2blc5a3. 
@@ -1221,7 +1242,7 @@ var countVowelsConsonants = function (string) {
 
   let = vowelCount = vowels.length;
   let = consonantCount = consonants.length;
-  if (vowels !== "" || consonants !== "") {
+  if (vowels.length > 0 || consonants.length > 0) {
     return { vowelCount, consonantCount };
   }
   return -1;
@@ -1233,13 +1254,13 @@ console.log(
 
 // THREE SUM:
 var threeSum = function (nums, target) {
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      for (let k = j + 1; k < nums.length; k++) {
-        if (nums[i] + nums[j] + nums[k] === target) {
-          return [i, j, k];
-        }
-      }
+  for (
+    let i = 0, j = i + 1, k = j + 1;
+    i < nums.length, j < nums.length, k < nums.length;
+    i++, j++, k++
+  ) {
+    if (nums[i] + nums[j] + nums[k] === target) {
+      return [i, j, k];
     }
   }
 
@@ -1250,8 +1271,26 @@ console.log(threeSum([2, 7, 11, 15], 9)); // -1
 console.log(threeSum([2, 7, 11, 15], 18)); // -1
 console.log(threeSum([2, 7, 11, 15], 33)); // [1, 2, 3]
 
+// RETURN THE INDEX OF AN ELEMENT: -> (ELEMENT * 3 = TARGET)
+var threeSum = function (nums, target) {
+  for (
+    let i = 0, j = 0, k = 0;
+    i < nums.length, j < nums.length, k < nums.length;
+    i++, j++, k++
+  ) {
+    if (nums[i] + nums[j] + nums[k] === target) {
+      return i;
+    }
+  }
+
+  return -1;
+};
+// invoke the function
+console.log(threeSum([2, 7, 11, 15], 9)); // -1
+console.log(threeSum([2, 7, 11, 15], 18)); // -1
+console.log(threeSum([2, 7, 11, 15], 33)); // 2
+
 // COUNT SUBARRAYS OR SUBSEQUENCES EQUAL TO SUM K
-// application of Two Sum:
 var subSequences = function (arr, k) {
   var new_array = [];
   var result = [];
@@ -1316,26 +1355,40 @@ console.log(largestSubarraySum([-3, 1, 100, 4, 15, 9, 30, -1])); // 159
 console.log(largestSubarraySum([2, 1, -3, 4, -1, 2, 1, -5, 4])); // 6
 console.log(largestSubarraySum([-1, -1, -5, -3, -7, -4, -5, -6, -100, -4])); // -1
 
-// The longest substring, subsequence without repeating characters:
+// COUNT THE LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS
 var longestSubstring = function (str) {
-  let result = [];
-  let res = [];
+  let substrings = [];
+  let uniqueSubStr = [];
+  let lenUniqueSubStr = [];
+
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
-      result.push(str.slice(i, j));
+      substrings.push(str.slice(i, j));
     }
   }
 
-  for (var el of result) {
+  substrings.filter((el) => {
     let set = [...new Set(el)];
-    res.push(set.length);
-  }
+    uniqueSubStr.push(set.join("")); // abcdef
+  });
 
-  return Math.max(...res);
+  uniqueSubStr.filter((el) => {
+    if (str.includes(el)) {
+      lenUniqueSubStr.push(el.length);
+      maxlen = Math.max(...lenUniqueSubStr);
+
+      // Output substring with maximum length
+      if (str.includes(el) && el.length === maxlen) {
+        result = el;
+      }
+    }
+  });
+
+  return result;
 };
 // invoke the function
 var string = "abbbcabcdefef";
-console.log(longestSubstring(string)); // 6
+console.log(longestSubstring(string)); // abcdef
 
 // SWITCH REVERSER
 var switchReverser = function (a) {
@@ -1385,25 +1438,29 @@ console.log(pigLatinConverter("category")); // ategorycay
 console.log(pigLatinConverter("chatter")); // atterchay
 console.log(pigLatinConverter("trash")); // ashtray
 
-// RETURN AN OBJECT REPRESENTING THE CHARACTER COUNT OF A STRING
+// RETURN AN OBJECT REPRESENTING THE CHARACTER / WORD COUNT OF A STRING
 // OR
-// The most frequent character of a string: // ['n', 'i'] // 3
+// The most frequent character/word of a string:
 // The most frequent element of an array:
 // OR
-// The least frequent character of a string:
+// The least frequent character/word of a string:
 // The least frequent element of an array:
 // OR
-// Check/Find duplicates in the string:
-// Check/Find duplicates in the array:
-function isDuplicate(str) {
+// Check for duplicates in the string:
+// Check for duplicates in the array:
+function isDuplicates(str) {
   let regexp = /[^A-Za-z0-9]/g;
   let obj = {};
   let dup = [];
 
   str
-    .replace(regexp, "")
     .toLowerCase()
-    .split("")
+    // .replace(regexp, "")
+    // .split("")
+
+    // BE OBSERVANT .....
+    .replaceAll(" ", ",")
+    .split(",")
     .forEach((el) => {
       if (obj[el]) {
         obj[el]++;
@@ -1411,12 +1468,12 @@ function isDuplicate(str) {
       }
       obj[el] = 1;
     });
-  // return obj; // object representing the character count
-  // return Math.max(...Object.values(obj)); // most frequent character count: 3
+  // return obj; // object representing the word count
+  // return Math.max(...Object.values(obj)); // most frequent word count -> 2
 
   return Object.keys(obj).filter((x) => {
     return obj[x] === Math.max(...Object.values(obj));
-    // the most frequent character or item: ['n', 'i'] OR ['cat']
+    // the most frequent word or item: ['the'] OR ['cat']
 
     //return obj[x] === Math.min(...Object.values(obj));
     // the least frequent character or element
@@ -1424,44 +1481,21 @@ function isDuplicate(str) {
 
   // for (let prop in obj) {
   //   if (obj[prop] > 1) {
-  //     // return true: isDuplicate
-  //     //dup.push(prop);
-  //     return true;
+  //     // if isDuplicate
+  //     dup.push(prop);
   //   }
   // }
-
-  // // else return false:
-  // return false;
-  // //return dup;
+  // //
+  // if (dup.length > 0) {
+  //   return [true, dup];
+  // }
+  // return [false, "no duplicates"];
 }
-// invoke the function
-console.log(isDuplicate("Mwanika Stephen Crispin"));
-// true: ['a', 'n', 'i', 's', 'e', 'p']
 
-//console.log(isDuplicate(["cat", "book", "pencil", "book", "cat", "cat"]));
-// true: ['cat', 'book']
-
-// Counting substrings of a string that contains only one distinct letter:
-var countSpecialStrings = (str = "") => {
-  let { length } = str;
-  let res = length;
-  if (!length) {
-    return length;
-  }
-  for (let j = 0, i = 1; i < length; ++i) {
-    if (str[i] === str[j]) {
-      res += i - j;
-    } else {
-      j = i;
-    }
-  }
-  return res;
-};
 // invoke the function
-console.log(countSpecialStrings("iiiji"));
-// 'iii', 'i', 'i', 'i', 'i', 'j', 'ii', 'ii' // 8
-console.log(countSpecialStrings("abcb"));
-// 'a', 'b', 'c', 'b' // 4
+console.log(isDuplicates("The quick brown fox jumps over the lazy dog")); // ['the'] -> 2
+
+//console.log(isDuplicates(["cat", "book", "pencil", "book", "cat", "cat"])); // ['cat'] -> 3
 
 // REVERSE STRING
 var reverseString = function (str) {
@@ -1485,7 +1519,7 @@ var reverseArray = function (arr) {
   return reversed_array;
 };
 // invoke the function
-console.log(reverseArray([1, 2, 3, 4, 5, 6, 7])); // [7, 6, 5, 4, 3, 2, 1]
+console.log(reverseArray([4, 2, 6, 5, 9])); // [9, 5, 6, 2, 4]
 
 // SORT IN DESCENDING ORDER
 var solution = function (a) {
@@ -1553,7 +1587,7 @@ console.log(isPrime(1)); // false
 console.log(isPrime(7)); // true
 
 // Return an array of all characters of a string:
-const listCharacters = (string) => {
+var listCharacters = function (string) {
   let char_array = string.split("");
 
   return char_array;
@@ -1562,7 +1596,7 @@ const listCharacters = (string) => {
 console.log(listCharacters("John Doe"));
 
 // Return an array of strings that contain prefix and suffix:
-const prefix_suffix = (prefixes, suffix) => {
+var prefix_suffix = function (prefixes, suffix) {
   prefixes = prefixes.split("");
   let strings = [];
 
@@ -1576,14 +1610,12 @@ const prefix_suffix = (prefixes, suffix) => {
 console.log(prefix_suffix("JKLMNOPQ", "ack"));
 
 // TEST ISDUPLICATE
-// Return an array that holds the indices of a searched element in an array:
-var isDuplicate = function (arr, el) {
+var isDuplicate = (array, element) => {
   let indices = [];
-
-  for (var idx = 0; idx < arr.length; idx++) {
-    idx = arr.indexOf(el, idx); // find index
-    if (idx === -1) break; // if nothing found, break.
-    indices.push(idx); // else, store the idx in indices
+  for (let [idx, ele] of array.entries()) {
+    if (ele === element) {
+      indices.push(idx);
+    }
   }
 
   if (indices.length > 1) {
@@ -1594,60 +1626,81 @@ var isDuplicate = function (arr, el) {
 };
 // invoke the function
 console.log(isDuplicate([1, 2, 3, 4, 5], 1)); // -1
-console.log(isDuplicate([1, 2, 5, 4, 5], 5)); // [true, [ 2, 4 ]]
+console.log(isDuplicate([1, 2, 5, 4, 5], 5)); // [true, [2, 4]]
 console.log(isDuplicate([1, 2, 3, 4, 5], 6)); // -1
 
-// Find letter in the string:
-function letterFound(string, letter) {
-  letter = letter.toLowerCase();
-  let arr = string.toLowerCase().split("");
-
-  for (var idx = 0; idx < arr.length; idx++) {
-    idx = arr.indexOf(letter, idx); // find index
-    if (idx === -1) break; // if nothing found, break.
-    return true; // else, true letter found
-  }
-
-  return false; // otherwise, false letter not found
-}
-// invoke the function
-console.log(letterFound("Olweny John", "o"));
-
 // Print the occurrence of a letter in the string:
-function letterCount(string, letter) {
+var letterCount = function (string, letter) {
   let indices = [];
   letter = letter.toLowerCase();
   let arr = string.toLowerCase().split("");
 
-  for (var idx = 0; idx < arr.length; idx++) {
-    idx = arr.indexOf(letter, idx); // find index
-    if (idx === -1) break; // if nothing found, break.
-    indices.push(idx); // else, store the idx in indexes
+  for (let [idx, el] of arr.entries()) {
+    if (el === letter) {
+      indices.push(idx);
+    }
   }
 
-  let len = indices.length;
-  return { letter, len };
-}
+  return [letter, indices.length];
+};
 // invoke the function
-console.log(letterCount("Olweny John", "o"));
+console.log(letterCount("Olweny John", "o")); // ['o', 2]
 
 // Print the occurrence of a word in the string:
-function wordCount(string, word) {
+var wordCount = function (string, word) {
   let indices = [];
   word = word.toLowerCase();
   let arr = string.toLowerCase().replaceAll(" ", ",").split(",");
 
-  for (var idx = 0; idx < arr.length; idx++) {
-    idx = arr.indexOf(word, idx); // find index
-    if (idx === -1) break; // if nothing found, break.
-    indices.push(idx); // else, store the idx in indexes
+  for (let [idx, el] of arr.entries()) {
+    if (el === word) {
+      indices.push(idx);
+    }
   }
 
-  let len = indices.length;
-  return { word, len };
-}
+  return [word, indices.length];
+};
 // invoke the function
-console.log(wordCount("The quick brown fox jumps over the lazy dog", "the"));
+console.log(wordCount("The quick brown fox jumps over the lazy dog", "the")); // ['the', 2]
+
+// Return the words with substring:
+// Count the Number of words with Substring:
+var wordHasSubstring = function (string, substring) {
+  let words = [];
+  substring = substring.toLowerCase();
+  let arr = string.toLowerCase().replaceAll(" ", ",").split(",");
+
+  arr.filter((item) => {
+    if (item.includes(substring)) {
+      words.push(item);
+    }
+  });
+
+  return words;
+};
+// invoke the function
+console.log(
+  wordHasSubstring("The quick brown fox jumps over the lazy dog", "o")
+);
+// ['brown', 'fox', 'over', 'dog'] -> 4
+var str =
+  "John Doe has 5 oranges while Jane Doe has only 2 oranges, Jane \
+  gave Mike 1 of her orange so she is now left with only 1 Orange.";
+console.log(wordHasSubstring(str, "ORaNGe"));
+// ['oranges', 'oranges', 'orange', 'orange.'] -> 4
+
+// OR
+// Count the Number of words with Substring:
+var countSubstrings = function (str, word) {
+  let regexp = new RegExp(word, "gi");
+  let count = str.match(regexp).length;
+  return count;
+};
+// invoke the function
+var str =
+  "John Doe has 5 oranges while Jane Doe has only 2 oranges, Jane \
+  gave Mike 1 of her orange so she is now left with only 1 Orange.";
+console.log(countSubstrings(str, "ORaNGe")); // 4
 
 // FLATTEN AN ARRAY
 var flattenArray = function (arr) {
@@ -1666,18 +1719,21 @@ var arr = [
 console.log(flattenArray(arr));
 
 // LINEAR SEARCH
-const linearSearch = (array, element) => {
-  for (const [idx, ele] of array.entries()) {
+// Return indices of searched element
+var linearSearch = (array, element) => {
+  let indices = [];
+  for (let [idx, ele] of array.entries()) {
     if (ele === element) {
-      return idx;
+      indices.push(idx);
     }
   }
+  return indices;
 };
 // invoke the function
 console.log(
   linearSearch(
-    ["at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""],
+    ["ball", "at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""],
     "ball"
   )
-); // 4
-console.log(linearSearch(["a", "b", "c", "d"], "d")); // 3
+); // [0, 5]
+console.log(linearSearch(["a", "b", "d", "c", "d"], "d")); // [2, 4]

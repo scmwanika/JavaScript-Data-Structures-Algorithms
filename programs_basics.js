@@ -434,7 +434,7 @@ function reverseArray(arr) {
 // invoke the function
 console.log(reverseArray([1, 2, 3, 4, 5, 6, 7])); // [7, 6, 5, 4, 3, 2, 1]
 
-// 1 Test strings if Anagram:
+// TEST STRINGS IF ANAGRAM or PERMUTATION
 function isAnagram(str1, str2) {
   if (str1.length != str2.length) {
     return false;
@@ -457,7 +457,7 @@ console.log(isAnagram("they see", "the eyes"));
 console.log(isAnagram("no.de", "deno./"));
 console.log(isAnagram("stop", "p ots"));
 
-// 2a Test string if Palindrome:
+// TEST STRING IF PALINDROME
 const isPalindrome = (str) => {
   var regexp = /[^A-Za-z0-9]/gi;
   // make the string case insensitive by converting to the same case
@@ -525,7 +525,8 @@ console.log(isPalindrome("0_0 (: /- :) 0–0"));
 // console.log(isPalindrome("A man, a plan, a canal. Panama"));
 // console.log(isPalindrome("0_0 (: /- :) 0–0"));
 
-// 3a Test strings if Reverse:
+// TEST STRINGS IF REVERSE
+// method 1
 function isReverse(str1, str2) {
   if (str1.length != str2.length) {
     return false;
@@ -544,7 +545,8 @@ function isReverse(str1, str2) {
 // invoke the function
 console.log(isReverse("Pots", "Stop"));
 
-// 3b Test strings if Reverse:
+// TEST STRINGS IF REVERSE
+// method 2
 function isReverse(str1, str2) {
   if (str1.length != str2.length) {
     return false;
@@ -571,48 +573,29 @@ function isReverse(str1, str2) {
 // invoke the function
 console.log(isReverse("Pots", "Stop"));
 
-// 4 Permutations:
-var duplicatePermutations = (string) => {
-  let permutationsArray = [];
-  if (string.length === 0) return permutationsArray;
-  if (string.length === 1) return string.split();
+// RETURN ANAGRAMS or PERMUTATIONS OF STRING WITHOUT REPEATING CHARACTERS
+var solution = (string) => {
+  let anagrams_permutations = [];
+  if (string.length === 0) return anagrams_permutations;
+  if (string.length === 1) {
+    anagrams_permutations.push(string);
+  }
 
   for (let i = 0; i < string.length; i++) {
-    let currentChar = string.charAt(i);
+    let cha1 = string.charAt(i);
+    let cha2 = string.slice(0, i) + string.slice(i + 1, string.length);
 
-    let nextChars = string.slice(0, i) + string.slice(i + 1, string.length);
-
-    for (let permutation of duplicatePermutations(nextChars)) {
-      permutationsArray.push(currentChar + permutation);
-    }
+    solution(cha2).filter((item) => {
+      anagrams_permutations.push(cha1 + item);
+    });
   }
-  return permutationsArray;
+
+  return [...new Set(anagrams_permutations)];
 };
 // invoke the function
-console.log(duplicatePermutations("aabc"));
+console.log(solution("aabc"));
 
-var noDuplicatePermutations = (string) => {
-  let permutationsArray = [];
-  if (string.length === 0) return permutationsArray;
-  if (string.length === 1) return string.split();
-
-  for (let i = 0; i < string.length; i++) {
-    let currentChar = string.charAt(i);
-
-    if (string.indexOf(currentChar) != i) continue; // added this code to differentiate
-
-    let nextChars = string.slice(0, i) + string.slice(i + 1, string.length);
-
-    for (let permutation of noDuplicatePermutations(nextChars)) {
-      permutationsArray.push(currentChar + permutation);
-    }
-  }
-  return permutationsArray;
-};
-// invoke the function
-console.log(noDuplicatePermutations("aabc"));
-
-/* ---------- SORTING AND SEARCHING ---------- */
+// SORTING AND SEARCHING ALGORITHMS
 
 // (i) Implement Quick Sort Algorithm:
 const quickSort = (originalArr) => {
@@ -731,7 +714,173 @@ console.log(
   )
 ); // null
 
-/* ---------- OBJECT UTILITY FUNCTIONS THAT ENUMERATE PROPERTIES ---------- */
+// OBJECT STORE (Dictionary)
+// Sorting Objects:
+var employees = [
+  { name: "John", salary: 90000, hireDate: "July 1, 2010" },
+  { name: "David", salary: 75000, hireDate: "August 15, 2009" },
+  { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
+];
+
+// SORT THE OBJECT BY SALARY
+const sortEmployeesBySalary = (employees) => {
+  return employees.sort((obj1, obj2) => obj1.salary - obj2.salary);
+  // same as
+  // return employees.sort((obj1, obj2) => (obj1.salary > obj2.salary ? 1 : -1));
+};
+// invoke the function
+console.table(sortEmployeesBySalary(employees));
+/*
+┌─────────┬─────────┬────────┬─────────────────────┐
+│ (index) │  name   │ salary │      hireDate       │
+├─────────┼─────────┼────────┼─────────────────────┤
+│    0    │ 'David' │ 75000  │  'August 15, 2009'  │
+│    1    │ 'David' │ 75000  │  'August 15, 2009'  │
+│    2    │  'Ana'  │ 80000  │ 'December 12, 2011' │
+│    3    │  'Ana'  │ 80000  │ 'December 12, 2011' │
+│    4    │ 'John'  │ 90000  │   'July 1, 2010'    │
+│    5    │ 'John'  │ 90000  │   'July 1, 2010'    │
+└─────────┴─────────┴────────┴─────────────────────┘
+*/
+
+// Keys, Values, Entries:
+let myKeys = Object.keys(employees);
+console.log(myKeys); // ['0', '1', '2']
+
+let myValues = Object.values(employees);
+console.log(myValues);
+/*
+[
+  { name: 'David', salary: 75000, hireDate: 'August 15, 2009' },
+  { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' },
+  { name: 'John', salary: 90000, hireDate: 'July 1, 2010' }
+]
+*/
+
+let myEntries = Object.entries(employees);
+console.log(myEntries);
+/*
+[
+  [
+    '0',
+    { name: 'David', salary: 75000, hireDate: 'August 15, 2009' }
+  ],
+  [
+    '1',
+    { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' }
+  ],
+  [ '2', { name: 'John', salary: 90000, hireDate: 'July 1, 2010' } ]
+]
+*/
+
+// same as
+let output = Object.keys(employees).map((key) => [String(key), employees[key]]);
+console.log(output);
+/*
+[
+  [
+    '0',
+    { name: 'David', salary: 75000, hireDate: 'August 15, 2009' }
+  ],
+  [
+    '1',
+    { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' }
+  ],
+  [ '2', { name: 'John', salary: 90000, hireDate: 'July 1, 2010' } ]
+]
+*/
+
+// Object.entries + Destructuring:
+let myObjArr = [];
+
+myEntries.forEach(([key, val]) => {
+  myObjArr.push(key);
+  myObjArr.push(val);
+});
+console.log(myObjArr);
+/*
+[
+  '0',
+  { name: 'David', salary: 75000, hireDate: 'August 15, 2009' },
+  '1',
+  { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' },
+  '2',
+  { name: 'John', salary: 90000, hireDate: 'July 1, 2010' }
+]
+*/
+
+// Converting an array to an object:
+let newObj = Object.fromEntries(myEntries);
+console.log(newObj);
+/*
+{
+  '0': { name: 'David', salary: 75000, hireDate: 'August 15, 2009' },
+  '1': { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' },
+  '2': { name: 'John', salary: 90000, hireDate: 'July 1, 2010' }
+}
+*/
+
+// EXTRACT THE VALUES OF A GIVEN PROPERTY FROM AN ARRAY OF OBJECTS
+// extract (names, salaries) from employees array
+const extractValues = (arr, prop1, prop2) => {
+  let output = [];
+
+  arr.forEach((item) => {
+    output.push(item[prop1], item[prop2]);
+  });
+
+  return output;
+};
+// invoke the function
+console.log(extractValues(employees, "name", "salary"));
+/*
+[
+  'John', 90000, 'David',
+  75000,  'Ana', 80000,
+  'John', 90000, 'David',
+  75000,  'Ana', 80000
+] */
+
+// Lists as Objects -> push()
+// Return an array that holds the indexes of the enumerable properties of an obj.
+const propIndexes = (employees) => {
+  if (typeof employees !== "object") throw TypeError(); // Object argument required
+  var [props, indexes] = [[], []]; // Return these arrays
+  for (var prop of employees) {
+    props.push(prop); // add it to the array.
+  }
+
+  for (var prop in props) {
+    indexes.push(prop); // add it to the array.
+  }
+  return { indexes, props }; // Return indexes.
+};
+// invoke the function
+console.log(propIndexes(employees));
+/*
+{
+  indexes: [ '0', '1', '2' ],
+  props: [
+    { name: 'David', salary: 75000, hireDate: 'August 15, 2009' },
+    { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' },
+    { name: 'John', salary: 90000, hireDate: 'July 1, 2010' }
+  ]
+}
+*/
+
+// Invert Key Value of an Object:
+const flipKeyValue = (obj) =>
+  Object.fromEntries(Object.entries(obj).map(([key, value]) => [value, key]));
+console.log(flipKeyValue({ x: 1, y: 2 })); // { '1': 'x', '2': 'y' }
+
+// Object transformations:
+let obj = { a: 1, b: 2, c: 3 };
+obj = Object.fromEntries(
+  Object.entries(obj).map(([key, val]) => [key, val * val])
+);
+console.log(obj); // { a: 1, b: 4, c: 9 }
+
+// OBJECT UTILITY FUNCTIONS THAT ENUMERATE PROPERTIES
 
 o = { name: "Stephen", age: "40", dob: "1982", career: "software engineering" };
 p = { name: "Jerome", age: "15", dob: "2007", school: "St. Maria Goreti S.S" };
@@ -802,6 +951,24 @@ function intersection(o, p) {
 }
 // invoke the function
 console.log(intersection(o, p));
+
+// UNIQUE OBJECT ARRAY
+// Creates an array of objects with unique property values (name)
+var uniqueObjectArray = function (arr) {
+  return [...new Map(arr.map((item) => [item["name"], item])).values()];
+};
+// invoke the function
+var employees = [
+  { name: "John", salary: 90000, hireDate: "July 1, 2010" },
+  { name: "David", salary: 75000, hireDate: "August 15, 2009" },
+  { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
+  { name: "John", salary: 90000, hireDate: "July 1, 2010" },
+  { name: "David", salary: 75000, hireDate: "August 15, 2009" },
+  { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
+];
+console.log(uniqueObjectArray(employees));
+
+// ------------------------------------------------------------------------------------ //
 
 // 1- SUBARRAY -> SUM
 var sumSubArray = function (arr) {
@@ -967,3 +1134,69 @@ const values2 = arr.map((element) => [2 ** element, 2 * element ** 2]);
 // invoke the function
 console.table(values1);
 console.table(values2);
+
+// Counting substrings of a string that contains only one distinct letter:
+var countSpecialStrings = (str = "") => {
+  let { length } = str;
+  let res = length;
+  if (!length) {
+    return length;
+  }
+  for (let j = 0, i = 1; i < length; ++i) {
+    if (str[i] === str[j]) {
+      res += i - j;
+    } else {
+      j = i;
+    }
+  }
+  return res;
+};
+// invoke the function
+console.log(countSpecialStrings("iiiji"));
+// 'iii', 'i', 'i', 'i', 'i', 'j', 'ii', 'ii' // 8
+console.log(countSpecialStrings("abcb"));
+// 'a', 'b', 'c', 'b' // 4
+
+// COUNTDOWN
+function countdown(n) {
+  if (n < 1) {
+    console.log(n);
+    return;
+  }
+  console.log(n);
+  return countdown(n - 1);
+}
+// invoke the function
+countdown(5);
+// 5
+// 4
+// 3
+// 2
+// 1
+// 0
+
+// UNIQUE OBJECT ARRAY
+var uniqueObjectArray = function (array) {
+  const result = [];
+  const map = new Map();
+  array.filter((item) => {
+    if (!map.has(item.name)) {
+      map.set(item.name, true); // set any value to Map
+      result.push({
+        name: item.name,
+        salary: item.salary,
+        hireDate: item.hireDate,
+      });
+    }
+  });
+  //
+  var res = [];
+  result.forEach((item) => {
+    res.push(item.name, item.salary);
+  });
+
+  return result;
+  //return res;
+};
+// invoke the function
+console.log(uniqueObjectArray(employees));
