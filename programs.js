@@ -105,6 +105,36 @@ function commonElements(arr1, arr2) {
 // invoke the function
 console.log(commonElements([1, "2", 3], [2, "3", 4])); // [2, 3] // 5
 
+// COUNT THE OCCURRENCE OF SUBSTRING IN STRING
+var countSubstring = function (string, substring) {
+  let result = [];
+  let res1 = [];
+  let res2 = [];
+  for (i = 0; i < string.length; i++) {
+    for (j = i + 1; j < string.length + 1; j++) {
+      result.push(string.slice(i, j));
+    }
+  }
+
+  // count all substrings including "an"
+  result.filter((item) => {
+    if (item.includes(substring)) {
+      res1.push(item); // outputs 19
+    }
+  });
+
+  // strictly count substring "an"
+  result.filter((item) => {
+    if (item === substring) {
+      res2.push(item); // outputs 2
+    }
+  });
+
+  return `${res2.length} of ${res1.length}`;
+};
+// invoke the function
+console.log(countSubstring("Mwanikan", "an")); // 2 of 19
+
 // REMOVE THE FIRST TWO ELEMENTS OF AN ARRAY USING ARRAY DESTRUCTURING
 function removeFirstTwoElements(arr) {
   const [, , ...list] = arr;
@@ -336,7 +366,6 @@ var words = ["for", "your", "information"];
 console.log(solution(words)); // ['fr', 'yr', 'in']
 
 // CHECK IF A STRING IS A SUBSTRING OF ANOTHER STRING
-// CHECK IF AN ARRAY IS A SUBARRAY OF ANOTHER ARRAY
 var issubStringArray = function (str, substr) {
   var result = [];
   var res = [];
@@ -353,13 +382,54 @@ var issubStringArray = function (str, substr) {
   });
 
   if (res.length > 0) return "Valid Substring";
-  return "Invalid";
+  return "Invalid Substring";
 };
 // invoke the function
 console.log(issubStringArray("stephen", "Hen")); // Valid Substring
 
-// CHECK IF A STRING IS A SEQUENCE OF ANOTHER STRING
-// CHECK IF AN ARRAY IS A SEQUENCE OF ANOTHER ARRAY
+// CHECK IF AN ARRAY IS A SUBARRAY OF ANOTHER ARRAY
+var issubStringArray = function (str, substr) {
+  var result = [];
+  var res = [];
+  for (i = 0; i < str.length; i++) {
+    for (j = i + 1; j < str.length + 1; j++) {
+      result.push(str.slice(i, j));
+    }
+  }
+
+  result.filter((item) => {
+    if (item.join("") === substr.join("")) {
+      res.push(item);
+    }
+  });
+
+  if (res.length > 0) return "Valid Subarray";
+  return "Invalid Subarray";
+};
+// invoke the function
+console.log(issubStringArray([1, 2, 3, 4, 5, 6, 7], [5, 6, 7])); // Valid Array
+
+// CHECK IF A STRING IS A SUBSEQUENCE OF ANOTHER STRING
+var subSequence = function (arr, subSeq) {
+  let result = [];
+  let res = [];
+  var subs = (subsets, value) =>
+    subsets.concat(subsets.map((set) => [...set, value]));
+  result = arr.split("").reduce(subs, [result]);
+
+  result.filter((el) => {
+    if (el.join("").includes(subSeq)) {
+      res.push(el);
+    }
+  });
+
+  if (res.length > 0) return "Valid Subsequence";
+  return "Invalid Subsequence";
+};
+// invoke the function
+console.log(subSequence("123", "13")); // true
+
+// CHECK IF AN ARRAY IS A SUBSEQUENCE OF ANOTHER ARRAY
 var subSequence = function (arr, subSeq) {
   let result = [];
   let res = [];
@@ -381,22 +451,45 @@ console.log(subSequence([1, 2, 3], [1, 3])); // true
 
 // CHECK IF AN ARRAY IS A SUBSET OF ANOTHER ARRAY
 var isSubset = function (arr, subset) {
-  let state;
-  subset.filter((el) => {
-    if (arr.includes(el)) {
-      state = true;
-    } else state = false;
+  let asc = [];
+  let des = [];
+  let merge_arr = [];
+
+  // ascending sort
+  var subs = (subsets, value) =>
+    subsets.concat(subsets.map((set) => [...set, value]));
+  asc = arr.reduce(subs, [asc]);
+  // descending sort
+  var subs = (subsets, value) =>
+    subsets.concat(subsets.map((set) => [value, ...set]));
+  des = arr.reduce(subs, [des]);
+  // merge arrays then flatten
+  let merge = asc.concat(des);
+  merge.filter((el) => {
+    merge_arr.push(el.join(""));
   });
 
-  if (state === true) return "Valid Subset";
-  return "Invalid";
+  //
+  let res;
+
+  merge_arr.filter((el) => {
+    if (el.includes(subset.join(""))) {
+      res = "valid subset";
+    }
+  });
+
+  if (res === "valid subset") return true;
+  return false;
 };
 // invoke the function
 var arr1 = ["a", "b", "c"];
 var arr2 = ["b", "c"];
 var arr3 = ["c", "d"];
-console.log(isSubset(arr1, arr2)); // Valid Subset
-console.log(isSubset(arr1, arr3)); // Invalid
+// var arr1 = [1, 2, 3];
+// var arr2 = [2, 3];
+// var arr3 = [3, 4];
+console.log(isSubset(arr1, arr2)); // true
+console.log(isSubset(arr1, arr3)); // false
 
 /* Sorted Matrix Search:
 Given an M x N matrix in which each row and each column is sorted in ascending order, 
@@ -757,11 +850,11 @@ var swapCase = function (str) {
   let new_array = [];
 
   for (var i = 0; i < old_array.length; i++) {
-    if (old_array[i] === low_case.charAt(i)) {
+    if (old_array[i].includes(low_case.charAt(i))) {
       new_array.push(old_array[i].toUpperCase());
     }
 
-    if (old_array[i] === upp_case.charAt(i)) {
+    if (old_array[i].includes(upp_case.charAt(i))) {
       new_array.push(old_array[i].toLowerCase());
     }
   }
@@ -771,33 +864,8 @@ var swapCase = function (str) {
 // invoke the function
 console.log(swapCase("heLLo")); // HEllO
 
-// DATES (number of days between two dates)
-const daysBetweenDates = (date1, date2) => {
-  date1 = new Date(date1);
-  date2 = new Date(date2);
-  let difference = (date1 - date2) / (1000 * 3600 * 24); // milliseconds
-
-  return Math.abs(difference);
-};
-// invoke the function
-var date1 = "12/25/2022";
-var date2 = "12/31/2022";
-console.log(daysBetweenDates(date1, date2)); // 6
-
-// SUBTRACT DAYS
-function subtractDays(date, days) {
-  date = new Date(date);
-
-  date.setDate(date.getDate() - days); // add + 1 if date format is: 12/31/2022 or 12-31-2022
-
-  return date;
-}
-// invoke the function
-const date = new Date("2022-12-31");
-console.log(subtractDays(date, 6)); // 2022-12-25T00:00:00.000Z
-
 // TIME (convert 12hours to 24hours)
-var convertTime = (timeStr) => {
+var convertTime = function (timeStr) {
   let [time, modifier] = timeStr.split(" ");
   let [hours, minutes] = time.split(":");
   if (hours === "12") {
@@ -822,12 +890,12 @@ console.log(convertTime(time3)); // 12:00
 console.log(convertTime(time4)); // 00:00
 
 /* Explanation
-console.log(time1.split(" ")) // ['5:00', 'PM']
-let str = '5:00'
-console.log(str.split(":")) // ['5', '00'] */
+  console.log(time1.split(" ")) // ['5:00', 'PM']
+  let str = '5:00'
+  console.log(str.split(":")) // ['5', '00'] */
 
 // TIME (convert 24hours to 12hours)
-var convertTime = (timeStr) => {
+var convertTime = function (timeStr) {
   let [hours, minutes] = timeStr.split(":");
   if (hours === "12") {
     hours = "12";
@@ -850,6 +918,31 @@ console.log(convertTime(time1)); // 5:00 PM
 console.log(convertTime(time2)); // 11:42 PM
 console.log(convertTime(time3)); // 12:00 PM
 console.log(convertTime(time4)); // 11:00 AM
+
+// DATES (number of days between two dates)
+const daysBetweenDates = function (date1, date2) {
+  date1 = new Date(date1);
+  date2 = new Date(date2);
+  let difference = (date1 - date2) / (1000 * 3600 * 24); // milliseconds
+
+  return Math.abs(difference);
+};
+// invoke the function
+var date1 = "12/25/2022";
+var date2 = "12/31/2022";
+console.log(daysBetweenDates(date1, date2)); // 6
+
+// SUBTRACT DAYS
+var subtractDays = function (date, days) {
+  date = new Date(date);
+
+  date.setDate(date.getDate() - days); // add + 1 if date format is: 12/31/2022 or 12-31-2022
+
+  return date;
+};
+// invoke the function
+const date = new Date("2022-12-31");
+console.log(subtractDays(date, 6)); // 2022-12-25T00:00:00.000Z
 
 // SORTING ALPHABET AND NUMBERS THE RIGHT WAY
 var sortAlpsNums = function (a) {
@@ -983,7 +1076,7 @@ var uniqueObjectArray = function (array) {
   const map = new Map();
   array.filter((item) => {
     if (!map.has(item.name)) {
-      map.set(item.name, true); // set any value to Map
+      map.set(item.name); // set any value to Map
       result.push({
         name: item.name,
         salary: item.salary,
@@ -1092,6 +1185,47 @@ console.log(isPalindromePermutation("refer")); // true
 console.log(isPalindromePermutation("rrfee")); // true
 console.log(isPalindromePermutation("taco cat")); // true
 console.log(isPalindromePermutation("atco cta")); // true
+
+// RETURN ANAGRAMS or PERMUTATIONS OF STRING WITHOUT REPEATING CHARACTERS
+var solution = function (string) {
+  let anagrams_permutations = [];
+  if (string.length === 0) return anagrams_permutations;
+  if (string.length === 1) {
+    anagrams_permutations.push(string);
+  }
+
+  for (let i = 0; i < string.length; i++) {
+    let cha1 = string.charAt(i);
+    let cha2 = string.slice(0, i) + string.slice(i + 1, string.length);
+
+    solution(cha2).filter((item) => {
+      anagrams_permutations.push(cha1 + item);
+    });
+  }
+
+  return [...new Set(anagrams_permutations)];
+};
+// invoke the function
+console.log(solution("aabc"));
+
+// CHECK IF TWO STRINGS ARE ANAGRAM PALINDROME, PERMUTATION OF EACH OTHER
+var isPermutation = function (str1, str2) {
+  let arr1 = [];
+  let arr2 = [];
+
+  // string1
+  str1.split("").filter((el) => {
+    arr1.push(el);
+  });
+  // string2
+  str2.split("").filter((el) => {
+    arr2.push(el);
+  });
+
+  return arr1.sort().join() === arr2.sort().join();
+};
+// invoke the function
+console.log(isPermutation("pots", "stop"));
 
 /* STRING COMPRESSION: Implement a method to perform basic string compression using the 
 counts of repeated characters. For example, the string aabcccccaaa would become a2blc5a3. 
@@ -1252,6 +1386,29 @@ console.log(
   countVowelsConsonants("The quick brown fox jumps over the lazy dog")
 ); // { vowelCount: 11, consonantCount: 24 }
 
+// VOWELS AND CONSONANTS
+var countVowels = function (string) {
+  let vowelWords = [];
+  let consonantWords = [];
+
+  string = string.replaceAll(" ", ",").split(",");
+  string.filter((el) => {
+    if (
+      el.includes("a") ||
+      el.includes("e") ||
+      el.includes("i") ||
+      el.includes("o") ||
+      el.includes("u")
+    ) {
+      vowelWords.push(el);
+    } else consonantWords.push(el);
+  });
+
+  return consonantWords;
+};
+// invoke the function
+console.log(countVowels("The quick pqzx brown fox jumps over the lazy dog")); // pqzx
+
 // THREE SUM:
 var threeSum = function (nums, target) {
   for (
@@ -1307,11 +1464,11 @@ var subSequences = function (arr, k) {
   }
 
   // push sum of subsequences to result
-  for (var item of new_array) {
+  new_array.filter((item) => {
     if (item.reduce(sum) === k) {
       result.push(item);
     }
-  }
+  });
 
   if (result.length > 0) return result.length;
   return -1;
@@ -1338,10 +1495,10 @@ var largestSubarraySum = function (arr) {
   }
 
   // push sum of subsequences to result
-  for (var item of new_array) {
+  new_array.filter((item) => {
     let k = item.reduce(sum);
     result.push(k);
-  }
+  });
 
   // then filter and return the max sum
   if (result.length > 0) return Math.max(...result);
@@ -1354,18 +1511,23 @@ console.log(largestSubarraySum([-3, 1, 100, 4, 15, 9, 30])); // 159
 console.log(largestSubarraySum([-3, 1, 100, 4, 15, 9, 30, -1])); // 159
 console.log(largestSubarraySum([2, 1, -3, 4, -1, 2, 1, -5, 4])); // 6
 console.log(largestSubarraySum([-1, -1, -5, -3, -7, -4, -5, -6, -100, -4])); // -1
+console.log(largestSubarraySum([2, -8, 3, -2, 4, -10])); // 5
 
-// COUNT THE LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS
+// LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming)
 var longestSubstring = function (str) {
   let substrings = [];
-  let uniqueSubStr = [];
-  let lenUniqueSubStr = [];
 
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
       substrings.push(str.slice(i, j));
     }
   }
+
+  //
+  let uniqueSubStr = [];
+  let lenUniqueSubStr = [];
+  let maxlen;
+  let result;
 
   substrings.filter((el) => {
     let set = [...new Set(el)];
@@ -1389,6 +1551,126 @@ var longestSubstring = function (str) {
 // invoke the function
 var string = "abbbcabcdefef";
 console.log(longestSubstring(string)); // abcdef
+
+// LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming)
+var longestSubstrings = function (str1, str2) {
+  let substrings1 = [];
+  let substrings2 = [];
+
+  // string1
+  for (i = 0; i < str1.length; i++) {
+    for (j = i + 1; j < str1.length + 1; j++) {
+      substrings1.push(str1.slice(i, j));
+    }
+  }
+  // string2
+  for (i = 0; i < str2.length; i++) {
+    for (j = i + 1; j < str2.length + 1; j++) {
+      substrings2.push(str2.slice(i, j));
+    }
+  }
+
+  //
+  let comSubStr = [];
+  let uniqueSubStr = [];
+  let lenUniqueSubStr = [];
+  let maxlen;
+  let result;
+
+  substrings1.filter((el) => {
+    substrings2.filter((item) => {
+      if (item.includes(el)) {
+        comSubStr.push(el);
+      }
+    });
+  });
+
+  // unique substrings -> can be adjusted for repeating characters as shown in comments
+  comSubStr.filter((el) => {
+    let set = [...new Set(el)]; // OR remove, then;
+    uniqueSubStr.push(set.join("")); // uniqueSubStr.push(el);
+    lenUniqueSubStr.push(set.join("").length); // lenUniqueSubStr.push(el.length);
+    maxlen = Math.max(...lenUniqueSubStr);
+
+    // Output substring with maximum length
+    uniqueSubStr.filter((el) => {
+      if (el.length === maxlen) {
+        result = el;
+      }
+    });
+  });
+  return result;
+};
+// invoke the function
+console.log(longestSubstrings("raven", "havoc")); // av
+console.log(longestSubstrings("abbcc", "dbbcc")); // bc
+console.log(longestSubstrings("ABCD", "ACBAD")); // D
+console.log(longestSubstrings("ABCD", "ABCAD")); // ABC
+
+// LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS (Dynamic Programming)
+var subSequences = function (str1, str2) {
+  let subseq1 = [];
+  let subseq2 = [];
+  let ressubseq1 = [];
+  let ressubseq2 = [];
+
+  // subsequence1
+  var subs = (subsets, value) =>
+    subsets.concat(subsets.map((set) => [...set, value]));
+  subseq1 = str1.split("").reduce(subs, [subseq1]);
+  // .....
+  subseq1.filter((el) => {
+    ressubseq1.push(el.join(""));
+  });
+
+  // subsequence2
+  var subs = (subsets, value) =>
+    subsets.concat(subsets.map((set) => [...set, value]));
+  subseq2 = str2.split("").reduce(subs, [subseq2]);
+  // .....
+  subseq2.filter((el) => {
+    ressubseq2.push(el.join(""));
+  });
+
+  //
+  let comSubSeq = [];
+  let uniqueSubSeq = [];
+  let lenUniqueSubSeq = [];
+  let maxlen;
+  let result;
+
+  ressubseq1.filter((el) => {
+    ressubseq2.filter((item) => {
+      if (item.includes(el)) {
+        comSubSeq.push(el);
+      }
+    });
+  });
+
+  // unique subsequence -> can be adjusted for repeating characters as shown in comments
+  comSubSeq.filter((el) => {
+    let set = [...new Set(el)]; // OR remove, then;
+    uniqueSubSeq.push(set.join("")); // uniqueSubStr.push(el);
+    lenUniqueSubSeq.push(set.join("").length); // lenUniqueSubStr.push(el.length);
+    maxlen = Math.max(...lenUniqueSubSeq);
+
+    // Output subsequence with maximum length
+    uniqueSubSeq.filter((el) => {
+      if (el.length === maxlen) {
+        result = el;
+      }
+    });
+  });
+  return result;
+};
+// invoke the function
+console.log(subSequences("abc", "adcc")); // ac
+console.log(subSequences("raven", "havoc")); // av
+console.log(subSequences("abbcc", "dbbcc")); // bc
+console.log(subSequences("step", "hen")); // e
+console.log(subSequences("Stephen", "tep")); // tep
+console.log(subSequences("ABCD", "ACBAD")); // ACD
+console.log(subSequences("ABCD", "ABCAD")); // ABCD
 
 // SWITCH REVERSER
 var switchReverser = function (a) {
@@ -1424,8 +1706,8 @@ var pigLatinConverter = function (str) {
     //if (!"aeiou".includes(str.toLowerCase().charAt(0))) {
     //return str.charAt(0) + "ay";
     //
-    let vowel = str.match(/[aeiou]/gi);
-    let end = str.indexOf(vowel[0]);
+    let start = str.match(/[aeiou]/gi);
+    let end = str.indexOf(start[0]);
     return str.substring(end) + str.substring(0, end) + "ay";
   }
 };
@@ -1497,7 +1779,20 @@ console.log(isDuplicates("The quick brown fox jumps over the lazy dog")); // ['t
 
 //console.log(isDuplicates(["cat", "book", "pencil", "book", "cat", "cat"])); // ['cat'] -> 3
 
-// REVERSE STRING
+// REVERSE STRING -> method1
+var reverseString = function (str) {
+  var reversed_string = [];
+
+  for (el of str.split("")) {
+    reversed_string.unshift(el);
+  }
+  return reversed_string.join("");
+};
+// invoke the function
+console.log(reverseString("Mwanika")); // akinawM
+console.log(reverseString("JavaScript is awesome")); // emosewa si tpircSavaJ
+
+// REVERSE STRING -> method2
 var reverseString = function (str) {
   var reversed_string = "";
   for (var i = str.length; i > -1; i--) {
@@ -1586,6 +1881,22 @@ console.log(isPrime(0)); // false
 console.log(isPrime(1)); // false
 console.log(isPrime(7)); // true
 
+// FLATTEN AN ARRAY
+var flattenArray = function (arr) {
+  let new_arr = [];
+  for (let el of arr) {
+    new_arr.push(el.join());
+  }
+  return new_arr.join().replaceAll(" ", ",").split(",");
+};
+// invoke the function
+var arr = [
+  ["Mwanika", "Stephen", "Crispin"],
+  ["Akoth", "Justine"],
+  ["Olweny", "John"],
+];
+console.log(flattenArray(arr));
+
 // Return an array of all characters of a string:
 var listCharacters = function (string) {
   let char_array = string.split("");
@@ -1609,11 +1920,31 @@ var prefix_suffix = function (prefixes, suffix) {
 // invoke the function
 console.log(prefix_suffix("JKLMNOPQ", "ack"));
 
+// LINEAR SEARCH
+// Return indices of searched element
+var linearSearch = (array, element) => {
+  let indices = [];
+  for (let [idx, ele] of array.entries()) {
+    if (ele.includes(element)) {
+      indices.push(idx);
+    }
+  }
+  return indices;
+};
+// invoke the function
+console.log(
+  linearSearch(
+    ["ball", "at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""],
+    "ball"
+  )
+); // [0, 5]
+console.log(linearSearch(["a", "b", "d", "c", "d"], "d")); // [2, 4]
+
 // TEST ISDUPLICATE
 var isDuplicate = (array, element) => {
   let indices = [];
   for (let [idx, ele] of array.entries()) {
-    if (ele === element) {
+    if (ele.includes(element)) {
       indices.push(idx);
     }
   }
@@ -1629,23 +1960,6 @@ console.log(isDuplicate([1, 2, 3, 4, 5], 1)); // -1
 console.log(isDuplicate([1, 2, 5, 4, 5], 5)); // [true, [2, 4]]
 console.log(isDuplicate([1, 2, 3, 4, 5], 6)); // -1
 
-// Print the occurrence of a letter in the string:
-var letterCount = function (string, letter) {
-  let indices = [];
-  letter = letter.toLowerCase();
-  let arr = string.toLowerCase().split("");
-
-  for (let [idx, el] of arr.entries()) {
-    if (el === letter) {
-      indices.push(idx);
-    }
-  }
-
-  return [letter, indices.length];
-};
-// invoke the function
-console.log(letterCount("Olweny John", "o")); // ['o', 2]
-
 // Print the occurrence of a word in the string:
 var wordCount = function (string, word) {
   let indices = [];
@@ -1653,7 +1967,7 @@ var wordCount = function (string, word) {
   let arr = string.toLowerCase().replaceAll(" ", ",").split(",");
 
   for (let [idx, el] of arr.entries()) {
-    if (el === word) {
+    if (el.includes(word)) {
       indices.push(idx);
     }
   }
@@ -1662,6 +1976,23 @@ var wordCount = function (string, word) {
 };
 // invoke the function
 console.log(wordCount("The quick brown fox jumps over the lazy dog", "the")); // ['the', 2]
+
+// Print the occurrence of a letter in the string:
+var letterCount = function (string, letter) {
+  let indices = [];
+  letter = letter.toLowerCase();
+  let arr = string.toLowerCase().split("");
+
+  for (let [idx, el] of arr.entries()) {
+    if (el.includes(letter)) {
+      indices.push(idx);
+    }
+  }
+
+  return [letter, indices.length];
+};
+// invoke the function
+console.log(letterCount("Olweny John", "o")); // ['o', 2]
 
 // Return the words with substring:
 // Count the Number of words with Substring:
@@ -1701,39 +2032,3 @@ var str =
   "John Doe has 5 oranges while Jane Doe has only 2 oranges, Jane \
   gave Mike 1 of her orange so she is now left with only 1 Orange.";
 console.log(countSubstrings(str, "ORaNGe")); // 4
-
-// FLATTEN AN ARRAY
-var flattenArray = function (arr) {
-  let new_arr = [];
-  for (let el of arr) {
-    new_arr.push(el.join());
-  }
-  return new_arr.join().replaceAll(" ", ",").split(",");
-};
-// invoke the function
-var arr = [
-  ["Mwanika", "Stephen", "Crispin"],
-  ["Akoth", "Justine"],
-  ["Olweny", "John"],
-];
-console.log(flattenArray(arr));
-
-// LINEAR SEARCH
-// Return indices of searched element
-var linearSearch = (array, element) => {
-  let indices = [];
-  for (let [idx, ele] of array.entries()) {
-    if (ele === element) {
-      indices.push(idx);
-    }
-  }
-  return indices;
-};
-// invoke the function
-console.log(
-  linearSearch(
-    ["ball", "at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""],
-    "ball"
-  )
-); // [0, 5]
-console.log(linearSearch(["a", "b", "d", "c", "d"], "d")); // [2, 4]

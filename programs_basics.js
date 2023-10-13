@@ -1200,3 +1200,34 @@ var uniqueObjectArray = function (array) {
 };
 // invoke the function
 console.log(uniqueObjectArray(employees));
+
+var reg = function (word) {
+  let regexp = /[A-Za-z]/g; // NOT /[^A-Za-z]/g;
+
+  // return only special characters and white space
+  word = word.replace(regexp, "");
+  return word;
+};
+// invoke the function
+console.log(reg("mwan..&ika")); // ..&
+
+
+// // Longest Common Subsequence:
+// function solution(s1, s2) {
+//   if (s1.length === 0 || s2.length === 0) {
+//     return "";
+//   } else if (s1.slice(-1) === s2.slice(-1)) {
+//     return solution(s1.slice(0, -1), s2.slice(0, -1)) + s1.slice(-1);
+//   } else {
+//     const sub1 = solution(s1.slice(0, -1), s2);
+//     const sub2 = solution(s1, s2.slice(0, -1));
+//     return sub1.length > sub2.length ? sub1 : sub2;
+//   }
+// }
+// // invoke the function
+// console.log(solution("ABCD", "ACBAD")); // ACD
+// console.log(solution("ABCD", "ABCAD")); // ABCD
+
+
+// [5,8,5,8,8,8] 3boxes
+// [1,2,3,4]none
