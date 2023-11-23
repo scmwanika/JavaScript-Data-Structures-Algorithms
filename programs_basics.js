@@ -1,5 +1,3 @@
-/* ---------- THE BASICS ---------- */
-
 // Given these variables:
 let fruits = ["Banana", "Orange", "Apple", "Mango"];
 let integers = [1, 2, 3, 4, 5];
@@ -133,6 +131,175 @@ newGirl.info.age = 30;
 // invoke the function
 console.log(girl.info.age, newGirl.info.age); // 30 30
 
+// ------------------------------------------------------------------------------------ //
+
+// for loop
+var solution = function (items_array) {
+  let copy_items = [];
+
+  for (let i = 0; i < items_array.length; i++) {
+    copy_items.push(i, items_array[i]);
+  }
+
+  return copy_items;
+};
+// invoke the function
+var items = ["item1", "item2", "item3"];
+console.log(solution(items)); // [0, 'item1', 1, 'item2', 2, 'item3']
+
+// convert a for loop to forEach()
+var solution = function (items_array) {
+  let copy_items = [];
+
+  items_array.forEach((item, index) => {
+    copy_items.push(index, item);
+  });
+
+  return copy_items;
+};
+// invoke the function
+var items = ["item1", "item2", "item3"];
+console.log(solution(items)); // [0, 'item1', 1, 'item2', 2, 'item3']
+
+// addition using forEach()
+// this solution also sums elements of a mixed array:
+var solution = function (nums) {
+  let sum = 0;
+
+  nums.forEach((el) => {
+    sum += +el;
+  });
+
+  return sum;
+};
+// invoke the function
+var numbers1 = [1, 2, 3, 4, 5];
+var numbers2 = [67, 45, "34", "23", 4, 6, "6"];
+console.log(solution(numbers1)); // 15 sum of numbers
+console.log(solution(numbers2)); // 185 sum of numbers + strings
+
+// addition using map()
+// this solution also sums elements of a mixed array:
+var solution = function (nums) {
+  let sum = 0;
+
+  nums.map((el) => {
+    sum += +el;
+  });
+
+  return sum;
+};
+// invoke the function
+var numbers1 = [1, 2, 3, 4, 5];
+var numbers2 = [67, 45, "34", "23", 4, 6, "6"];
+console.log(solution(numbers1)); // 15 sum of numbers
+console.log(solution(numbers2)); // 185 sum of numbers + strings
+
+// addition using reduce()
+// this solution also sums elements of a mixed array:
+var solution = function (nums) {
+  // compute sum
+  function sum(e1, e2) {
+    return +e1 + +e2;
+  }
+
+  return nums.reduce(sum);
+};
+// invoke the function
+var numbers1 = [1, 2, 3, 4, 5];
+var numbers2 = [67, 45, "34", "23", 4, 6, "6"];
+console.log(solution(numbers1)); // 15 sum of numbers
+console.log(solution(numbers2)); // 185 sum of numbers + strings
+
+// MIN, MAX using reduce()
+var solution = function (nums) {
+  // compute min
+  function min(e1, e2) {
+    if (e1 > e2) return e2;
+    if (e1 < e2) return e1;
+    return e1;
+  }
+  // compute max
+  function max(e1, e2) {
+    if (e1 > e2) return e1;
+    if (e1 < e2) return e2;
+    return e1;
+  }
+
+  return { min_element: nums.reduce(min), max_element: nums.reduce(max) };
+};
+// invoke the function
+var numbers1 = [3, 4, 5, 1, 2];
+var numbers2 = [67, 45, "34", "23", 4, 6, "6"];
+console.log(solution(numbers1)); // { min_element: 1, max_element: 5 }
+console.log(solution(numbers2)); // { min_element: 4, max_element: 67 }
+
+// filter()
+var solution = function (nums) {
+  function lessThanThree(el) {
+    return el < 3;
+  }
+
+  return nums.filter(lessThanThree);
+};
+// invoke the function
+var numbers = [1, 2, 3, 4, 5];
+console.log(solution(numbers)); // [1, 2]
+
+// every()
+var solution = function (nums) {
+  function lessThanThree(el) {
+    return el < 3;
+  }
+
+  return nums.every(lessThanThree);
+};
+// invoke the function
+var numbers = [1, 2, 3, 4, 5];
+console.log(solution(numbers)); // false: not every elments < 3
+
+// some()
+var solution = function (nums) {
+  function lessThanThree(el) {
+    return el < 3;
+  }
+
+  return nums.some(lessThanThree);
+};
+// invoke the function
+var numbers = [1, 2, 3, 4, 5];
+console.log(solution(numbers)); // true: some elments < 3
+
+// for...of loop
+var solution = function (items_array) {
+  let copy_items = [];
+
+  for (let item of items_array) {
+    if (item < 3) copy_items.push(item);
+  }
+
+  return copy_items;
+};
+// invoke the function
+var numbers = [1, 2, 3, 4, 5];
+console.log(solution(numbers)); // prints elments array [1, 2]
+
+// for...in loop
+var solution = function (items_array) {
+  let copy_items = [];
+
+  for (let item in items_array) {
+    if (item < 3) copy_items.push(item);
+  }
+
+  return copy_items;
+};
+// invoke the function
+var numbers = [1, 2, 3, 4, 5];
+console.log(solution(numbers)); // prints indices array ['0', '1', '2']
+
+// ------------------------------------------------------------------------------------ //
+
 // Methods to remove duplicates from an array:
 var arr = ["scale", "happy", "strength", "peace", "happy", "happy"];
 
@@ -184,6 +351,8 @@ function removeDuplicates(arr) {
   return unique;
 }
 console.log(removeDuplicates(arr)); // ['scale', 'happy', 'strength', 'peace']
+
+// ------------------------------------------------------------------------------------ //
 
 // Return an array of elements: [MIN, MAX]
 function findMinMax(arr) {
@@ -355,51 +524,43 @@ console.log(solution([1, 2, 3])); // 4
 console.log(solution([-1, -3])); // 1
 console.log(solution([1, 2, 4, 6, 3, 7, 8])); // 5
 
-// Two Sum:
+/* 2SUM
+Given an array of integers nums and an integer target, return indices of the two numbers 
+such that they add up to target. You may assume that each input would have exactly one
+solution, and you may not use the same element twice.You can return the answer in any order. 
+*/
 var twoSum = function (nums, target) {
   for (let i = 0; i < nums.length; i++) {
     for (let j = i + 1; j < nums.length; j++) {
-      if (nums[i] + nums[j] == target) {
+      if (nums[i] + nums[j] === target) {
         return [i, j];
       }
     }
   }
+  return null;
 };
 // invoke the function
-console.log(twoSum([2, 7, 11, 15], 9)); // true
-console.log(twoSum([2, 7, 11, 15], 18)); // true
+console.log(twoSum([2222222, 2222222], 4444444)); // [0, 1]
+console.log(twoSum([2, 7, 11, 15], 18)); // [1, 2]
+console.log(twoSum([2, 7, 11, 15], 17)); // [0, 3]
 
-/* Write a function that does the following:
-console logs the numbers from 1 to n, where n is the integer the function takes as its parameter
-logs fizz instead of the number for multiples of 3
-logs buzz instead of the number for multiples of 5
-logs fizzbuzz instead of the number for multiples of both 3 and 5 */
-
-const fizzBuzz = (num) => {
-  for (let n = 1; n <= num; n++) {
-    // check if the number is a multiple of 3
-    if (n % 3 === 0) {
-      console.log("fizz");
-    } // check if the number is a multiple of 5
-    else if (n % 5 === 0) {
-      console.log("buzz");
-    } // check if the number is a multiple of 3 and 5
-    else if (n % 3 === 0 && n % 5 === 0) {
-      console.log("fizzbuzz");
-    } else {
-      console.log(n);
+// 2SUM SORTED ARRAY
+var twoSum = function (nums, target) {
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] === target) {
+        return [i + 1, j + 1];
+      }
     }
   }
+  return null;
 };
 // invoke the function
-fizzBuzz(5);
-/* 1
-   2
-   fizz
-   4
-   buzz */
+console.log(twoSum([2, 7, 11, 15], 9)); // [1, 2]
+console.log(twoSum([2, 3, 4], 6)); // [1, 3]
+console.log(twoSum([-1, 0], -1)); // [1, 2]
 
-/* ---------- CODING CHALLENGES ---------- */
+// ------------------------------------------------------------------------------------ //
 
 // Reverse the string:
 function reverseString(str) {
@@ -434,167 +595,7 @@ function reverseArray(arr) {
 // invoke the function
 console.log(reverseArray([1, 2, 3, 4, 5, 6, 7])); // [7, 6, 5, 4, 3, 2, 1]
 
-// TEST STRINGS IF ANAGRAM or PERMUTATION
-function isAnagram(str1, str2) {
-  if (str1.length != str2.length) {
-    return false;
-  }
-  var regexp = /[^A-Za-z0-9]/gi;
-  // make the strings case insensitive by converting to the same case
-  // then remove whitespace, and any unwanted characters from the strings
-  str1 = str1.toLowerCase().replace(regexp, "").split("").sort().join("");
-  str2 = str2.toLowerCase().replace(regexp, "").split("").sort().join("");
-  if (str1 === str2) {
-    return true;
-  }
-  return false;
-}
-// invoke the function
-console.log(isAnagram("123", "311"));
-console.log(isAnagram("123", "321"));
-console.log(isAnagram("listen", "silent"));
-console.log(isAnagram("they see", "the eyes"));
-console.log(isAnagram("no.de", "deno./"));
-console.log(isAnagram("stop", "p ots"));
-
-// TEST STRING IF PALINDROME
-const isPalindrome = (str) => {
-  var regexp = /[^A-Za-z0-9]/gi;
-  // make the string case insensitive by converting to the same case
-  // then remove whitespace, and any unwanted characters from the string
-  str = str.toLowerCase().replace(regexp, "");
-  // reverse the input string and return the result of the comparison
-  return str === str.split("").reverse().join("");
-};
-// invoke the function
-console.log(isPalindrome("1221"));
-console.log(isPalindrome("12121"));
-console.log(isPalindrome("book"));
-console.log(isPalindrome("leveL"));
-console.log(isPalindrome("eye"));
-console.log(isPalindrome("Refer"));
-console.log(isPalindrome("A man, a plan, a canal. Panama"));
-console.log(isPalindrome("0_0 (: /- :) 0–0"));
-
-// // 2b Test string if Palindrome: USING FOR LOOP
-// const isPalindrome = (str) => {
-//   // Remove whitespace, and unwanted characters from the string
-//   var re = /[^A-Za-z0-9]/gi; // Remove any one character not between the brackets.
-//   // Then make the string case-insensitive by converting to lowercase
-//   str = str.toLowerCase().replace(re, "");
-//   var i, j;
-//   for (i = 0, j = str.length - 1; i < j; i++, --j) {
-//     if (str[i] != str[j]) {
-//       return false;
-//     }
-//     return true;
-//   }
-// };
-// // invoke the function
-// console.log(isPalindrome("1221"));
-// console.log(isPalindrome("12121"));
-// console.log(isPalindrome("book"));
-// console.log(isPalindrome("eye"));
-// console.log(isPalindrome("Refer"));
-// console.log(isPalindrome("A man, a plan, a canal. Panama"));
-// console.log(isPalindrome("0_0 (: /- :) 0–0"));
-
-// // 2c Test string if Palindrome: USING WHILE LOOP
-// function isPalindrome(str) {
-//   var regexp = /[^A-Za-z0-9]/gi;
-//   // make the string case insensitive by converting to the same case
-//   // then remove whitespace, and any unwanted characters from the string
-//   str = str.toLowerCase().replace(regexp, "");
-//   var [i, j] = [0, str.length - 1];
-//   while (j > 0) {
-//     if (str[i] != str[j]) {
-//       return false;
-//     }
-//     i++;
-//     --j;
-//   }
-//   return true;
-// }
-// // invoke the function
-// console.log(isPalindrome("1221"));
-// console.log(isPalindrome("12121"));
-// console.log(isPalindrome("book"));
-// console.log(isPalindrome("leveL"));
-// console.log(isPalindrome("eye"));
-// console.log(isPalindrome("Refer"));
-// console.log(isPalindrome("A man, a plan, a canal. Panama"));
-// console.log(isPalindrome("0_0 (: /- :) 0–0"));
-
-// TEST STRINGS IF REVERSE
-// method 1
-function isReverse(str1, str2) {
-  if (str1.length != str2.length) {
-    return false;
-  }
-  var regexp = /[^A-Za-z0-9]/gi;
-  // make the strings case insensitive by converting to the same case
-  // then remove whitespace, and any unwanted characters from the strings
-  // also reverse the second string, and comapare to the first string
-  str1 = str1.toLowerCase().replace(regexp, "");
-  str2 = str2.toLowerCase().replace(regexp, "").split("").reverse().join("");
-  if (str1 === str2) {
-    return true;
-  }
-  return false;
-}
-// invoke the function
-console.log(isReverse("Pots", "Stop"));
-
-// TEST STRINGS IF REVERSE
-// method 2
-function isReverse(str1, str2) {
-  if (str1.length != str2.length) {
-    return false;
-  }
-  var regexp = /[^A-Za-z0-9]/gi;
-  // make the strings case insensitive by converting to the same case
-  // then remove whitespace, and any unwanted characters from the strings
-  str1 = str1.toLowerCase().replace(regexp, "");
-  str2 = str2.toLowerCase().replace(regexp, "");
-
-  if (str1.length != str2.length) {
-    return false;
-  }
-  var [i, j] = [0, str2.length - 1];
-  while (j > 0) {
-    if (str1[i] != str2[j]) {
-      return false;
-    }
-    i++;
-    --j;
-  }
-  return true;
-}
-// invoke the function
-console.log(isReverse("Pots", "Stop"));
-
-// RETURN ANAGRAMS or PERMUTATIONS OF STRING WITHOUT REPEATING CHARACTERS
-var solution = (string) => {
-  let anagrams_permutations = [];
-  if (string.length === 0) return anagrams_permutations;
-  if (string.length === 1) {
-    anagrams_permutations.push(string);
-  }
-
-  for (let i = 0; i < string.length; i++) {
-    let cha1 = string.charAt(i);
-    let cha2 = string.slice(0, i) + string.slice(i + 1, string.length);
-
-    solution(cha2).filter((item) => {
-      anagrams_permutations.push(cha1 + item);
-    });
-  }
-
-  return [...new Set(anagrams_permutations)];
-};
-// invoke the function
-console.log(solution("aabc"));
-
+// ------------------------------------------------------------------------------------ //
 // SORTING AND SEARCHING ALGORITHMS
 
 // (i) Implement Quick Sort Algorithm:
@@ -657,30 +658,7 @@ const mergeSort = (originalArr) => {
 var originalArr = [1, 6, 3, 4, 5, 1, 0, 4, 8];
 console.log(mergeSort(originalArr)); // [0, 1, 1, 3, 4, 4, 5, 6, 8]
 
-// (iii) Implement Linear Search Algorithm:
-/* Sparse Search: Given a sorted array of strings that is interspersed with empty strings, write a
-method to find the location of a given string.
-EXAMPLE
-Input: ball, {"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""}
-Output: 4 */
-// LINEAR SEARCH:
-const linearSearch = (array, element) => {
-  for (const [idx, ele] of array.entries()) {
-    if (ele === element) {
-      return idx;
-    }
-  }
-};
-// invoke the function
-console.log(
-  linearSearch(
-    ["at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""],
-    "ball"
-  )
-); // 4
-console.log(linearSearch(["a", "b", "c", "d"], "d")); // 3
-
-// (iv) Implement Binary Search Algorithm:
+// (iii) Implement Binary Search Algorithm:
 /* Search in Rotated Array: Given a sorted array of n integers that has been rotated an unknown
 number of times, write code to find an element in the array. You may assume that the array was
 originally sorted in increasing order.
@@ -714,6 +692,7 @@ console.log(
   )
 ); // null
 
+// ------------------------------------------------------------------------------------ //
 // OBJECT STORE (Dictionary)
 // Sorting Objects:
 var employees = [
@@ -955,7 +934,7 @@ console.log(intersection(o, p));
 // UNIQUE OBJECT ARRAY
 // Creates an array of objects with unique property values (name)
 var uniqueObjectArray = function (arr) {
-  return [...new Map(arr.map((item) => [item["name"], item])).values()];
+  return [...new Map(arr.map((item) => [item.name, item])).values()];
 };
 // invoke the function
 var employees = [
@@ -1046,7 +1025,7 @@ var sumOddSubArray = function (arr) {
 var arr = [1, 2, 3, 4, 5]; // 57
 console.log(sumOddSubArray(arr));
 
-/* ---------- Test parentheses (balanced brackets) ---------- */
+// ------------------------------------------------------------------------------------ //
 
 // solution 1:
 const balancedBrackets = (str) => {
@@ -1135,6 +1114,34 @@ const values2 = arr.map((element) => [2 ** element, 2 * element ** 2]);
 console.table(values1);
 console.table(values2);
 
+// COUNTDOWN
+function countdown(n) {
+  if (n < 1) {
+    console.log(n);
+    return;
+  }
+  console.log(n);
+  return countdown(n - 1);
+}
+// invoke the function
+countdown(5);
+// 5
+// 4
+// 3
+// 2
+// 1
+// 0
+
+var reg = function (word) {
+  let regexp = /[A-Za-z]/g; // NOT /[^A-Za-z]/g;
+
+  // return only special characters and white space
+  word = word.replace(regexp, "");
+  return word;
+};
+// invoke the function
+console.log(reg("mwan..&ika")); // ..&
+
 // Counting substrings of a string that contains only one distinct letter:
 var countSpecialStrings = (str = "") => {
   let { length } = str;
@@ -1157,77 +1164,193 @@ console.log(countSpecialStrings("iiiji"));
 console.log(countSpecialStrings("abcb"));
 // 'a', 'b', 'c', 'b' // 4
 
-// COUNTDOWN
-function countdown(n) {
-  if (n < 1) {
-    console.log(n);
-    return;
+console.log(Math.pow(2, 31) - 1);
+console.log(Math.pow(-2, 31));
+
+function lcs(word1, word2) {
+  var max = 0;
+  var index = 0;
+  var lcsarr = new Array(word1.length + 1);
+  for (var i = 0; i <= word1.length + 1; ++i) {
+    lcsarr[i] = new Array(word2.length + 1);
+    for (var j = 0; j <= word2.length + 1; ++j) {
+      lcsarr[i][j] = 0;
+    }
   }
-  console.log(n);
-  return countdown(n - 1);
+  for (var i = 0; i <= word1.length; ++i) {
+    for (var j = 0; j <= word2.length; ++j) {
+      if (i == 0 || j == 0) {
+        lcsarr[i][j] = 0;
+      } else {
+        if (word1[i - 1] == word2[j - 1]) {
+          lcsarr[i][j] = lcsarr[i - 1][j - 1] + 1;
+        } else {
+          lcsarr[i][j] = 0;
+        }
+      }
+      if (max < lcsarr[i][j]) {
+        max = lcsarr[i][j];
+        index = i;
+      }
+    }
+  }
+  var str = "";
+  if (max == 0) {
+    return "";
+  } else {
+    for (var i = index - max; i <= max; ++i) {
+      str += word2[i];
+    }
+    return str;
+  }
 }
 // invoke the function
-countdown(5);
-// 5
-// 4
-// 3
-// 2
-// 1
-// 0
+console.log(lcs("abbcc", "dbbcc")); // bbcc
 
-// UNIQUE OBJECT ARRAY
-var uniqueObjectArray = function (array) {
-  const result = [];
-  const map = new Map();
-  array.filter((item) => {
-    if (!map.has(item.name)) {
-      map.set(item.name, true); // set any value to Map
-      result.push({
-        name: item.name,
-        salary: item.salary,
-        hireDate: item.hireDate,
-      });
+//
+var lengthOfLongestSubstring = function (s) {
+  // Left and right pointers
+  let left = 0;
+  let right = 0;
+  // Longest Sub and our empty Set
+  let longestSub = 0;
+  let charsSet = new Set();
+
+  while (right < s.length) {
+    // The set doesn't contain the char
+    if (!charsSet.has(s[right])) {
+      charsSet.add(s[right]);
+      longestSub = Math.max(longestSub, charsSet.size);
+      right++;
+    } else {
+      // The char is found in our set
+      charsSet.delete(s[left]);
+      left++;
+    }
+  }
+  return longestSub;
+};
+// invoke the function
+console.log(lengthOfLongestSubstring("dvdf")); // 3
+
+// LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming)
+var longestSubstring = function (str) {
+  let uniqueSubStr = [];
+  let lenUniqueSubStr = [];
+  let maxlen;
+  let result;
+
+  for (i = 0; i < str.length; i++) {
+    for (j = i + 1; j < str.length + 1; j++) {
+      let set = [...new Set(str.slice(i, j))].join("");
+      if (!uniqueSubStr.includes(set)) uniqueSubStr.push(set);
+    }
+  }
+
+  uniqueSubStr.filter((el) => {
+    if (str.includes(el)) {
+      lenUniqueSubStr.push(el.length);
+      maxlen = Math.max(...lenUniqueSubStr);
+
+      // Output substring with maximum length
+      if (str.includes(el) && el.length === maxlen) {
+        result = el;
+      }
     }
   });
+
+  if (str.length === 0) return "";
+  return result;
+};
+// invoke the function
+console.log(longestSubstring("")); //
+console.log(longestSubstring("dvdf")); // vdf -> 3
+console.log(longestSubstring("abbbcabcdefef")); // abcdef -> 6
+console.log(longestSubstring("pwwkew")); // kew -> 3
+
+// LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming)
+var longestSubstrings = function (str1, str2) {
+  let substrings1 = [];
+  let substrings2 = [];
+
+  // string1
+  for (i = 0; i < str1.length; i++) {
+    for (j = i + 1; j < str1.length + 1; j++) {
+      substrings1.push(str1.slice(i, j));
+    }
+  }
+  // string2
+  for (i = 0; i < str2.length; i++) {
+    for (j = i + 1; j < str2.length + 1; j++) {
+      substrings2.push(str2.slice(i, j));
+    }
+  }
+
   //
-  var res = [];
-  result.forEach((item) => {
-    res.push(item.name, item.salary);
+  let comSubStr = [];
+  let uniqueSubStr = [];
+  let lenUniqueSubStr = [];
+  let maxlen;
+  let result;
+
+  substrings1.filter((el) => {
+    substrings2.filter((item) => {
+      if (item.includes(el)) {
+        comSubStr.push(el);
+      }
+    });
   });
 
+  // unique substrings -> can be adjusted for repeating characters as shown in comments
+  comSubStr.filter((el) => {
+    let set = [...new Set(el)]; // OR remove, then;
+    uniqueSubStr.push(set.join("")); // uniqueSubStr.push(el);
+    lenUniqueSubStr.push(set.join("").length); // lenUniqueSubStr.push(el.length);
+    maxlen = Math.max(...lenUniqueSubStr);
+
+    // Output substring with maximum length
+    uniqueSubStr.filter((el) => {
+      if (el.length === maxlen) {
+        result = el;
+      }
+    });
+  });
   return result;
-  //return res;
 };
 // invoke the function
-console.log(uniqueObjectArray(employees));
+console.log(longestSubstrings("raven", "havoc")); // av
+console.log(longestSubstrings("abbcc", "dbbcc")); // bc
+console.log(longestSubstrings("ABCD", "ACBAD")); // D
+console.log(longestSubstrings("ABCD", "ABCAD")); // ABC
 
-var reg = function (word) {
-  let regexp = /[A-Za-z]/g; // NOT /[^A-Za-z]/g;
-
-  // return only special characters and white space
-  word = word.replace(regexp, "");
-  return word;
-};
+/* URLify: Write a method to replace all spaces in a string with '%20'. You may assume 
+that the string has sufficient space at the end to hold the additional characters, and 
+that you are given the "true" length of the string.
+EXAMPLE
+Input: "Mr John Smith ", 13
+Output: "Mr%20John%20Smith" */
+function URLify(string) {
+  return string.trim().replace(/\s/g, "%20");
+}
 // invoke the function
-console.log(reg("mwan..&ika")); // ..&
+console.log(URLify("Mr John Smith ", 13)); // "Mr%20John%20Smith"
 
+// Separate a string with a special character sequence into an array of substrings:
+var str = " John <----> Smith ";
+var regexp = /\s*<---->\s*/g;
+var separate_string = str.trim().split(regexp);
+console.log(separate_string); // ['John', 'Smith']
+console.log(separate_string.join(" ")); // John Smith
 
-// // Longest Common Subsequence:
-// function solution(s1, s2) {
-//   if (s1.length === 0 || s2.length === 0) {
-//     return "";
-//   } else if (s1.slice(-1) === s2.slice(-1)) {
-//     return solution(s1.slice(0, -1), s2.slice(0, -1)) + s1.slice(-1);
-//   } else {
-//     const sub1 = solution(s1.slice(0, -1), s2);
-//     const sub2 = solution(s1, s2.slice(0, -1));
-//     return sub1.length > sub2.length ? sub1 : sub2;
-//   }
-// }
-// // invoke the function
-// console.log(solution("ABCD", "ACBAD")); // ACD
-// console.log(solution("ABCD", "ABCAD")); // ABCD
+/* Is Unique: Implement an algorithm to determine if a string has all unique characters. 
+   What if you cannot use additional data structures? 
 
-
-// [5,8,5,8,8,8] 3boxes
-// [1,2,3,4]none
+   Method 1:
+If all characters are unique, the size of the set will be the same length as the string. 
+If we have duplicate characters, the set will be smaller. This is because the set 
+completely ignores duplicate insertions. */
+function isUnique(str) {
+  return new Set(str).size === str.length;
+}
+// invoke the function
+console.log(isUnique("mwanika")); // false

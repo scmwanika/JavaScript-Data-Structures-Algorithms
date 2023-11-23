@@ -1,11 +1,11 @@
 {
-  "name": "data-structures-and-algorithms",
+  "name": "testing-functionality-of-javascript-programs-with-jest",
   "version": "1.0.0",
-  "description": "The JavaScript Programming Environment and Model",
+  "description": "Testing Functionality of Javascript Programs With Jest",
   "main": "code.js",
   "scripts": {
-    "test": "jest",
-    "start": "nodemon"
+    "start": "nodemon",
+    "test": "jest"
   },
   "author": "Mwanika Stephen Crispin",
   "license": "ISC",
