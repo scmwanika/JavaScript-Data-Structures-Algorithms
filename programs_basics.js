@@ -131,7 +131,7 @@ newGirl.info.age = 30;
 // invoke the function
 console.log(girl.info.age, newGirl.info.age); // 30 30
 
-// ------------------------------------------------------------------------------------ //
+/* ------------------------------------------------------------------------------------ */
 
 // for loop
 var solution = function (items_array) {
@@ -298,7 +298,7 @@ var solution = function (items_array) {
 var numbers = [1, 2, 3, 4, 5];
 console.log(solution(numbers)); // prints indices array ['0', '1', '2']
 
-// ------------------------------------------------------------------------------------ //
+/* ------------------------------------------------------------------------------------ */
 
 // Methods to remove duplicates from an array:
 var arr = ["scale", "happy", "strength", "peace", "happy", "happy"];
@@ -352,7 +352,7 @@ function removeDuplicates(arr) {
 }
 console.log(removeDuplicates(arr)); // ['scale', 'happy', 'strength', 'peace']
 
-// ------------------------------------------------------------------------------------ //
+/* ------------------------------------------------------------------------------------ */
 
 // Return an array of elements: [MIN, MAX]
 function findMinMax(arr) {
@@ -560,7 +560,7 @@ console.log(twoSum([2, 7, 11, 15], 9)); // [1, 2]
 console.log(twoSum([2, 3, 4], 6)); // [1, 3]
 console.log(twoSum([-1, 0], -1)); // [1, 2]
 
-// ------------------------------------------------------------------------------------ //
+/* ------------------------------------------------------------------------------------ */
 
 // Reverse the string:
 function reverseString(str) {
@@ -595,7 +595,7 @@ function reverseArray(arr) {
 // invoke the function
 console.log(reverseArray([1, 2, 3, 4, 5, 6, 7])); // [7, 6, 5, 4, 3, 2, 1]
 
-// ------------------------------------------------------------------------------------ //
+/* ------------------------------------------------------------------------------------ */
 // SORTING AND SEARCHING ALGORITHMS
 
 // (i) Implement Quick Sort Algorithm:
@@ -692,7 +692,7 @@ console.log(
   )
 ); // null
 
-// ------------------------------------------------------------------------------------ //
+/* ------------------------------------------------------------------------------------ */
 // OBJECT STORE (Dictionary)
 // Sorting Objects:
 var employees = [
@@ -949,7 +949,7 @@ var employees = [
 ];
 console.log(uniqueObjectArray(employees));
 
-// ------------------------------------------------------------------------------------ //
+/* ------------------------------------------------------------------------------------ */
 
 // 1- SUBARRAY -> SUM
 var sumSubArray = function (arr) {
@@ -1027,7 +1027,7 @@ var sumOddSubArray = function (arr) {
 var arr = [1, 2, 3, 4, 5]; // 57
 console.log(sumOddSubArray(arr));
 
-// ------------------------------------------------------------------------------------ //
+/* ------------------------------------------------------------------------------------ */
 
 // solution 1:
 const balancedBrackets = (str) => {
@@ -1134,6 +1134,66 @@ countdown(5);
 // 1
 // 0
 
+/* REMOVE DUPLICATES FROM SORTED ARRAY
+Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place
+such that each unique element appears only once. The relative order of the elements should
+be kept the same. Then return the number of unique elements in nums.
+
+Consider the number of unique elements of nums to be k, to get accepted, you need to do the
+following things:
+
+Change the array nums such that the first k elements of nums contain the unique elements in
+the order they were present in nums initially. The remaining elements of nums
+are not important as well as the size of nums.
+
+Return k. */
+var removeDuplicates = function (nums) {
+  if (nums.length === 0) {
+    return 0;
+  }
+
+  let k = 1; // Initialize the count of unique elements to 1
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] !== nums[k - 1]) {
+      nums[k] = nums[i]; // Overwrite the next unique element
+      k++;
+    }
+  }
+
+  return k;
+};
+// invoke the function
+console.log(removeDuplicates([1, 1, 2])); // 2
+console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4])); // 5
+
+// REMOVE ELEMENT FROM UNSORTED ARRAY
+var removeElement = function (nums, val) {
+  if (nums.length === 0) {
+    return 0;
+  }
+
+  let k = 0; // Initialize the count of unique elements to 0
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== val) {
+      nums[k] = nums[i]; // Overwrite the next unique element
+      k++;
+    }
+  }
+
+  return k;
+};
+// invoke the function
+console.log(removeElement([3, 2, 2, 3], 3)); // 2
+console.log(removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2)); // 5
+
+// Separate a string with a special character sequence into an array of substrings:
+var str = " John <----> Smith ";
+var regexp = /\s*<---->\s*/g;
+var separate_string = str.trim().split(regexp);
+console.log(separate_string); // ['John', 'Smith']
+console.log(separate_string.join(" ")); // John Smith
+
+//
 var reg = function (word) {
   let regexp = /[A-Za-z]/g; // NOT /[^A-Za-z]/g;
 
@@ -1144,712 +1204,48 @@ var reg = function (word) {
 // invoke the function
 console.log(reg("mwan..&ika")); // ..&
 
-// Counting substrings of a string that contains only one distinct letter:
-var countSpecialStrings = (str = "") => {
-  let { length } = str;
-  let res = length;
-  if (!length) {
-    return length;
-  }
-  for (let j = 0, i = 1; i < length; ++i) {
-    if (str[i] === str[j]) {
-      res += i - j;
-    } else {
-      j = i;
-    }
-  }
-  return res;
-};
-// invoke the function
-console.log(countSpecialStrings("iiiji"));
-// 'iii', 'i', 'i', 'i', 'i', 'j', 'ii', 'ii' // 8
-console.log(countSpecialStrings("abcb"));
-// 'a', 'b', 'c', 'b' // 4
+// FLATTEN AN ARRAY
+var flattenArray = function (arr) {
+  let new_arr = [];
 
-console.log(Math.pow(2, 31) - 1);
-console.log(Math.pow(-2, 31));
-
-function lcs(word1, word2) {
-  var max = 0;
-  var index = 0;
-  var lcsarr = new Array(word1.length + 1);
-  for (var i = 0; i <= word1.length + 1; ++i) {
-    lcsarr[i] = new Array(word2.length + 1);
-    for (var j = 0; j <= word2.length + 1; ++j) {
-      lcsarr[i][j] = 0;
-    }
-  }
-  for (var i = 0; i <= word1.length; ++i) {
-    for (var j = 0; j <= word2.length; ++j) {
-      if (i == 0 || j == 0) {
-        lcsarr[i][j] = 0;
-      } else {
-        if (word1[i - 1] == word2[j - 1]) {
-          lcsarr[i][j] = lcsarr[i - 1][j - 1] + 1;
-        } else {
-          lcsarr[i][j] = 0;
-        }
-      }
-      if (max < lcsarr[i][j]) {
-        max = lcsarr[i][j];
-        index = i;
-      }
-    }
-  }
-  var str = "";
-  if (max == 0) {
-    return "";
-  } else {
-    for (var i = index - max; i <= max; ++i) {
-      str += word2[i];
-    }
-    return str;
-  }
-}
-// invoke the function
-console.log(lcs("abbcc", "dbbcc")); // bbcc
-
-//
-var lengthOfLongestSubstring = function (s) {
-  // Left and right pointers
-  let left = 0;
-  let right = 0;
-  // Longest Sub and our empty Set
-  let longestSub = 0;
-  let charsSet = new Set();
-
-  while (right < s.length) {
-    // The set doesn't contain the char
-    if (!charsSet.has(s[right])) {
-      charsSet.add(s[right]);
-      longestSub = Math.max(longestSub, charsSet.size);
-      right++;
-    } else {
-      // The char is found in our set
-      charsSet.delete(s[left]);
-      left++;
-    }
-  }
-  return longestSub;
-};
-// invoke the function
-console.log(lengthOfLongestSubstring("dvdf")); // 3
-
-// LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming)
-var longestSubstring = function (str) {
-  let uniqueSubStr = [];
-  let lenUniqueSubStr = [];
-  let maxlen;
-  let result;
-
-  for (i = 0; i < str.length; i++) {
-    for (j = i + 1; j < str.length + 1; j++) {
-      let set = [...new Set(str.slice(i, j))].join("");
-      if (!uniqueSubStr.includes(set)) uniqueSubStr.push(set);
-    }
-  }
-
-  uniqueSubStr.filter((el) => {
-    if (str.includes(el)) {
-      lenUniqueSubStr.push(el.length);
-      maxlen = Math.max(...lenUniqueSubStr);
-
-      // Output substring with maximum length
-      if (str.includes(el) && el.length === maxlen) {
-        result = el;
-      }
-    }
+  arr.forEach((el) => {
+    new_arr.push(el.join());
   });
-
-  if (str.length === 0) return "";
-  return result;
+  return new_arr.join().replaceAll(" ", ",").split(",");
 };
 // invoke the function
-console.log(longestSubstring("")); //
-console.log(longestSubstring("dvdf")); // vdf -> 3
-console.log(longestSubstring("abbbcabcdefef")); // abcdef -> 6
-console.log(longestSubstring("pwwkew")); // kew -> 3
+var arr = [
+  ["Mwanika", "Stephen", "Crispin"],
+  ["Akoth", "Justine"],
+  ["Olweny", "John"],
+];
+console.log(flattenArray(arr));
 
-// LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming)
-var longestSubstrings = function (str1, str2) {
-  let substrings1 = [];
-  let substrings2 = [];
-
-  // string1
-  for (i = 0; i < str1.length; i++) {
-    for (j = i + 1; j < str1.length + 1; j++) {
-      substrings1.push(str1.slice(i, j));
-    }
-  }
-  // string2
-  for (i = 0; i < str2.length; i++) {
-    for (j = i + 1; j < str2.length + 1; j++) {
-      substrings2.push(str2.slice(i, j));
-    }
-  }
-
-  //
-  let comSubStr = [];
-  let uniqueSubStr = [];
-  let lenUniqueSubStr = [];
-  let maxlen;
-  let result;
-
-  substrings1.filter((el) => {
-    substrings2.filter((item) => {
-      if (item.includes(el)) {
-        comSubStr.push(el);
-      }
-    });
-  });
-
-  // unique substrings -> can be adjusted for repeating characters as shown in comments
-  comSubStr.filter((el) => {
-    let set = [...new Set(el)]; // OR remove, then;
-    uniqueSubStr.push(set.join("")); // uniqueSubStr.push(el);
-    lenUniqueSubStr.push(set.join("").length); // lenUniqueSubStr.push(el.length);
-    maxlen = Math.max(...lenUniqueSubStr);
-
-    // Output substring with maximum length
-    uniqueSubStr.filter((el) => {
-      if (el.length === maxlen) {
-        result = el;
-      }
-    });
-  });
-  return result;
-};
-// invoke the function
-console.log(longestSubstrings("raven", "havoc")); // av
-console.log(longestSubstrings("abbcc", "dbbcc")); // bc
-console.log(longestSubstrings("ABCD", "ACBAD")); // D
-console.log(longestSubstrings("ABCD", "ABCAD")); // ABC
-
-/* URLify: Write a method to replace all spaces in a string with '%20'. You may assume 
-that the string has sufficient space at the end to hold the additional characters, and 
-that you are given the "true" length of the string.
-EXAMPLE
-Input: "Mr John Smith ", 13
-Output: "Mr%20John%20Smith" */
-function URLify(string) {
-  return string.trim().replace(/\s/g, "%20");
-}
-// invoke the function
-console.log(URLify("Mr John Smith ", 13)); // "Mr%20John%20Smith"
-
-// Separate a string with a special character sequence into an array of substrings:
-var str = " John <----> Smith ";
-var regexp = /\s*<---->\s*/g;
-var separate_string = str.trim().split(regexp);
-console.log(separate_string); // ['John', 'Smith']
-console.log(separate_string.join(" ")); // John Smith
-
-/* Is Unique: Implement an algorithm to determine if a string has all unique characters. 
-   What if you cannot use additional data structures? 
-
-   Method 1:
-If all characters are unique, the size of the set will be the same length as the string. 
-If we have duplicate characters, the set will be smaller. This is because the set 
-completely ignores duplicate insertions. */
-function isUnique(str) {
-  return new Set(str).size === str.length;
-}
-// invoke the function
-console.log(isUnique("mwanika")); // false
+let ob = { name: "Mwanika", age: 42, gender: "M" };
+console.log(ob["age"]); // same as ob.age -> 42
 
 // RETURN ARRAY OF CHARACHERS USING THE SPREAD OPERATOR
-var s = "mwanika"
-console.log([...s])
+var s = "mwanika";
+console.log([...s]);
 
-// // FLATTEN AN ARRAY
-// var flattenArray = function (arr) {
-//   let new_arr = [];
-
-//   arr.forEach((el) => {
-//     new_arr.push(el.join());
-//   });
-//   return new_arr.join().replaceAll(" ", ",").split(",");
-// };
-// // invoke the function
-// var arr = [
-//   ["Mwanika", "Stephen", "Crispin"],
-//   ["Akoth", "Justine"],
-//   ["Olweny", "John"],
-// ];
-// console.log(flattenArray(arr));
-
-// // REMOVE THE FIRST TWO ELEMENTS OF AN ARRAY USING ARRAY DESTRUCTURING
-// function removeFirstTwoElements(arr) {
-//   const [, , ...list] = arr;
-//   return list;
-// }
-// // invoke the function
-// var arr = [8, 9, 10, 11, 12];
-// console.log(removeFirstTwoElements(arr)); // [10, 11, 12]
-
-// // Application of Set()
-// // Return count of duplicates in array:
-// function countDuplicates(arr) {
-//   // remove duplicates
-//   let set = [...new Set(arr)];
-
-//   // count = length of superset - length of subset ()
-//   return arr.length - set.length;
-// }
-// // invoke the function
-// var arr = ["cat", "book", "pencil", "book", "cat", "cat"];
-// console.log(countDuplicates(arr)); // 3
-
-
-
-
-/* 3SUM
-Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that
-i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
-
-Notice that the solution set must not contain duplicate triplets. */
-// var threeSum = function (nums) {
-//   let result = [];
-
-//   for (let i = 0; i < nums.length; i++) {
-//     for (let j = i + 1; j < nums.length; j++) {
-//       for (let k = j + 1; k < nums.length; k++) {
-//         if (nums[i] + nums[j] + nums[k] === 0) {
-//           result.push([nums[i], nums[j], nums[k]].sort());
-//         }
-//       }
-//     }
-//   }
-//   // Transform arrays to strings
-//   let stringArray = result.map(JSON.stringify);
-//   // Remove duplicates
-//   let uniqueStringArray = new Set(stringArray);
-//   // Transform back to array of arrays
-//   let uniqueArray = Array.from(uniqueStringArray, JSON.parse);
-
-//   return uniqueArray;
-// };
-// // invoke the function
-// console.log(threeSum([-1, 0, 1, 2, -1, -4])); // [[-1, 0, 1], [-1, -1, 2]]
-// console.log(threeSum([0, 1, 1])); // []
-// console.log(threeSum([0, 0, 0])); // [0, 0, 0]
-
-// /* 4SUM
-//   Given an array nums of n integers, return an array of all the
-//   unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that: 0 <= a, b, c, d < n
-//   a, b, c, and d are distinct. nums[a] + nums[b] + nums[c] + nums[d] == target
-//   You may return the answer in any order. */
-// var fourSum = function (nums, target) {
-//   let result = [];
-
-//   for (let a = 0; a < nums.length; a++) {
-//     for (let b = a + 1; b < nums.length; b++) {
-//       for (let c = b + 1; c < nums.length; c++) {
-//         for (let d = c + 1; d < nums.length; d++) {
-//           if (nums[a] + nums[b] + nums[c] + nums[d] === target) {
-//             result.push([nums[a], nums[b], nums[c], nums[d]]);
-//           }
-//         }
-//       }
-//     }
-//   }
-//   // Transform arrays to strings
-//   let stringArray = result.map(JSON.stringify);
-//   // Remove duplicates
-//   let uniqueStringArray = new Set(stringArray);
-//   // Transform back to array of arrays
-//   let uniqueArray = Array.from(uniqueStringArray, JSON.parse);
-
-//   return uniqueArray;
-// };
-// // invoke the function
-// console.log(fourSum([1, 0, -1, 0, -2, 2], 0)); // [[1, 0, -1, 0], [1, -1, -2, 2], [0, 0, -2, 2]]
-// console.log(fourSum([2, 2, 2, 2, 2], 8)); // [2, 2, 2, 2]
-
-// DIVIDE TWO INTEGERS
-// For this problem, if the quotient is strictly greater than 231 - 1, then return 231 - 1, and if the quotient is strictly less than -231, then return -231.
-/*
-Example 1:
-
-Input: dividend = 10, divisor = 3
-Output: 3
-Explanation: 10/3 = 3.33333.. which is truncated to 3.
-Example 2:
-
-Input: dividend = 7, divisor = -3
-Output: -2
-Explanation: 7/-3 = -2.33333.. which is truncated to -2.*/
-var divide = function (dividend, divisor) {
-  let quotient = Math.round(dividend / divisor);
-  return quotient;
-};
-// invoke the function
-console.log(divide(10, 3)); // 3
-console.log(divide(7, -3)); // -2
-console.log(divide(1, 2)); // 0...
-
-// searched element in the rotated array
-// Return an array that holds the indices of a searched element in the rotated array.
-var search = function (nums, target) {
-  // get indices of a searched element in the rotated array
-  let indices = [];
-  for (let [idx, el] of nums.entries()) {
-    if (el === target) {
-      indices.push(idx);
-    }
-  }
-
-  if (indices.length > 0) return parseInt(indices);
-  return -1;
-};
-// invoke the function
-console.log(search([4, 5, 6, 7, 0, 1, 2], 0)); // 4
-console.log(search([4, 5, 6, 7, 0, 1, 2], 3)); // -1
-console.log(search([1], 0)); // -1
-
-// SUBSETS 1
-var subsets = function (nums) {
-  let result = [];
-  var subs = (sub_sets, value) =>
-    sub_sets.concat(sub_sets.map((set) => [...set, value]));
-  return nums.reduce(subs, [result]);
-};
-// invoke the function
-console.log(subsets([1, 2, 3])); // [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
-console.log(subsets([0])); // [[], [0]]
-
-/* SUBSETS 2
-Given an integer array nums that may contain duplicates, return all possible subsets
-(the power set).
-The solution set must not contain duplicate subsets. Return the solution in any order. */
-var subsetsWithDup = function (nums) {
-  let result = [];
-  let uniquesubsets;
-
-  var subs = (sub_sets, value) =>
-    sub_sets.concat(sub_sets.map((set) => [...set, value]));
-  uniquesubsets = nums.sort().reduce(subs, [result]);
-
-  // Transform arrays to strings
-  let stringArray = uniquesubsets.sort().map(JSON.stringify);
-  // Remove duplicates
-  let uniqueStringArray = new Set(stringArray);
-  // Transform back to array of arrays
-  let uniqueArray = Array.from(uniqueStringArray, JSON.parse);
-
-  return uniqueArray;
-};
-// invoke the function
-// console.log(subsetsWithDup([1, 2, 2])); // [[], [1], [2], [1, 2], [2, 2], [1, 2, 2]]
-// console.log(subsetsWithDup([0])); // [[], [0]]
-// console.log(subsetsWithDup([4, 4, 4, 1, 4])); //
-console.log(subsetsWithDup([1, 2, 1])); //
-
-// /* REMOVE DUPLICATES FROM SORTED ARRAY
-// Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place
-// such that each unique element appears only once. The relative order of the elements should
-// be kept the same. Then return the number of unique elements in nums.
-
-// Consider the number of unique elements of nums to be k, to get accepted, you need to do the
-// following things:
-
-// Change the array nums such that the first k elements of nums contain the unique elements in
-// the order they were present in nums initially. The remaining elements of nums
-// are not important as well as the size of nums.
-
-// Return k. */
-// var removeDuplicates = function (nums) {
-//   if (nums.length === 0) {
-//     return 0;
-//   }
-
-//   let k = 1; // Initialize the count of unique elements to 1
-//   for (let i = 1; i < nums.length; i++) {
-//     if (nums[i] !== nums[k - 1]) {
-//       nums[k] = nums[i]; // Overwrite the next unique element
-//       k++;
-//     }
-//   }
-
-//   return k;
-// };
-// // invoke the function
-// console.log(removeDuplicates([1, 1, 2])); // 2
-// console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4])); // 5
-
-// // REMOVE ELEMENT FROM UNSORTED ARRAY
-// var removeElement = function (nums, val) {
-//   if (nums.length === 0) {
-//     return 0;
-//   }
-
-//   let k = 0; // Initialize the count of unique elements to 0
-//   for (let i = 0; i < nums.length; i++) {
-//     if (nums[i] !== val) {
-//       nums[k] = nums[i]; // Overwrite the next unique element
-//       k++;
-//     }
-//   }
-
-//   return k;
-// };
-// // invoke the function
-// console.log(removeElement([3, 2, 2, 3], 3)); // 2
-// console.log(removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2)); // 5
-
-// /* Given a string s, return true if the s can be palindrome after deleting at most one
-// character from it.
-
-// Example 1:
-// Input: s = "aba"
-// Output: true
-
-// Example 2:
-// Input: s = "abca"
-// Output: true
-// Explanation: You could delete the character 'c'.
-
-// Example 3:
-// Input: s = "abc"
-// Output: false */
-
-
-
-
-// /* ROMAN TO INTEGER
-// Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
-
-// Symbol       Value
-// I             1
-// V             5
-// X             10
-// L             50
-// C             100
-// D             500
-// M             1000
-// For example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
-
-// Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
-
-// I can be placed before V (5) and X (10) to make 4 and 9.
-// X can be placed before L (50) and C (100) to make 40 and 90.
-// C can be placed before D (500) and M (1000) to make 400 and 900.
-// Given a roman numeral, convert it to an integer.
-
-// Example 1:
-// Input: s = "III"
-// Output: 3
-// Explanation: III = 3.
-
-// Example 2:
-// Input: s = "LVIII"
-// Output: 58
-// Explanation: L = 50, V= 5, III = 3.
-
-// Example 3:
-// Input: s = "MCMXCIV"
-// Output: 1994
-// Explanation: M = 1000, CM = 900, XC = 90 and IV = 4. */
-
-// ------------------------------------------------------------------------------------ //
-
-var intToRoman = function(num) {
-  const ones = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
-  const tens = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"];
-  const hrns = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"];
-  const ths = ["", "M", "MM", "MMM"];
-  return ths[Math.floor(num / 1000)] + hrns[Math.floor((num % 1000) / 100)] + tens[Math.floor((num % 100) / 10)] + ones[num % 10];
-};
-
-function intToRoman(num) {
-  const map = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
-  return Object.entries(map).reduce((result, [letter, n]) => {
-      result += letter.repeat(Math.floor(num / n));
-      num %= n;
-      return result;
-  }, '');
+// REMOVE THE FIRST TWO ELEMENTS OF AN ARRAY USING ARRAY DESTRUCTURING
+function removeFirstTwoElements(arr) {
+  const [, , ...list] = arr;
+  return list;
 }
+// invoke the function
+var arr = [8, 9, 10, 11, 12];
+console.log(removeFirstTwoElements(arr)); // [10, 11, 12]
 
-function intToRoman(num) {
-  const map = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
-  let result = '';
-  Object.entries(map).forEach(([letter, n]) => {
-      result += letter.repeat(Math.floor(num / n));
-      num %= n;
-  });
-  return result;
+// Application of Set()
+// Return count of duplicates in array:
+function countDuplicates(arr) {
+  // remove duplicates
+  let set = [...new Set(arr)];
+
+  // count = length of superset - length of subset ()
+  return arr.length - set.length;
 }
-
-function intToRoman(num: number): string {
-  const rNums: Record<string,number> = {
-    M:1000,
-    CM:900,
-    D:500,
-    CD:400,
-    C:100,
-    XC:90,
-    L:50,
-    XL:40,
-    X:10,
-    IX:9,
-    V:5,
-    IV:4,
-    I:1
-  };
-  let result = '';
-  for(let rN in rNums){
-      let count = num / rNums[rN];
-      if(count>0) {
-          result+= rN.repeat(count);
-          num = num % rNums[rN];
-      }
-  }
-  return result;
-};
-
-const val = [1000,900,500,400,100,90,50,40,10,9,5,4,1]
-const rom = ["M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"]
-
-var intToRoman = function(N) {
-    let ans = ""
-    for (let i = 0; N; i++)
-        while (N >= val[i]) ans += rom[i], N -= val[i]
-    return ans
-};
-
-// ------------------------------------------------------------------------------------ //
-
-var romanToInt = function(s) {
-  const sym = {
-    'I': 1,
-    'V': 5,
-    'X': 10,
-    'L': 50,
-    'C': 100,
-    'D': 500,
-    'M': 1000
-}
-
-let result = 0;
-
-for (let i = 0; i < s.length; i++) {
-    const cur = sym[s[i]];
-    const next = sym[s[i + 1]];
-
-    if (cur < next) {
-        result += next - cur;
-        i++;
-    } else {
-        result += cur;
-    }
-}
-
-return result;
-};
-
-var romanToInt = function(s) {
-  const romanValues = {
-      'I': 1,
-      'V': 5,
-      'X': 10,
-      'L': 50,
-      'C': 100,
-      'D': 500,
-      'M': 1000
-  };
-
-  let result = 0;
-
-  for (let i = s.length - 1; i >= 0; i--) {
-      const currValue = romanValues[s[i]];
-
-      if (i < s.length - 1 && currValue < romanValues[s[i + 1]]) {
-          result -= currValue;
-      } else {
-          result += currValue;
-      }
-  }
-
-  return result;
-};
-
-symbols = {
-  "I": 1,
-  "V": 5,
-  "X": 10,
-  "L": 50,
-  "C": 100,
-  "D": 500,
-  "M": 1000
-};
-
-var romanToInt = function(s) {
-  let value = 0;
-  for(let i = 0; i < s.length; i+=1){
-      symbols[s[i]] < symbols[s[i+1]] ? value -= symbols[s[i]]: value += symbols[s[i]]
-  }
-  return value
-};
-
-const roman = {
-  I: 1,
-  V: 5,
-  X: 10,
-  L: 50,
-  C: 100,
-  D: 500,
-  M: 1000,
-};
-
-function romanToInt(s: string): number {
-  const integers = s.split('').map(c => roman[c]);
-  
-  return integers.reduce((acc, x, i) => x < integers[i+1] ? acc - x : acc + x, 0);
-};
-
-// ------------------------------------------------------------------------------------ //
-// // var reverseOnlyLetters = function(s) {
-// //   s = s.split('');
-// //     let start = 0;
-// //     let end = s.length - 1;
-// //     const regex = /[a-zA-Z]/g;
-// //     while (start < end) {
-// //         if (s[start].match(regex) === null) { // not a letter at the start, continue without swapping
-// //             start++;
-// //             continue;
-// //         }
-// //         if (s[end].match(regex) === null) { // not a letter at the end, continue without swapping
-// //             end--;
-// //             continue;
-// //         }
-// //         // let tmp = s[start]; // we end up here when there are letters at 'start' and 'end' so we just swap them
-// //         // s[start] = s[end];
-// //         // s[end] = tmp;
-// //         // start++;
-// //         // end--;
-// //     }
-
-// //     return s.join('');
-// // };
-// // // invoke the function
-// // console.log(reverseOnlyLetters('a-bC-dEf-ghIj')); //
-
-// var reverseVowels = function(s) {
-//   const VOWELS = { 'a': 1, 'e': 1, 'i': 1, 'o': 1, 'u': 1, 'A': 1, 'E': 1, 'I': 1, 'O': 1, 'U': 1 };
-//   const arr = s.split('');
-//   let i = 0, j = arr.length - 1;
-//   while (i < j) {
-//       if (VOWELS[arr[i]] && VOWELS[arr[j]]) {
-//           [arr[i], arr[j]] = [arr[j], arr[i]];
-//           i++;
-//           j--;
-//       } else if (VOWELS[arr[i]]) {
-//           j--;
-//       } else {
-//           i++;
-//       }
-//   }
-//   return arr.join('');
-// };
-// // invoke the function
-// console.log(reverseVowels('hello')); //
+// invoke the function
+var arr = ["cat", "book", "pencil", "book", "cat", "cat"];
+console.log(countDuplicates(arr)); // 3

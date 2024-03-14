@@ -45,48 +45,8 @@ exports.subtractDays = function (date, days) {
 };
 
 // ------------------------------------------------------------------------------------ //
-/* ZERO MATRIX: Write an algorithm such that if an element in an MxN matrix is 0, its
-entire row and column are set to 0. */
 
-/* ROTATE MATRIX (2D Array) in-place: Given an image represented by an NxN matrix, where
-each pixel in the image is 4 bytes, write a method to rotate the image by 90 degrees. */
-
-// Rotate Matrix Right -> Clockwise
-exports.rotateMatrixRight = function (matrix) {
-  let n = matrix.length;
-
-  for (let row = 0; row < n; row++) {
-    for (let col = row; col < n - 1 - row; col++) {
-      let last = n - 1 - row;
-      let offset = col - row;
-
-      // implement the swap index by index:
-      let top = matrix[row][col];
-
-      // left edge -> top edge
-      matrix[row][col] = matrix[last - offset][row];
-
-      // bottom edge -> left edge
-      matrix[last - offset][row] = matrix[last][last - offset];
-
-      // right edge -> bottom edge
-      matrix[last][last - offset] = matrix[col][last];
-
-      // top edge -> right edge
-      matrix[col][last] = top;
-    }
-  }
-
-  return matrix;
-};
-// // invoke the function
-// // var matrix = [
-// //   [5, 1, 9, 11],
-// //   [2, 4, 8, 10],
-// //   [13, 3, 6, 7],
-// //   [15, 14, 12, 16],
-// // ];
-// rotateMatrixRight(matrix); // 
+/* ROTATE MATRIX LEFT
 
 // Rotate Matrix Left -> Anti-Clockwise
 exports.rotateMatrixLeft = function (matrix) {
@@ -123,18 +83,7 @@ exports.rotateMatrixLeft = function (matrix) {
 // //   [13, 3, 6, 7],
 // //   [15, 14, 12, 16],
 // // ];
-// rotateMatrixLeft(matrix); // 
-
-// ------------------------------------------------------------------------------------ //
-/* IS ROTATION: Assume you have a method isSubstring which checks if one word is
-a substring of another. Given two strings, supstr and substr,
-write code to check if substr is a rotation of supstr using only one call to isSubstring
-(e.g., "waterbottle" is a rotation of" erbottlewat"). */
-exports.isRotation = function (supstr, substr) {
-  supstr = supstr.toLowerCase().split("").sort().join("");
-  substr = substr.toLowerCase().split("").sort().join("");
-  return supstr === substr;
-};
+// rotateMatrixLeft(matrix);
 
 // ROTATE STRING
 exports.rotateString = function (string, k, direction) {
@@ -195,141 +144,6 @@ exports.rotateArray = function (array, k, direction, element) {
 
     return { merge_array, indices };
   }
-};
-
-// ------------------------------------------------------------------------------------ //
-// SUBSTRINGS, SUBARRAYS, SUBSEQUENCES, SUBSETS
-
-/* SUBSTRINGS AND SUBARRAYS
--> a substring is a string that occurs in another string.
--> a subarray is a slice from a contiguous array.
-both substrings and subarrays occupy consective positions and inherently maintain
-the order of characters and elements respectively. */
-exports.subStringsArrays = function (str) {
-  var result = [];
-  for (i = 0; i < str.length; i++) {
-    for (j = i + 1; j < str.length + 1; j++) {
-      result.push(str.slice(i, j));
-    }
-  }
-  return result;
-};
-
-/* SUBSEQUENCES AND SUBSETS
--> a subsequence of an array is a new array that is formed from the original array
-by deleting some (or none) of the elements without disturbing the relative
-positions and order of the remaining elements.
-a subsequence may be continuous or non-continuous: for example;
-[1,3,5] is a non-continuous subsequence of [1,2,3,4,5] while
-[1,2,3] is a continuous subsequence of [1,2,3,4,5]
-
-[1,3,2] is not a subsequence of [1,2,3,4,5] because the array is non-continuous
-and does not maintain relative position and order of elements. however,
-[1,3,2] is a subset of [1,2,3,4,5]. a subset may not maintain relative position
-and order of elements.
-
--> a subset is any possible combination of the original set. for example;
-[1,3,2] is a subset of [1,2,3,4,5]. a subset may not maintain relative position
-and order of elements. */
-exports.subSequencesSubsets = function (arr) {
-  let result = [];
-  var subs = (subsets, value) =>
-    subsets.concat(subsets.map((set) => [...set, value]));
-  return arr.reduce(subs, [result]);
-};
-
-// ------------------------------------------------------------------------------------ //
-// IS SUBSTRING / COMBINATION OF ANOTHER STRING
-exports.isSubString = function (str, substr) {
-  let res;
-  if (str.toLowerCase().includes(substr.toLowerCase())) res = "Valid Substring";
-
-  if (res === "Valid Substring") return true;
-  return false;
-};
-
-// IS SUBSEQUENCE OF ANOTHER STRING
-exports.isSubStringSequence = function (str, subseq) {
-  let idx = 0;
-  let arr = str.toLowerCase().split("");
-
-  arr.filter((el) => {
-    if (el.includes(subseq.toLowerCase()[idx])) idx++;
-  });
-
-  if (idx === subseq.length) return true;
-  return false;
-};
-
-// IS SUBSET OF ANOTHER STRING
-exports.isSubSetStr = function (str, subset) {
-  let idx = 0;
-  let arr = str.toLowerCase().split("").sort();
-
-  arr.filter((el) => {
-    if (el.includes(subset.toLowerCase().split("").sort()[idx])) idx++;
-  });
-
-  return idx === subset.length;
-};
-
-// ------------------------------------------------------------------------------------ //
-// IS SUBARRAY / COMBINATION OF ANOTHER ARRAY
-exports.isSubArray = function (arr, subarr) {
-  subarr = subarr.join("").toString();
-  arr = arr.join("").toString();
-
-  let res;
-  if (arr.toLowerCase().includes(subarr.toLowerCase())) res = "Valid Subarray";
-
-  if (res === "Valid Subarray") return true;
-  return false;
-};
-
-// IS SUBSEQUENCE OF ANOTHER ARRAY
-exports.isSubArraySequence = function (arr, subseq) {
-  subseq = subseq.join("").toString();
-  arr = arr.join("").toString();
-  arr = arr.toLowerCase().split("");
-
-  let idx = 0;
-
-  arr.filter((el) => {
-    if (el.includes(subseq.toLowerCase()[idx])) idx++;
-  });
-
-  if (idx === subseq.length) return true;
-  return false;
-};
-
-// IS SUBSET OF ANOTHER ARRAY
-exports.isSubSetArr = function (arr, subset) {
-  subset = subset.join("").toString();
-  arr = arr.join("").toString();
-  arr = arr.toLowerCase().split("").sort();
-
-  let idx = 0;
-
-  arr.filter((el) => {
-    if (el.includes(subset.toLowerCase().split("").sort()[idx])) idx++;
-  });
-
-  return idx === subset.length;
-};
-
-// ------------------------------------------------------------------------------------ //
-// LARGEST SUBARRAY SUM
-exports.largestSubarraySum = function (array) {
-  let presum = 0;
-  let cursum = 0;
-  //let nexsum = 0;
-  let accumulator = [];
-  array.forEach((el) => {
-    cursum = Math.max(presum, cursum + el);
-    //nexsum = Math.max(cursum, nexsum);
-    accumulator.push(cursum);
-  });
-  return Math.max(...accumulator);
 };
 
 // COUNT SUBARRAYS EQUAL TO SUM
@@ -434,23 +248,6 @@ exports.isPermutation = function (s1, s2) {
   );
 };
 
-/* IS PERMUTATION OF A PALINDROME
-Palindrome Permutation: Given a string, write a function to check if it is a
-permutation of a palindrome. */
-exports.isPalindromePermutation = function (s) {
-  let res = new Set();
-  return (
-    s
-      .replace(/[^A-Za-z0-9]/g, "")
-      .toLowerCase()
-      .split("")
-      .reduce((set, item) => {
-        (set.has(item) && set.delete(item)) || set.add(item);
-        return set;
-      }, res).size <= 1
-  );
-};
-
 // // PERMUTATIONS -> ANAGRAMS
 // exports.generatePermutation = function (arr) {
 //   let resultArr = [];
@@ -481,24 +278,6 @@ exports.isPalindromePermutation = function (s) {
 // console.log(generatePermutation([1, 2, 3]));
 
 // ------------------------------------------------------------------------------------ //
-// SORTING ALPHABET AND NUMBERS THE RIGHT WAY
-exports.sortAlpsNums = function (a) {
-  a.sort(function (e1, e2) {
-    // Alphabet Case-Insensitive Sort
-    if ((typeof e1 && typeof e2) === "string") {
-      e1 = e1.toLowerCase();
-      e2 = e2.toLowerCase();
-      if (e1 > e2) return 1;
-      if (e1 < e2) return -1;
-    }
-    // Numerical Sort
-    if ((typeof e1 && typeof e2) === "number") {
-      if (e1 > e2) return 1;
-      if (e1 < e2) return -1;
-    }
-  });
-  return a;
-};
 
 // SORT THE ARRAY IN A WAY THAT NUMBERS COME FIRST AND STRINGS SECOND
 exports.firstNumsSecondAlps = function (arr) {
@@ -646,27 +425,6 @@ exports.notCommonCharacters = function (s1, s2) {
   return notComChars.join("");
 };
 
-/* IS ONEAWAY -> ZERO OR ONE EDIT AWAY
-There are three types of edits that can be performed on strings:
-insert a character, remove a character, or replace a character. Given two
-strings, write a function to check if they are one edit (or zero edits) away.
-EXAMPLE
-pale, ple -> true
-pales, pale -> true
-pale, bale -> true
-pale, bae -> false */
-exports.isOneAway = function (s1, s2) {
-  let notCom = [];
-  s1.split("").filter((el) => {
-    if (!s2.split("").includes(el)) {
-      notCom.push(el);
-    }
-  });
-
-  if (notCom.length <= 1) return true;
-  return false;
-};
-
 // COMMON ELEMENTS SUM -> type insensitive
 exports.commonElements = function (a1, a2) {
   let comElements = [];
@@ -736,26 +494,6 @@ exports.wordHasSubstring = function (string, substring) {
   });
 
   return words;
-};
-
-/* SORTED MATRIX SEARCH
-Given an M x N matrix in which each row and each column is sorted in ascending order,
-write a method to find an element.
-If the element is found, prints its position and returns true, otherwise prints
-"element not found" and returns false */
-exports.findElement = (matrix, el) => {
-  for (
-    let row = 0, col = matrix.length - 1;
-    row < matrix.length && col >= 0;
-
-  ) {
-    if (matrix[row][col] === el) return [[row, col], true];
-    if (matrix[row][col] < el) row++;
-    if (matrix[row][col] > el) col--;
-  }
-  return ["element not found", false];
-
-  //return -1;
 };
 
 // WORD WEIGHT
@@ -859,91 +597,6 @@ exports.pigLatinConverter = function (str) {
   else return str.substring(end) + str.substring(0, end) + "ay";
 };
 
-// ------------------------------------------------------------------------------------ //
-/* STRING COMPRESSION: Implement a method to perform basic sing compression using the
-counts of repeated characters. For example, the sing aabcccccaaa would become a2blc5a3.
-If the "compressed" sing would not become smaller than the original sing, your method
-should return the original sing.
-You can assume the string has only uppercase and lowercase letters (a - z). */
-exports.strCompression = (s) => {
-  s = s.toLowerCase().replace(/[^A-Za-z]/g, "");
-  let [compstr, count] = ["", 1];
-
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] === s[i + 1]) {
-      count++;
-    } else {
-      compstr = compstr + s[i] + count;
-      count = 1;
-    }
-  }
-  if (compstr.length < s.length) return compstr;
-  return s;
-};
-
-// /* SORTED SEARCH, NO SIZE: You are given an array-like data structure Listy which lacks a
-// size method. It does, however, have an elementAt (i) method that returns the element at
-// index i in 0(1) time. If i is beyond the bounds of the data structure, it returns -1.
-// (For this reason, the data structure only supports positive integers.) Given a Listy which
-// contains sorted, positive integers, find the index at which an element x occurs.
-// If x occurs multiple times, you may return any index. */
-
-// /* MISSING INT: Given an input file with four billion non-negative integers, provide an
-// algorithm to generate an integer that is not contained in the file. Assume you have 1 GB
-// of memory available for this task.
-// FOLLOW UP:
-// What if you have only 1O MB of memory? Assume that all the values are distinct and we now
-// have no more than one billion non-negative integers. */
-
-// GROUP ANAGRAMS -> SORT AN ARRAY OF STRINGS SO THAT ALL THE ANAGRAMS ARE NEXT TO EACH OTHER
-exports.groupAnagrams = function (nums) {
-  let obj = [];
-  nums.forEach((el) => {
-    let chars = el.split("").sort();
-    //
-    if (obj[chars]) {
-      return obj[chars].push(el);
-    } else return (obj[chars] = [el]);
-  });
-
-  obj = Object.values(obj);
-
-  return obj;
-
-  // let anagrams = []; // for sorting anagrams
-  // obj.filter((item) => {
-  //   anagrams.push(item.sort());
-  // });
-
-  // return anagrams.sort();
-};
-
-/* ALTERNATING SEQUENCE -> Peaks and Valleys
-In an array of integers, a "peak" is an element which is greater than or equal to the
-adjacent integers and a "valley" is an element which is less than or equal to the adjacent
-integers.
-For example, in the array {5, 8, 6, 2, 3, 4, 6}, {8, 6} are peaks and {5, 2} are valleys.
-Given an array of integers, sort the array into an alternating sequence of peaks and valleys.
-EXAMPLE Input: {5, 3, 1, 2, 3} Output: {5, 1, 3, 2, 3} */
-exports.peaksValleys = function (arr) {
-  if (arr.length === 0) return -1;
-  // sort the array
-  arr.sort(function (a, b) {
-    return a - b;
-  });
-
-  let new_arr = [];
-  let [start, stop] = [0, arr.length - 1];
-
-  while (start < stop) {
-    new_arr.push(arr[stop--], arr[start++]);
-  }
-
-  // If array length is odd then print the last middle element.
-  if (arr.length % 2 === 0) return new_arr;
-  if (arr.length % 2 !== 0) return new_arr.concat(arr[start]);
-};
-
 // // COUNT VOWELS AND CONSONANTS
 // var countVowelsConsonants = function (string) {
 //   let vowels = [];
@@ -970,27 +623,6 @@ exports.peaksValleys = function (arr) {
 // ); // { vowelCount: 11, consonantCount: 24 }
 
 // // WORDS WITH MORE THAN ONE VOWEL
-// var countVowels = function (string) {
-//   let vowelWords = [];
-//   let consonantWords = [];
-
-//   string = string.replaceAll(" ", ",").split(",");
-//   string.filter((el) => {
-//     if (
-//       el.includes("a") ||
-//       el.includes("e") ||
-//       el.includes("i") ||
-//       el.includes("o") ||
-//       el.includes("u")
-//     )
-//       vowelWords.push(el);
-//     else consonantWords.push(el);
-//   });
-
-//   return consonantWords;
-// };
-// // invoke the function
-// console.log(countVowels("The quick pqzx brown fox jumps over the lazy dog")); // pqzx
 
 // ------------------------------------------------------------------------------------ //
 // RETURN AN ARRAY OF EVEN SQUARE IN THE RANGE
@@ -1027,20 +659,6 @@ exports.fizzBuzz = function (num) {
   return num;
 };
 
-// IS ADDITIVE SEQUENCE / FIBONACCI SERIES
-exports.isFibonacciSeries = function (arr) {
-  // sort the array and
-  // check if every element is equal to the sum of the previous 2 elements
-  arr.sort(function (e1, e2) {
-    return e1 - e2;
-  });
-
-  for (i = 2; i < arr.length; i++) {
-    if (arr[i - 1] + arr[i - 2] != arr[i]) return false;
-  }
-  return true;
-};
-
 // IS PRIME NUMBER
 exports.isPrimeNumber = function (num) {
   if (num < 2) return false;
@@ -1049,3 +667,478 @@ exports.isPrimeNumber = function (num) {
   }
   return true;
 };
+
+//........................................................................................
+/*
+ARRAYS (typeof el === "string" || type of el === "number")
+ -> sorting elements (ascend & descend)
+ -> reversing elements
+ -> searching element (e.g find index or indices of searched element, find duplicates)
+ -> counting element (based on condition)
+ -> return object representing character count
+ -> RegExp
+ -> swap character
+*/
+
+// RETURN AN ARRAY OF EVEN SQUARE IN THE RANGE
+var even_squares = function (start, end) {
+  let evensq = [];
+
+  for (start; start <= end; start++) {
+    if (start % 2 === 0) evensq.push(start * start);
+  }
+  return evensq;
+};
+// invoke the function
+console.log(even_squares(0, 10)); // [0, 4, 16, 36, 64, 100]
+
+// COUNT EVEN ELEMENTS IN THE RANGE
+var even_elements = function (start, end) {
+  let counteven = 0;
+
+  for (start; start <= end; start++) {
+    if (start % 2 === 0) counteven++;
+  }
+  return counteven;
+};
+// invoke the function
+console.log(even_elements(0, 10)); // 6
+
+// OBJECT REPRESENTING CHARACTER COUNT OF A STRING
+var characterCount = function (s) {
+  let obj = {};
+  s.toLowerCase()
+    .replace(/[^A-Za-z]/g, "")
+    .split("")
+
+    // // FOR WORD COUNT ...
+    // .replaceAll(" ", ",")
+    // .split(",")
+
+    .forEach((el) => {
+      if (obj[el]) {
+        obj[el]++;
+        return;
+      }
+      obj[el] = 1;
+    });
+  //return obj; // {m: 1, w: 1, a: 2, n: 1, i: 1, k: 1}
+
+  //return Math.max(...Object.values(obj)); // count most frequent character -> 2
+
+  // CHECK IF IS DUPLICATE ...
+  if (Math.max(...Object.values(obj)) > 1) return [true, "is duplicate"];
+  return [false, "not duplicate"];
+
+  // return Object.keys(obj)
+  //   .filter((x) => {
+  //     return obj[x] === Math.max(...Object.values(obj));
+  //   })
+  //   .join(""); // most frequent character -> a
+};
+// invoke the function
+console.log(characterCount("mwanika")); // a
+
+// UNIQUE OBJECT ARRAY
+// Creates an array of objects with unique property values (name)
+var uniqueObjectArray = function (arr) {
+  let q = [];
+  arr.forEach((item) => q.push([item.name, item]));
+  return [...new Map(q).values()];
+};
+// invoke the function
+var employees = [
+  { name: "John", salary: 90000, hireDate: "July 1, 2010" },
+  { name: "David", salary: 75000, hireDate: "August 15, 2009" },
+  { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
+  { name: "John", salary: 90000, hireDate: "July 1, 2010" },
+  { name: "David", salary: 75000, hireDate: "August 15, 2009" },
+  { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
+];
+console.log(uniqueObjectArray(employees));
+
+// TRAVERSE A STRING (return consonants)
+var traverseString = function (s) {
+  let consonants = "";
+  for (let i = 0; i < s.length; i++) {
+    if (!"aeiou".includes(s[i])) consonants = consonants + s[i];
+  }
+  return consonants;
+};
+// invoke the function
+console.log(traverseString("Mwanika")); // Mwnk
+console.log(traverseString("The quick brown fox jumps over the lazy dog")); // Th qck brwn fx jmps vr th lzy dg
+
+// TRAVERSE A STRING (return consonants)
+var traverseString2 = function (s) {
+  let consonants = [];
+  for (let i = 0; i < s.length; i++) {
+    if (!"aeiou".includes(s[i])) consonants.push(s[i]);
+  }
+  return consonants.join("");
+};
+// invoke the function
+console.log(traverseString2("Mwanika")); // Mwnk
+console.log(traverseString2("The quick brown fox jumps over the lazy dog")); // Th qck brwn fx jmps vr th lzy dg
+
+// TRAVERSE AN ARRAY OF STRINGS
+var traverseArray = function (a) {
+  let characters = [];
+  a.forEach((el) => {
+    for (let i = 0; i < el.length; i++) {
+      characters.push(el[i]);
+    }
+  });
+  return characters;
+};
+// invoke the function
+console.log(traverseArray(["Mwanika", "Stephen", "Crispin"]));
+
+// same as:
+var a = ["Mwanika", "Stephen", "Crispin"];
+console.log(
+  String(a)
+    .replace(/[^A-Za-z]/g, "")
+    .split("")
+);
+
+// REVERSE STRING -> method1
+var reverseString = function (str) {
+  var reversed_string = "";
+  for (var i = str.length - 1; i > -1; i--) {
+    reversed_string = reversed_string + str[i];
+  }
+  return reversed_string;
+};
+// invoke the function
+console.log(reverseString("Mwanika")); // akinawM
+console.log(reverseString("JavaScript is awesome")); // emosewa si tpircSavaJ
+
+// REVERSE STRING -> method2
+var reverseString2 = function (str) {
+  var reversed_string = [];
+  str.split("").forEach((el) => {
+    reversed_string.unshift(el);
+  });
+  return reversed_string.join("");
+};
+// invoke the function
+console.log(reverseString2("Mwanika")); // akinawM
+console.log(reverseString2("JavaScript is awesome")); // emosewa si tpircSavaJ
+
+// //.........................................................
+// function hasThreeVowels(value) {
+//   const vowels = 'aeiou';
+//   return [...value].filter(e => vowels.indexOf(e.toLowerCase()) > -1)//.length >= 3;
+// }
+// // invoke the function
+// console.log( hasThreeVowels("The quick brown fox jumps over the lazy dog")); //
+// //........
+// var mostVowels = function(words) {
+//   var wordToReturn;
+//   var highestVowelCount = -1;
+
+//   for(var i = 0; i < words.length; i++) {
+//     var vowelCount = words[i].match(/[aeiouAEIOU]/g).length;
+//     if(vowelCount > highestVowelCount) {
+//       highestVowelCount = vowelCount;
+//       wordToReturn = words[i];
+//     }
+//   }
+//   return wordToReturn;
+// }
+// // invoke the function
+// console.log( mostVowels(["meow", "aeiou", "FOUR"])); //
+
+// RETURN AN ARRAY OF STRINGS WITH PREFIX AND SUFFIX
+var prefix_suffix = function (prefix, suffix) {
+  let strings = [];
+
+  prefix.split("").forEach((item) => {
+    strings.push(item + suffix);
+  });
+
+  return strings;
+};
+// invoke the function
+console.log(prefix_suffix("JKLMNOPQ", "ack"));
+
+// LONGEST PREFIX
+var longestPrefix = function (a) {
+  let characters = [];
+  let lens = [];
+  let minlens;
+  let shortests;
+  //
+  a.filter((el) => {
+    lens.push(el.length);
+    minlens = Math.min(...lens);
+    // Get string with minimum length
+    if (el.length === minlens) shortests = el;
+  });
+  //
+  a.every((el) => {
+    for (let i = 0, j = 0; i < el.length, j < shortests.length; i++, j++) {
+      if (el[i] === shortests[j]) characters.push(el[i]);
+    }
+  });
+  return characters;
+};
+// invoke the function
+console.log(longestPrefix(["flower", "flow", "flight"])); // ["f", "l"] -> 2
+console.log(longestPrefix(["flower", "floor", "flood"])); // ["f", "l", "o"] -> 3
+console.log(longestPrefix(["Mwanika", "Stephen", "Crispin"])); // [] -> 0
+console.log(longestPrefix([])); // [] -> 0
+
+/* CHECK PALINDROME
+Given two strings, write a method to decide if one is a palindrome
+of the other. */
+var isPalindrome = function (s) {
+  s = s.toLowerCase().replace(/[^A-Za-z0-9]/g, "");
+  // reverse the input and return the result of the comparison
+  return s === s.split("").reverse().join("");
+};
+// invoke the function
+console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
+console.log(isPalindrome("race a car")); // false
+console.log(isPalindrome("")); // true
+
+// PALINDROME NUMBER
+var isPalindrome = function (x) {
+  x = String(x);
+  // reverse the input string and return the result of the comparison
+  return x === x.split("").reverse().join("");
+};
+// invoke the function
+console.log(isPalindrome(121)); // true
+console.log(isPalindrome(-121)); // false
+console.log(isPalindrome(10)); // false
+
+// ANOTHER VERSION OF STRING COMPRESSION -> NOT RELATED TO ABOVE
+var strCompressions = (s) => {
+  let obj = {};
+  s.toLowerCase()
+    .replace(/[^A-Za-z0-9]/g, "")
+    .split("")
+    .forEach((el) => {
+      if (obj[el]) {
+        obj[el]++;
+        return;
+      }
+      obj[el] = 1;
+    });
+
+  return Object.entries(obj).flat().join("");
+};
+// invoke the function
+console.log(strCompressions("aabCccccaaa")); // a5b1c5
+console.log(strCompressions("wwwaabbbb")); // w3a2b4
+console.log(strCompressions("kkkkj")); // k4j1
+console.log(strCompressions("aab")); // a2b1
+
+// COUNT SUBARRAYS EQUAL TO SUM
+var subarraySum = function (nums, k) {
+  let count = 0;
+  for (let i = 0; i < nums.length; i++) {
+    let sum = 0;
+    for (let j = i; j < nums.length; j++) {
+      sum = sum + nums[j];
+      if (sum === k) count++;
+    }
+  }
+  return count;
+};
+// invoke the function
+console.log(subarraySum([2, 2, -4, 1, 1, 2], -3)); // 1
+console.log(subarraySum([2, 2, 2], 4)); // 2
+console.log(subarraySum([3, 2, 1], 3)); // 2
+
+// PAIRING
+var pairing = function (nums) {
+  let obj = {};
+  nums.forEach((el) => {
+    if (obj[el]) {
+      obj[el]++;
+      return;
+    }
+    obj[el] = 1;
+  });
+
+  //
+  let pairs = [];
+  obj = Object.values(obj); // [2, 4]
+  obj.filter((el) => {
+    if (el % 2 === 0) pairs.push(el / 2); // if no remainder
+    else pairs.push((el - 1) / 2);
+  });
+
+  // helper function to sum pairs array
+  function sum(e1, e2) {
+    return +e1 + +e2;
+  }
+  // total pairs
+  if (pairs.reduce(sum) === 0) return "none";
+  else return pairs.reduce(sum);
+};
+// invoke the function
+console.log(pairing([5, 8, 5, 8, 8, 8])); // 3 -> pairs/boxes
+console.log(pairing([1, 2, 3, 4])); // 0 -> none
+
+// BALANCED DIGIT
+var balancedDigit = function (nums, target) {
+  // helper function to sum nums array
+  function sum(e1, e2) {
+    return +e1 + +e2;
+  }
+  // compute missing value
+  let missing;
+  missing = target - nums.reduce(sum);
+  return missing;
+};
+// invoke the function
+console.log(balancedDigit([3, 7, 1, 8, 1, 3], 25)); // 2
+console.log(balancedDigit([1, 2, 3, 4], 11)); // 1
+
+// ------------------------------------------------------------------------------------ //
+// PERMUTATIONS -> ANAGRAMS ...................
+var generatePermutation = function (arr) {
+  let resultArr = [];
+  if (arr.length === 0) return resultArr;
+  if (arr.length === 1) resultArr.push(arr);
+
+  for (let i = 0; i < arr.length; i++) {
+    const currentElement = arr[i];
+
+    const otherElements = arr.slice(0, i).concat(arr.slice(i + 1));
+    const swappedPermutation = generatePermutation(otherElements);
+
+    for (let j = 0; j < swappedPermutation.length; j++) {
+      const finalSwappedPermutation = [currentElement].concat(
+        swappedPermutation[j]
+      );
+
+      resultArr.push(finalSwappedPermutation.join("")); // for strings
+      // resultArr.push(finalSwappedPermutation); // for arrays
+    }
+  }
+
+  return resultArr;
+};
+// invoke the function
+console.log(generatePermutation("aabc"));
+console.log(generatePermutation(["a", "a", "b", "c"]));
+console.log(generatePermutation(["S", "t", "e", "p", "h", "e", "n"]));
+console.log(generatePermutation("123"));
+console.log(generatePermutation(["1", "2", "3"]));
+console.log(generatePermutation([1, 2, 3]));
+
+// LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS
+var lengthOfLongestSubstring = function (s) {
+  // initialize variables
+  let i = 0;
+  let j = 0;
+  let longestSub = 0;
+  let uniquechars = [];
+
+  while (i < s.length) {
+    // The char is not found in the array
+    if (!uniquechars.includes(s[i])) {
+      uniquechars.push(s[i]);
+      longestSub = Math.max(longestSub, uniquechars.length);
+      i++;
+    } else {
+      // The char is found in the array
+      uniquechars.shift(s[j]);
+      j++;
+    }
+  }
+  return longestSub;
+};
+// invoke the function
+console.log(lengthOfLongestSubstring("")); // "" -> 0
+console.log(lengthOfLongestSubstring("dvdf")); // vdf -> 3
+console.log(lengthOfLongestSubstring("abbbcabcdefef")); // abcdef -> 6
+console.log(lengthOfLongestSubstring("pwwkew")); // wke, kew -> 3
+
+// SWAP UPPERCASE AND LOWERCASE LETTERS DURING TRAVERSING -> method1
+var swapCase = function (str) {
+  let new_array = "";
+
+  for (var i = 0; i < str.length; i++) {
+    if (str[i].includes(str.toLowerCase()[i]))
+      new_array = new_array + str[i].toUpperCase();
+    else new_array = new_array + str[i].toLowerCase();
+  }
+
+  return new_array;
+};
+// invoke the function
+console.log(swapCase("heLLo")); // HEllO
+
+// SWAP UPPERCASE AND LOWERCASE LETTERS DURING TRAVERSING -> method2
+var swapCase2 = function (str) {
+  let new_array = [];
+
+  for (var i = 0; i < str.length; i++) {
+    if (str[i].includes(str.toLowerCase()[i]))
+      new_array.push(str[i].toUpperCase());
+    else new_array.push(str[i].toLowerCase());
+  }
+
+  return new_array.join("");
+};
+
+// SWITCH REVERSER
+var switchReverser = function (a) {
+  let alps = [];
+  let nums = [];
+
+  a.forEach((el) => {
+    if (typeof el === "string") alps.push(el.toUpperCase());
+    else nums.push(el);
+  });
+
+  if (alps.length === a.length) return alps;
+  if (nums.length === a.length) return nums.reverse();
+  return a;
+};
+
+// PIG LATIN CONVERTER
+var pigLatinConverter = function (str) {
+  str = str.toLowerCase();
+  let start = str.match(/[aeiou]/gi);
+  let end = str.indexOf(start[0]);
+
+  if ("aeiou".includes(str[0])) return str + "way";
+  else return str.substring(end) + str.substring(0, end) + "ay";
+};
+// invoke the function
+console.log(pigLatinConverter("Andela")); // andelaway
+console.log(pigLatinConverter("WILL")); // illway
+
+// RETURN AN ARRAY OF FIRST AND LAST CHARACTER OF EACH WORD
+var firstLastCharacter = function (words_array) {
+  let res = [];
+  words_array.filter((item) => {
+    res.push(item[0] + item[item.length - 1]);
+  });
+
+  return res;
+};
+
+// // LONGEST COMMON SUBSEQUENCE
+// var solution = function (s1, s2) {
+//   if (s1.length === 0 || s2.length === 0) return "";
+//   if (s1.slice(-1) === s2.slice(-1))
+//     return solution(s1.slice(0, -1), s2.slice(0, -1)) + s1.slice(-1);
+
+//   let subseq1 = solution(s1.slice(0, -1), s2);
+//   let subseq2 = solution(s1, s2.slice(0, -1));
+//   if (subseq1.length > subseq2.length) return subseq1;
+//   else return subseq2;
+// };
+// // invoke the function
+// console.log(solution("ABCD", "ACBAD")); // ACD
+// console.log(solution("ABCD", "ABCAD")); // ABCD
+// console.log(solution("RAVEN", "HAVOC")); // AV
+// console.log(solution("ABBCC", "DBBCC")); // BBCC

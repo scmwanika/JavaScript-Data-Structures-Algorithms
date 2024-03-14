@@ -1,20 +1,40 @@
-// ARRAYS AND STRINGS
-
 /* Is Unique: 
 Implement an algorithm to determine if a string has all unique characters. What if you
 cannot use additional data structures? */
 
+function isUnique(str) {
+  return new Set(str).size === str.length;
+}
+// invoke the function
+console.log(isUnique("mwanika")); // false
+
 /* Check Permutation: 
 Given two strings, write a method to decide if one is a permutation of the other. */
 
+var isPermutation = function (s1, s2) {
+  let regexp = /[^A-Za-z0-9]/gi;
+  // sort the input and return the result of the comparison
+  return (
+    s1.toLowerCase().replace(regexp, "").split("").sort().join("") ===
+    s2.toLowerCase().replace(regexp, "").split("").sort().join("")
+  );
+};
+// invoke the function
+console.log(isPermutation("amadm", "madam")); // true
+
 /* URLify: 
 Write a method to replace all spaces in a string with '%20'. You may assume that the 
-string has sufficient space at the end to hold the additional characters, and that you are 
-given the "true" length of the string. (Note: If implementing in Java, please use a 
-character array so that you can perform this operation in place.)
-EXAMPLE
-Input: "Mr John Smith ", 13
+string has sufficient space at the end to hold the additional characters, and that you 
+are given the "true" length of the string. 
+EXAMPLE 
+Input: "Mr John Smith ", 13 
 Output: "Mr%20John%20Smith" */
+
+function URLify(string) {
+  return string.trim().replace(/\s/g, "%20");
+}
+// invoke the function
+console.log(URLify("Mr John Smith ", 13)); // "Mr%20John%20Smith"
 
 /* Palindrome Permutation: 
 Given a string, write a function to check if it is a permutation of a palindrome.
@@ -24,6 +44,26 @@ dictionary words.
 EXAMPLE
 Input: Tact Coa
 Output: True (permutations: "taco cat", "atco eta", etc.) */
+
+var isPalindromePermutation = function (s) {
+  let regexp = /[^A-Za-z0-9]/gi;
+  let res = new Set();
+  return (
+    s
+      .toLowerCase()
+      .replace(regexp, "")
+      .split("")
+      .reduce((set, item) => {
+        (set.has(item) && set.delete(item)) || set.add(item);
+        return set;
+      }, res).size <= 1
+  );
+};
+// invoke the function
+console.log(isPalindromePermutation("refer")); // true
+console.log(isPalindromePermutation("rrfee")); // true
+console.log(isPalindromePermutation("taco cat")); // true
+console.log(isPalindromePermutation("atco cta")); // true
 
 /* One Away: 
 There are three types of edits that can be performed on strings: insert a character,
@@ -35,24 +75,108 @@ pales, pale -> true
 pale, bale -> true
 pale, bake -> false */
 
+var isOneAway = function (s1, s2) {
+  let notCom = [];
+  s1.split("").filter((el) => {
+    if (!s2.split("").includes(el)) {
+      notCom.push(el);
+    }
+  });
+
+  if (notCom.length <= 1) return true;
+  return false;
+};
+
 /* String Compression: 
 Implement a method to perform basic string compression using the counts of repeated 
 characters. For example, the string aabcccccaaa would become a2blc5a3. If the "compressed" 
 string would not become smaller than the original string, your method should return the 
 original string. You can assume the string has only uppercase and lowercase letters */
 
+var strCompression = (s) => {
+  s = s.toLowerCase().replace(/[^A-Za-z]/g, "");
+  let [compstr, count] = ["", 1];
+
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] === s[i + 1]) {
+      count++;
+    } else {
+      compstr = compstr + s[i] + count;
+      count = 1;
+    }
+  }
+  if (compstr.length < s.length) return compstr;
+  return s;
+};
+// invoke the function
+console.log(strCompression("aabCccccaaa")); // a2b1c5a3
+console.log(strCompression("wwwaabbbb")); // w3a2b4
+console.log(strCompression("kkkkj")); // k4j1
+console.log(strCompression("aab")); // aab
+
 /* Rotate Matrix: 
 Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, 
 write a method to rotate the image by 90 degrees. Can you do this in place? */
+
+// ROTATE MATRIX RIGHT (CLOCKWISE)
+var rotateMatrixRight = function (matrix) {
+  let n = matrix.length;
+
+  for (let row = 0; row < n; row++) {
+    for (let col = row; col < n - 1 - row; col++) {
+      let last = n - 1 - row;
+      let offset = col - row;
+
+      // implement the swap index by index:
+      let top = matrix[row][col];
+
+      // left edge -> top edge
+      matrix[row][col] = matrix[last - offset][row];
+
+      // bottom edge -> left edge
+      matrix[last - offset][row] = matrix[last][last - offset];
+
+      // right edge -> bottom edge
+      matrix[last][last - offset] = matrix[col][last];
+
+      // top edge -> right edge
+      matrix[col][last] = top;
+    }
+  }
+
+  return matrix;
+};
+// invoke the function
+var matrix = [
+  [5, 1, 9, 11],
+  [2, 4, 8, 10],
+  [13, 3, 6, 7],
+  [15, 14, 12, 16],
+];
+console.log(rotateMatrixRight(matrix));
+/*
+[
+  [15, 13, 2, 5],
+  [14, 3, 4, 1],
+  [12, 6, 8, 9],
+  [16, 7, 10, 11],
+];
+*/
 
 /* Zero Matrix: 
 Write an algorithm such that if an element in an MxN matrix is 0, its entire row and 
 column are set to 0. */
 
 /* String Rotation:
-Assumeyou have a method isSubstring which checks if one word is a substring of another. 
+Assume you have a method isSubstring which checks if one word is a substring of another. 
 Given two strings, sl and s2, write code to check if s2 is a rotation of sl using only one
 call to isSubstring (e.g "waterbottle" is a rotation of"erbottlewat"). */
+
+var isRotation = function (supstr, substr) {
+  supstr = supstr.toLowerCase().split("").sort().join("");
+  substr = substr.toLowerCase().split("").sort().join("");
+  return supstr === substr;
+};
 
 // SORTING AND SEARCHING
 
@@ -88,6 +212,10 @@ var groupAnagrams = function (nums) {
 // invoke the function
 console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
 // [['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]
+console.log(groupAnagrams(["321", "213", "897", "456", "987", "798"]));
+// [['321', '213'], ['897', '987', '798'], ['456']]
+console.log(groupAnagrams([""])); // [['']]
+console.log(groupAnagrams(["a"])); // [['a']]
 
 /* Search in Rotated Array: 
 Given a sorted array of n integers that has been rotated an unknown number of times, write 
@@ -525,6 +653,17 @@ console.log(
   sortAlpsNums(["ant", "33", "Bug", "4", "cat", "1111", "Dog", "222"])
 ); // ['1111','222','33','4','ant','Bug','cat','Dog']
 
+// SORT DESCENDING
+var solution = function (a) {
+  a.sort(function (e1, e2) {
+    // numerical sort
+    return e2 - e1;
+  });
+  return a;
+};
+// invoke the function
+console.log(solution([4, 2, 6, 5, 9])); // [9, 6, 5, 4, 2]
+
 // MISSING ELEMENTS
 var missingElements = function (a1, a2) {
   let missing = [];
@@ -573,59 +712,6 @@ var rotateRight = function (nums, k) {
 // invoke the function
 console.log(rotateRight([1, 2, 3, 4, 5], 2)); // [4,5,1,2,3]
 
-// ROTATE MATRIX RIGHT (CLOCKWISE)
-var rotateMatrixRight = function (matrix) {
-  let n = matrix.length;
-
-  for (let row = 0; row < n; row++) {
-    for (let col = row; col < n - 1 - row; col++) {
-      let last = n - 1 - row;
-      let offset = col - row;
-
-      // implement the swap index by index:
-      let top = matrix[row][col];
-
-      // left edge -> top edge
-      matrix[row][col] = matrix[last - offset][row];
-
-      // bottom edge -> left edge
-      matrix[last - offset][row] = matrix[last][last - offset];
-
-      // right edge -> bottom edge
-      matrix[last][last - offset] = matrix[col][last];
-
-      // top edge -> right edge
-      matrix[col][last] = top;
-    }
-  }
-
-  return matrix;
-};
-// invoke the function
-var matrix = [
-  [5, 1, 9, 11],
-  [2, 4, 8, 10],
-  [13, 3, 6, 7],
-  [15, 14, 12, 16],
-];
-console.log(rotateMatrixRight(matrix));
-/*
-[
-  [15, 13, 2, 5],
-  [14, 3, 4, 1],
-  [12, 6, 8, 9],
-  [16, 7, 10, 11],
-];
-*/
-
-// SET MATRIX ZEROES
-var setZeroes = function (matrix) {};
-// invoke the function
-
-// SPIRAL MATRIX
-var spiralOrder = function (matrix) {};
-// invoke the function
-
 // MAXIMUM SUM SUBARRAY
 var maxSum = function (nums) {
   let presum = 0;
@@ -668,11 +754,6 @@ console.log(maxSum([5, 4, -1, 7, 8])); // 23
 // console.log(maxProduct([-2])); // -2
 // console.log(maxProduct([-2, -1, -3])); // 3
 
-// COUNT PERMUTATIONS OF A STRING
-
-// let ob = { name: "Mwanika", age: 42, gender: "M" };
-// console.log(ob["age"]); // same as ob.age -> 42
-
 // VALID ANAGRAM | PERMUTATION
 var isAnagram = function (s, t) {
   return s.split("").sort().join("") === t.split("").sort().join("");
@@ -698,19 +779,159 @@ var isAdditiveSeries = function (arr) {
 console.log(isAdditiveSeries([1, 1, 2, 3, 5, 8])); // true
 console.log(isAdditiveSeries([8, 3, 5, 13])); // true
 
-// // ADDITIVE NUMBER
-// var isAdditiveNumber = function (num) {
-//   // sort the array and
-//   // check if every element is equal to the sum of the previous 2 elements
-//   num = num.split("").sort(function (e1, e2) {
-//     return e1 - e2;
-//   });
+// SUBSTRINGS, SUBARRAYS, SUBSEQUENCES, SUBSETS
 
-//   for (i = 2; i < num.length; i++) {
-//     if (Number(num[i - 1]) + Number(num[i - 2]) != Number(num[i])) return false;
-//   }
-//   return true;
-// };
-// // invoke the function
-// console.log(isAdditiveNumber("112358")); // true
-// console.log(isAdditiveNumber("199100199")); // true
+/* SUBSTRINGS AND SUBARRAYS
+-> a substring is a string that occurs in another string.
+-> a subarray is a slice from a contiguous array.
+both substrings and subarrays occupy consective positions and inherently maintain
+the order of characters and elements respectively. */
+exports.subStringsArrays = function (str) {
+  var result = [];
+  for (i = 0; i < str.length; i++) {
+    for (j = i + 1; j < str.length + 1; j++) {
+      result.push(str.slice(i, j));
+    }
+  }
+  return result;
+};
+
+/* SUBSEQUENCES AND SUBSETS
+-> a subsequence of an array is a new array that is formed from the original array
+by deleting some (or none) of the elements without disturbing the relative
+positions and order of the remaining elements.
+a subsequence may be continuous or non-continuous: for example;
+[1,3,5] is a non-continuous subsequence of [1,2,3,4,5] while
+[1,2,3] is a continuous subsequence of [1,2,3,4,5]
+
+[1,3,2] is not a subsequence of [1,2,3,4,5] because the array is non-continuous
+and does not maintain relative position and order of elements. however,
+[1,3,2] is a subset of [1,2,3,4,5]. a subset may not maintain relative position
+and order of elements.
+
+-> a subset is any possible combination of the original set. for example;
+[1,3,2] is a subset of [1,2,3,4,5]. a subset may not maintain relative position
+and order of elements. */
+exports.subSequencesSubsets = function (arr) {
+  let result = [];
+  var subs = (subsets, value) =>
+    subsets.concat(subsets.map((set) => [...set, value]));
+  return arr.reduce(subs, [result]);
+};
+
+/* ------------------------------------------------------------------------------------ */
+// IS SUBSTRING / COMBINATION OF ANOTHER STRING
+exports.isSubString = function (str, substr) {
+  let res;
+  if (str.toLowerCase().includes(substr.toLowerCase())) res = "Valid Substring";
+
+  if (res === "Valid Substring") return true;
+  return false;
+};
+
+// IS SUBSEQUENCE OF ANOTHER STRING
+exports.isSubStringSequence = function (str, subseq) {
+  let idx = 0;
+  let arr = str.toLowerCase().split("");
+
+  arr.filter((el) => {
+    if (el.includes(subseq.toLowerCase()[idx])) idx++;
+  });
+
+  if (idx === subseq.length) return true;
+  return false;
+};
+
+// IS SUBSET OF ANOTHER STRING
+exports.isSubSetStr = function (str, subset) {
+  let idx = 0;
+  let arr = str.toLowerCase().split("").sort();
+
+  arr.filter((el) => {
+    if (el.includes(subset.toLowerCase().split("").sort()[idx])) idx++;
+  });
+
+  return idx === subset.length;
+};
+
+/* ------------------------------------------------------------------------------------ */
+// IS SUBARRAY / COMBINATION OF ANOTHER ARRAY
+exports.isSubArray = function (arr, subarr) {
+  subarr = subarr.join("").toString();
+  arr = arr.join("").toString();
+
+  let res;
+  if (arr.toLowerCase().includes(subarr.toLowerCase())) res = "Valid Subarray";
+
+  if (res === "Valid Subarray") return true;
+  return false;
+};
+
+// IS SUBSEQUENCE OF ANOTHER ARRAY
+exports.isSubArraySequence = function (arr, subseq) {
+  subseq = subseq.join("").toString();
+  arr = arr.join("").toString();
+  arr = arr.toLowerCase().split("");
+
+  let idx = 0;
+
+  arr.filter((el) => {
+    if (el.includes(subseq.toLowerCase()[idx])) idx++;
+  });
+
+  if (idx === subseq.length) return true;
+  return false;
+};
+
+// IS SUBSET OF ANOTHER ARRAY
+exports.isSubSetArr = function (arr, subset) {
+  subset = subset.join("").toString();
+  arr = arr.join("").toString();
+  arr = arr.toLowerCase().split("").sort();
+
+  let idx = 0;
+
+  arr.filter((el) => {
+    if (el.includes(subset.toLowerCase().split("").sort()[idx])) idx++;
+  });
+
+  return idx === subset.length;
+};
+
+// SUBSETS 1
+var subsets = function (nums) {
+  let result = [];
+  var subs = (sub_sets, value) =>
+    sub_sets.concat(sub_sets.map((set) => [...set, value]));
+  return nums.reduce(subs, [result]);
+};
+// invoke the function
+console.log(subsets([1, 2, 3])); // [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]
+console.log(subsets([0])); // [[], [0]]
+
+/* SUBSETS 2
+Given an integer array nums that may contain duplicates, return all possible subsets
+(the power set).
+The solution set must not contain duplicate subsets. Return the solution in any order. */
+var subsetsWithDup = function (nums) {
+  let result = [];
+  let uniquesubsets;
+
+  var subs = (sub_sets, value) =>
+    sub_sets.concat(sub_sets.map((set) => [...set, value]));
+  uniquesubsets = nums.sort().reduce(subs, [result]);
+
+  // Transform arrays to strings
+  let stringArray = uniquesubsets.sort().map(JSON.stringify);
+  // Remove duplicates
+  let uniqueStringArray = new Set(stringArray);
+  // Transform back to array of arrays
+  let uniqueArray = Array.from(uniqueStringArray, JSON.parse);
+
+  return uniqueArray;
+};
+// invoke the function
+// console.log(subsetsWithDup([1, 2, 2])); // [[], [1], [2], [1, 2], [2, 2], [1, 2, 2]]
+// console.log(subsetsWithDup([0])); // [[], [0]]
+// console.log(subsetsWithDup([4, 4, 4, 1, 4])); //
+console.log(subsetsWithDup([1, 2, 1])); //
