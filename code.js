@@ -1,322 +1,69 @@
-// TRAVERSE A STRING
-var traverseString = function (s) {
-  let characters = [];
-  for (let i = 0; i < s.length; i++) {
-    characters.push(s[i]);
-  }
-  return characters;
-};
-// invoke the function
-console.log(traverseString("Mwanika"));
+// ARRAYS AND STRINGS
 
-// same as:
-var listCharacters = function (s) {
-  return s.split("");
-};
-// invoke the function
-console.log(listCharacters("Mwanika"));
+/* Is Unique: 
+Implement an algorithm to determine if a string has all unique characters. What if you
+cannot use additional data structures? */
 
-// TRAVERSE AN ARRAY OF STRINGS
-var traverseArray = function (a) {
-  let characters = [];
-  a.forEach((el) => {
-    for (let i = 0; i < el.length; i++) {
-      characters.push(el[i]);
-    }
-  });
-  return characters;
-};
-// invoke the function
-console.log(traverseArray(["Mwanika", "Stephen", "Crispin"]));
+/* Check Permutation: 
+Given two strings, write a method to decide if one is a permutation of the other. */
 
-// // LENGTH OF LAST WORD
-// var lengthOfLastWord = function (s) {
-//   let unfiltered_words = s.replaceAll(" ", ",").split(",");
-//   let filtered_words = [];
-//   let result = [];
+/* URLify: 
+Write a method to replace all spaces in a string with '%20'. You may assume that the 
+string has sufficient space at the end to hold the additional characters, and that you are 
+given the "true" length of the string. (Note: If implementing in Java, please use a 
+character array so that you can perform this operation in place.)
+EXAMPLE
+Input: "Mr John Smith ", 13
+Output: "Mr%20John%20Smith" */
 
-//   unfiltered_words.filter((word) => {
-//     if (word.length > 0) filtered_words.push(word);
-//     result = filtered_words[filtered_words.length - 1];
-//   });
+/* Palindrome Permutation: 
+Given a string, write a function to check if it is a permutation of a palindrome.
+A palindrome is a word or phrase that is the same forwards and backwards. A permutation
+is a rearrangement of letters. The palindrome does not need to be limited to just 
+dictionary words.
+EXAMPLE
+Input: Tact Coa
+Output: True (permutations: "taco cat", "atco eta", etc.) */
 
-//   return result.length;
-// };
-// // invoke the function
-// console.log(lengthOfLastWord("Hello World")); // 5
-// console.log(lengthOfLastWord("   fly me   to   the moon  ")); // 4
-// console.log(lengthOfLastWord("luffy is still joyboy")); // 6
+/* One Away: 
+There are three types of edits that can be performed on strings: insert a character,
+remove a character, or replace a character. Given two strings, write a function to check 
+if they are one edit (or zero edits) away.
+EXAMPLE
+pale, ple -> true
+pales, pale -> true
+pale, bale -> true
+pale, bake -> false */
 
-// RETURN AN ARRAY OF STRINGS WITH PREFIX AND SUFFIX
-var prefix_suffix = function (prefix, suffix) {
-  let strings = [];
+/* String Compression: 
+Implement a method to perform basic string compression using the counts of repeated 
+characters. For example, the string aabcccccaaa would become a2blc5a3. If the "compressed" 
+string would not become smaller than the original string, your method should return the 
+original string. You can assume the string has only uppercase and lowercase letters */
 
-  prefix.split("").forEach((item) => {
-    strings.push(item + suffix);
-  });
+/* Rotate Matrix: 
+Given an image represented by an NxN matrix, where each pixel in the image is 4 bytes, 
+write a method to rotate the image by 90 degrees. Can you do this in place? */
 
-  return strings;
-};
-// invoke the function
-console.log(prefix_suffix("JKLMNOPQ", "ack"));
+/* Zero Matrix: 
+Write an algorithm such that if an element in an MxN matrix is 0, its entire row and 
+column are set to 0. */
 
-// // LONGEST PREFIX
-// var longestPrefix = function (a) {
-//   let characters = [];
-//   let lens = [];
-//   let minlens;
-//   let shortests;
-//   //
-//   a.filter((el) => {
-//     lens.push(el.length);
-//     minlens = Math.min(...lens);
-//     // Get string with minimum length
-//     if (el.length === minlens) shortests = el;
-//   });
-//   //
-//   a.every((el) => {
-//     for (let i = 0, j = 0; i < el.length, j < shortests.length; i++, j++) {
-//       if (el[i] === shortests[j]) characters.push(el[i]);
-//     }
-//   });
-//   return characters;
-// };
-// // invoke the function
-// console.log(longestPrefix(["flower", "floor", "flood"])); // ["f", "l", "o"] -> 3
-// console.log(longestPrefix(["Mwanika", "Stephen", "Crispin"])); // [] -> 0
-// console.log(longestPrefix([])); // [] -> 0
+/* String Rotation:
+Assumeyou have a method isSubstring which checks if one word is a substring of another. 
+Given two strings, sl and s2, write code to check if s2 is a rotation of sl using only one
+call to isSubstring (e.g "waterbottle" is a rotation of"erbottlewat"). */
 
-// LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS
-var lengthOfLongestSubstring = function (s) {
-  // initialize variables
-  let i = 0;
-  let j = 0;
-  let longestSub = 0;
-  let uniquechars = [];
+// SORTING AND SEARCHING
 
-  while (i < s.length) {
-    // The char is not found in the array
-    if (!uniquechars.includes(s[i])) {
-      uniquechars.push(s[i]);
-      longestSub = Math.max(longestSub, uniquechars.length);
-      i++;
-    } else {
-      // The char is found in the array
-      uniquechars.shift(s[j]);
-      j++;
-    }
-  }
-  return longestSub;
-};
-// invoke the function
-console.log(lengthOfLongestSubstring("")); // "" -> 0
-console.log(lengthOfLongestSubstring("dvdf")); // vdf -> 3
-console.log(lengthOfLongestSubstring("abbbcabcdefef")); // abcdef -> 6
-console.log(lengthOfLongestSubstring("pwwkew")); // wke, kew -> 3
+/* Sorted Merge: 
+You are given two sorted arrays, A and B, where A has a large enough buffer at the end to 
+hold B. Write a method to merge B into A in sorted order. */
 
-/* CHECK PALINDROME
-Given two strings, write a method to decide if one is a palindrome 
-of the other. */
-var isPalindrome = function (s) {
-  let regexp = /[^A-Za-z0-9]/gi;
-  s = s.toLowerCase().replace(regexp, "");
-  // reverse the input and return the result of the comparison
-  return s === s.split("").reverse().join("");
-};
-// invoke the function
-console.log(isPalindrome("A man, a plan, a canal: Panama")); // true
-console.log(isPalindrome("race a car")); // false
-console.log(isPalindrome("")); // true
+/* Group Anagrams: 
+Write a method to sort an array of strings so that all the anagrams are next to each other.
+*/
 
-/* CHECK PERMUTATION
-Given two strings, write a method to decide if one is a permutation 
-of the other. */
-var isPermutation = function (s1, s2) {
-  let regexp = /[^A-Za-z0-9]/gi;
-  // sort the input and return the result of the comparison
-  return (
-    s1.toLowerCase().replace(regexp, "").split("").sort().join("") ===
-    s2.toLowerCase().replace(regexp, "").split("").sort().join("")
-  );
-};
-// invoke the function
-console.log(isPermutation("amadm", "madam")); // true
-
-// CHECK IF STRING IS PERMUTATION OF A PALINDROME
-var isPalindromePermutation = function (s) {
-  let regexp = /[^A-Za-z0-9]/gi;
-  let res = new Set();
-  return (
-    s
-      .toLowerCase()
-      .replace(regexp, "")
-      .split("")
-      .reduce((set, item) => {
-        (set.has(item) && set.delete(item)) || set.add(item);
-        return set;
-      }, res).size <= 1
-  );
-};
-// invoke the function
-console.log(isPalindromePermutation("refer")); // true
-console.log(isPalindromePermutation("rrfee")); // true
-console.log(isPalindromePermutation("taco cat")); // true
-console.log(isPalindromePermutation("atco cta")); // true
-
-/* STRING COMPRESSION: Implement a method to perform basic sing compression using the 
-counts of repeated characters. For example, the sing aabcccccaaa would become a2blc5a3. 
-If the "compressed" sing would not become smaller than the original sing, your method 
-should return the original sing. 
-You can assume the string has only uppercase and lowercase letters (a - z). */
-var strCompression = (s) => {
-  let regexp = /[^A-Za-z]/gi;
-  s = s.toLowerCase().replace(regexp, "");
-  let [compstr, count] = ["", 1];
-
-  for (let i = 0; i < s.length; i++) {
-    if (s[i] === s[i + 1]) {
-      count++;
-    } else {
-      compstr = compstr + s[i] + count;
-      count = 1;
-    }
-  }
-  if (compstr.length < s.length) return compstr;
-  return s;
-};
-// invoke the function
-console.log(strCompression("aabCccccaaa")); // a2blc5a3
-console.log(strCompression("wwwaabbbb")); // w3a2b4
-console.log(strCompression("kkkkj")); // k4j1
-console.log(strCompression("aab")); // aab
-
-// ANOTHER VERSION OF STRING COMPRESSION -> NOT RELATED TO ABOVE
-var strCompressions = (s) => {
-  let regexp = /[^A-Za-z0-9]/gi;
-  let obj = {};
-  s.toLowerCase()
-    .replace(regexp, "")
-    .split("")
-    .forEach((el) => {
-      if (obj[el]) {
-        obj[el]++;
-        return;
-      }
-      obj[el] = 1;
-    });
-
-  return Object.entries(obj).flat().join("");
-};
-// invoke the function
-console.log(strCompressions("aabCccccaaa")); // a5b1c5
-console.log(strCompressions("wwwaabbbb")); // w3a2b4
-console.log(strCompressions("kkkkj")); // k4j1
-console.log(strCompressions("aab")); // a2b1
-
-// LONGEST COMMON SUBSEQUENCE
-var solution = function (s1, s2) {
-  if (s1.length === 0 || s2.length === 0) return "";
-  if (s1.slice(-1) === s2.slice(-1))
-    return solution(s1.slice(0, -1), s2.slice(0, -1)) + s1.slice(-1);
-
-  let subseq1 = solution(s1.slice(0, -1), s2);
-  let subseq2 = solution(s1, s2.slice(0, -1));
-  if (subseq1.length > subseq2.length) return subseq1;
-  else return subseq2;
-};
-// invoke the function
-console.log(solution("ABCD", "ACBAD")); // ACD
-console.log(solution("ABCD", "ABCAD")); // ABCD
-console.log(solution("RAVEN", "HAVOC")); // AV
-console.log(solution("ABBCC", "DBBCC")); // BBCC
-
-// LARGEST SUBARRAY SUM
-var largestSubarraySum = function (array) {
-  let presum = 0;
-  let cursum = 0;
-  //let nexsum = 0;
-  let accumulator = [];
-  array.forEach((el) => {
-    cursum = Math.max(presum, cursum + el);
-    //nexsum = Math.max(cursum, nexsum);
-    accumulator.push(cursum);
-  });
-  return Math.max(...accumulator);
-};
-// invoke the function
-console.log(largestSubarraySum([1, 100, 4, 15, 9, 30])); // 159
-console.log(largestSubarraySum([1, 100, 4, 15, 9, 30, -1])); // 159
-console.log(largestSubarraySum([-3, 1, 100, 4, 15, 9, 30])); // 159
-console.log(largestSubarraySum([-3, 1, 100, 4, 15, 9, 30, -1])); // 159
-console.log(largestSubarraySum([2, 1, -3, 4, -1, 2, 1, -5, 4])); // 6
-console.log(largestSubarraySum([-1, -1, -5, -3, -7, -4, -5, -6, -100, -4])); // 0
-console.log(largestSubarraySum([2, -8, 3, -2, 4, -10])); // 5
-
-// COUNT SUBARRAYS EQUAL TO SUM
-var subarraySum = function (nums, k) {
-  let count = 0;
-  for (let i = 0; i < nums.length; i++) {
-    let sum = 0;
-    for (let j = i; j < nums.length; j++) {
-      sum = sum + nums[j];
-      if (sum === k) count++;
-    }
-  }
-  return count;
-};
-// invoke the function
-console.log(subarraySum([2, 2, -4, 1, 1, 2], -3)); // 1
-console.log(subarraySum([2, 2, 2], 4)); // 2
-console.log(subarraySum([3, 2, 1], 3)); // 2
-
-// PAIRING
-var pairing = function (nums) {
-  let obj = {};
-  nums.forEach((el) => {
-    if (obj[el]) {
-      obj[el]++;
-      return;
-    }
-    obj[el] = 1;
-  });
-
-  //
-  let pairs = [];
-  obj = Object.values(obj);
-  obj.filter((el) => {
-    if (el % 2 === 0) pairs.push(el / 2);
-    else pairs.push((el - 1) / 2);
-  });
-
-  // helper function to sum pairs array
-  function sum(e1, e2) {
-    return +e1 + +e2;
-  }
-  // total pairs
-  if (pairs.reduce(sum) === 0) return "none";
-  else return pairs.reduce(sum);
-};
-// invoke the function
-console.log(pairing([5, 8, 5, 8, 8, 8])); // 3 -> pairs/boxes
-console.log(pairing([1, 2, 3, 4])); // 0 -> none
-
-// BALANCED DIGIT
-var balancedDigit = function (nums, target) {
-  // helper function to sum nums array
-  function sum(e1, e2) {
-    return +e1 + +e2;
-  }
-  // compute missing value
-  let missing;
-  missing = target - nums.reduce(sum);
-  return missing;
-};
-// invoke the function
-console.log(balancedDigit([3, 7, 1, 8, 1, 3], 25)); // 2
-console.log(balancedDigit([1, 2, 3, 4], 11)); // 1
-
-// GROUP ANAGRAMS
-// sort an array of strings so that all the anagrams are next to each other
 var groupAnagrams = function (nums) {
   let obj = [];
   nums.forEach((el) => {
@@ -341,124 +88,629 @@ var groupAnagrams = function (nums) {
 // invoke the function
 console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
 // [['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]
-console.log(groupAnagrams(["321", "213", "897", "456", "987", "798"]));
-// [['321', '213'], ['897', '987', '798'], ['456']]
-console.log(groupAnagrams([""])); // [['']]
-console.log(groupAnagrams(["a"])); // [['a']]
-//console.log(groupAnagrams([321, 213, 897, 456, 987, 798]));
 
-// ------------------------------------------------------------------------------------ //
+/* Search in Rotated Array: 
+Given a sorted array of n integers that has been rotated an unknown number of times, write 
+code to find an element in the array. You may assume that the array was originally sorted 
+in increasing order. */
+
+var search = function (nums, target) {
+  for (let [idx, el] of nums.entries()) {
+    if (el === target) {
+      return true;
+    }
+  }
+  // else
+  return false;
+};
+// invoke the function
+console.log(search([2, 5, 6, 0, 0, 1, 2], 0)); // true
+console.log(search([2, 5, 6, 0, 0, 1, 2], 3)); // false
+
+/* Sorted Search, No Size: 
+You are given an array-like data structure Listy which lacks a size method. It does, 
+however, have an elementAt (i) method that returns the element at index i in 0(1) time. 
+If i is beyond the bounds of the data structure, it returns -1. (For this reason, the data
+structure only supports positive integers.) Given a Listy which contains sorted, positive 
+integers, find the index at which an element x occurs. If x occurs multiple times, you may 
+return any index. */
+
+var linearSearch = function (array, element) {
+  let indices = [];
+  for (let [idx, el] of array.entries()) {
+    if (el === element) {
+      indices.push(idx);
+    }
+  }
+  // index / indices of searched element
+  return indices; // if indices.length > 1, then element is Duplicate
+};
+// invoke the function
+console.log(
+  linearSearch(
+    ["ball", "at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""],
+    "ball"
+  )
+); // [0, 5]
+
+/* Sparse Search: 
+Given a sorted array of strings that is interspersed with empty strings, write a method to 
+find the location of a given string.
+EXAMPLE
+Input: ball, ["ball", "at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""]
+Output: [0, 5] */
+
+var linearSearch = function (array, element) {
+  let indices = [];
+  for (let [idx, el] of array.entries()) {
+    if (el === element) {
+      indices.push(idx);
+    }
+  }
+  // index / indices of searched element
+  return indices; // if indices.length > 1, then element is Duplicate
+};
+// invoke the function
+console.log(
+  linearSearch(
+    ["ball", "at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""],
+    "ball"
+  )
+); // [0, 5]
+
+/* Sort Big File: 
+Imagine you have a 20 GB file with one string per line. Explain how you would sort the file.
+*/
+
+/* Missing Int: 
+Given an input file with four billion non-negative integers, provide an algorithm to 
+generate an integer that is not contained in the file. Assume you have 1 GB of memory 
+available for this task.
+FOLLOW UP
+What if you have only 10 MB of memory? Assume that all the values are distinct and we now 
+have no more than one billion non-negative integers. */
+
+var missingNumber = function (nums) {
+  let n = nums.length;
+  let missing = "";
+  let nums2 = [];
+
+  for (let start = 0; start <= n; start++) {
+    nums2.push(start);
+  }
+  // missing elements in nums2
+  nums2.filter((el) => {
+    if (!nums.includes(el)) {
+      missing = missing + el;
+    }
+  });
+  return Number(missing);
+};
+// invoke the function
+console.log(missingNumber([3, 0, 1])); // 2
+console.log(missingNumber([0, 1])); // 2
+console.log(missingNumber([9, 6, 4, 2, 3, 5, 7, 0, 1])); // 8
+
+/* Find Duplicates:
+You have an array with all the numbers from 1 to N, where N is at most 32,000. The array 
+may have duplicate entries and you do not know what N is. With only 4 kilobytes of memory
+available, how would you print all duplicate elements in the array? */
+
+var findDuplicate = function (nums) {
+  // Get object element count
+  let obj = {};
+
+  nums.forEach((el) => {
+    if (obj[el]) return obj[el]++;
+    else obj[el] = 1;
+  });
+
+  // Get entries with value > 1
+  let entrys = [];
+  Object.entries(obj).filter((el) => {
+    if (!el.includes(1)) entrys.push(el);
+  });
+
+  // Get keys from entries and convert to datatype "number"
+  let keys = [];
+  entrys.flat().filter((el) => {
+    if (typeof el === "string") keys.push(Number(el));
+  });
+
+  if (keys.length === 0) return -1;
+  if (keys.length === 1) return keys[0];
+  if (keys.length > 1) return keys;
+};
+console.log(findDuplicate([2, 2, 1])); // 2
+console.log(findDuplicate([-4, 1, 2, 1, 2])); // [1, 2]
+console.log(findDuplicate([1])); // -1
+console.log(findDuplicate([1, 2, 1, 3, 2, 5])); // [1, 2]
+
+/* Sorted Matrix Search: 
+Given an M x N matrix in which each row and each column is sorted in ascending order, 
+write a method to find an element. */
+
+var searchMatrix = (matrix, target) => {
+  for (
+    let row = 0, col = matrix[0].length - 1;
+    row < matrix.length && col >= 0;
+
+  ) {
+    if (matrix[row][col] === target) return true; // return [[row, col], true]
+    if (matrix[row][col] > target) col--;
+    if (matrix[row][col] < target) row++;
+  }
+  return false;
+};
+// invoke the function
+console.log(
+  searchMatrix(
+    [
+      [10, 20, 30, 40],
+      [15, 25, 35, 45],
+      [27, 29, 37, 48],
+      [32, 33, 39, 50],
+    ],
+    28
+  )
+); // false
+console.log(
+  searchMatrix(
+    [
+      [10, 20, 30, 40],
+      [15, 25, 35, 45],
+      [27, 29, 37, 48],
+      [32, 33, 39, 50],
+    ],
+    29
+  )
+); // true
+
+/* Rank from Stream: 
+Imagine you are reading in a stream of integers. Periodically, you wish to be able to look 
+up the rank of a number x (the number of values less than or equal to x). lmplement the 
+data structures and algorithms to support these operations. That is, implement the method 
+track ( int x), which is called when each number is generated, and the method 
+getRankOfNumber(int x), which returns the number of values less than or equal to x 
+(not including x itself).
+EXAMPLE
+Stream (in order of appearance): 5, 1, 4, 4, 5, 9, 7, 13, 3
+getRankOfNumber(l) = 0
+getRankOfNumber(3) = 1
+getRankOfNumber(4) = 3 */
+
+/* Peaks and Valleys:
+In an array of integers, a "peak" is an element which is greater than or equal to the 
+adjacent integers and a "valley" is an element which is less than or equal to the adjacent 
+integers.
+For example, in the array [5, 1, 3, 2, 3], [5, 3, 3] are peaks and [1, 2] are valleys. 
+Given an array of integers, sort the array into an alternating sequence of peaks and valleys.
+EXAMPLE
+Input: [5, 3, 1, 2, 3]
+Output: [5, 1, 3, 2, 3] */
+
+var peaksValleys = function (arr) {
+  if (arr.length === 0) return -1;
+  // sort the array
+  arr.sort(function (a, b) {
+    return a - b;
+  });
+
+  let new_arr = [];
+  let [start, stop] = [0, arr.length - 1];
+
+  while (start < stop) {
+    new_arr.push(arr[stop--], arr[start++]);
+  }
+
+  // If array length is odd then print the last middle element.
+  if (arr.length % 2 === 0) return new_arr;
+  if (arr.length % 2 !== 0) return new_arr.concat(arr[start]);
+};
+// invoke the function
+console.log(peaksValleys([5, 3, 1, 2, 3])); // [5, 1, 3, 2, 3]
+
+/* ------------------------------------------------------------------------------------ */
 
 // REVERSE INTEGER
-var reverse = function (x) {
-  let reversed_arr = [];
-  let result;
-  x = String(x);
-  x = x.split("");
-  x.forEach((el) => {
-    reversed_arr.unshift(el);
-    result = reversed_arr.join("");
+var reverseInteger = function (num) {
+  let arr = String(num).split("");
+  let reverseArr = [];
+
+  arr.forEach((el) => {
+    if ("0123456789".includes(el)) reverseArr.unshift(el);
   });
-  return result;
+  // constraints
+  if (
+    Number(reverseArr.join("")) < (-2) ** 31 ||
+    Number(reverseArr.join("")) > 2 ** 31
+  )
+    return 0;
+  //
+  if (arr[0] === "-") return Number(arr[0] + reverseArr.join(""));
+  else return Number(reverseArr.join(""));
 };
 // invoke the function
-console.log(reverse(-123));
+console.log(reverseInteger(123)); // 321
+console.log(reverseInteger(-123)); // -321
+console.log(reverseInteger(120)); // 21
+console.log(reverseInteger(-1234567890)); // -987654321
 
-// PALINDROME NUMBER
-var isPalindrome = function (x) {
-  x = String(x);
-  // reverse the input string and return the result of the comparison
-  return x === x.split("").reverse().join("");
-};
-// invoke the function
-console.log(isPalindrome(121)); // true
-console.log(isPalindrome(-121)); // false
-console.log(isPalindrome(10)); // false
+// REVERSE WORDS IN A STRING
+var reverseWords = function (s) {
+  let arr = s.replaceAll(" ", ",").split(",");
+  let reverseArr = [];
 
-//...............................................................
-
-// REVERSE STRING -> method1
-var reverseString = function (str) {
-  var reversed_string = [];
-  str.split("").forEach((el) => {
-    reversed_string.unshift(el);
+  arr.filter((word) => {
+    if (word.length > 0) reverseArr.unshift(word);
   });
-  return reversed_string.join("");
+  // constraints
+
+  return reverseArr.join(" ");
 };
 // invoke the function
-console.log(reverseString("Mwanika")); // akinawM
-console.log(reverseString("JavaScript is awesome")); // emosewa si tpircSavaJ
+console.log(reverseWords("the sky is blue")); // blue is sky the
+console.log(reverseWords(" hello world ")); // world hello
+console.log(reverseWords("a good  example")); // example good a
 
-// REVERSE STRING -> method2
-var reverseString = function (str) {
-  var reversed_string = "";
-  for (var i = str.length; i > -1; i--) {
-    reversed_string = reversed_string + str[i];
-  }
-  return reversed_string;
+// LENGTH OF LAST WORD
+var lengthOfLastWord = function (s) {
+  let arr = s.replaceAll(" ", ",").split(",");
+  let filtered_words = [];
+
+  arr.filter((word) => {
+    if (word.length > 0) filtered_words.push(word);
+  });
+
+  return filtered_words[filtered_words.length - 1].length;
 };
 // invoke the function
-console.log(reverseString("Mwanika")); // akinawM
-console.log(reverseString("JavaScript is awesome")); // emosewa si tpircSavaJ
+console.log(lengthOfLastWord("Hello World")); // 5
+console.log(lengthOfLastWord("   fly me   to   the moon  ")); // 4
+console.log(lengthOfLastWord("luffy is still joyboy")); // 6
 
-// REVERSE ARRAY
-var reverseArray = function (arr) {
-  var reversed_array = [];
-  while (arr.length) {
-    reversed_array.push(arr.pop());
-  }
-
-  return reversed_array;
-};
-// invoke the function
-console.log(reverseArray([4, 2, 6, 5, 9])); // [9, 5, 6, 2, 4]
-
-// SORT IN DESCENDING ORDER
-var solution = function (a) {
-  a.sort(function (e1, e2) {
-    // numerical sort
+// COUNT MAXIMUM HEIGHT
+var countMax = function (nums) {
+  //let el = Math.max(...nums); or
+  let el = nums.sort(function (e1, e2) {
+    // descending numerical sort
     return e2 - e1;
+  })[0];
+  let count = 0;
+
+  nums.filter((num) => {
+    if (num === el) count++;
+  });
+
+  return count;
+};
+// invoke the function
+console.log(countMax([4, 4, 1, 3])); // 2
+
+// FIND THE SINGLE LETTER
+var singleLetter = function (s) {
+  let obj = {};
+  s.toLowerCase()
+    .replace(/[^A-Za-z0-9]/g, "")
+    .split("")
+    .forEach((el) => {
+      if (obj[el]) return obj[el]++;
+      else obj[el] = 1;
+    });
+
+  //
+  let res = [];
+  Object.entries(obj).filter((el) => {
+    if (el.includes(1)) res.push(el);
+  });
+
+  return res.flat()[0];
+};
+// invoke the function
+console.log(singleLetter("aabCccccaaa")); // b
+console.log(singleLetter("wwwaabbbb")); //
+console.log(singleLetter("kkkkj")); // j
+console.log(singleLetter("aab")); // b
+
+// FIND THE SINGLE NUMBER
+var singleNumber = function (nums) {
+  // Get object element count
+  let obj = {};
+
+  nums.forEach((el) => {
+    if (obj[el]) return obj[el]++;
+    else obj[el] = 1;
+  });
+
+  // Get entries with value = 1
+  let entrys = [];
+  Object.entries(obj).filter((el) => {
+    if (el.includes(1)) entrys.push(el);
+  });
+
+  // Get keys from entries and convert to datatype "number"
+  let keys = [];
+  entrys.flat().filter((el) => {
+    if (typeof el === "string") keys.push(Number(el));
+  });
+
+  if (keys.length === 0) return -1;
+  if (keys.length === 1) return keys[0];
+  if (keys.length > 1) return keys;
+};
+// invoke the function
+console.log(singleNumber([2, 2, 1])); // 1
+console.log(singleNumber([-4, 1, 2, 1, 2])); // -4
+console.log(singleNumber([1])); // 1
+console.log(singleNumber([1, 2, 1, 3, 2, 5])); // [3, 5]
+
+// REMOVE DUPLICATES FROM SORTED ARRAY
+
+// CLIMBING STAIRS
+/* A child is running up a staircase with n steps and can hop either
+1 step, 2 steps, or 3 steps at a time. Implement a method to count how many possible ways
+the child can run up the stairs. */
+var climbStairs = function (n) {
+  if (n < 0) return 0;
+  if (n === 0) return 1;
+  if (n > 0)
+    return climbStairs(n - 3) + climbStairs(n - 2) + climbStairs(n - 1);
+};
+// invoke the function
+console.log(climbStairs(2)); // 2 ways
+console.log(climbStairs(3)); // 4 ways
+console.log(climbStairs(5)); // 13 ways
+console.log(climbStairs(30)); // 53798080 ways
+
+// SEARCH INSERT POSITION
+var searchInsert = function (nums, target) {
+  let indices = [];
+  for (let [idx, el] of [
+    ...new Set(
+      nums.concat(target).sort(function (e1, e2) {
+        if (e1 > e2) return 1;
+        if (e1 < e2) return -1;
+      })
+    ),
+  ].entries()) {
+    if (el === target) {
+      indices.push(idx);
+    }
+  }
+  // index / indices of searched element
+  return Number(indices); // if indices.length > 1, then element is Duplicate
+};
+// invoke the function
+console.log(searchInsert([1, 3, 5, 6], 5)); // 2
+console.log(searchInsert([1, 3, 5, 6], 2)); // 1
+console.log(searchInsert([1, 3, 5, 6], 7)); // 4
+console.log(searchInsert([1, 3, 5, 6], 10)); // 4
+
+// SEARCH IN ROTATED SORTED ARRAY
+var search = function (nums, target) {
+  for (let [idx, el] of nums.entries()) {
+    if (el === target) {
+      return true;
+    }
+  }
+  // else
+  return false;
+};
+// invoke the function
+console.log(search([2, 5, 6, 0, 0, 1, 2], 0)); // true
+console.log(search([2, 5, 6, 0, 0, 1, 2], 3)); // false
+
+// SORT ALPHABET AND NUMBERS ASCENDING
+var sortAlpsNums = function (a) {
+  a.sort(function (e1, e2) {
+    // alphabet case-insensitive sort
+    if ((typeof e1 && typeof e2) === "string") {
+      e1 = e1.toLowerCase();
+      e2 = e2.toLowerCase();
+      if (e1 > e2) return 1;
+      if (e1 < e2) return -1;
+    }
+    // numerical sort
+    if ((typeof e1 && typeof e2) === "number") {
+      if (e1 > e2) return 1;
+      if (e1 < e2) return -1;
+    }
   });
   return a;
 };
 // invoke the function
-console.log(solution([4, 2, 6, 5, 9])); // [9, 6, 5, 4, 2]
+console.log(sortAlpsNums(["a", "B", "A", "c", "b"])); // ["a", "A", "B", "b", "c"]
+console.log(sortAlpsNums([2, 3, 10, 4, 100])); // [2, 3, 4, 10, 100]
+console.log(
+  sortAlpsNums(["ant", "33", "Bug", "4", "cat", "1111", "Dog", "222"])
+); // ['1111','222','33','4','ant','Bug','cat','Dog']
 
-// FLATTEN AN ARRAY
-var flattenArray = function (arr) {
-  let new_arr = [];
-
-  arr.forEach((el) => {
-    new_arr.push(el.join());
+// MISSING ELEMENTS
+var missingElements = function (a1, a2) {
+  let missing = [];
+  // missing elements in a1
+  a1.filter((el) => {
+    if (!a2.includes(el)) {
+      missing.push(el);
+    }
   });
-  return new_arr.join().replaceAll(" ", ",").split(",");
+  // missing elements in a2
+  a2.filter((el) => {
+    if (!a1.includes(el)) {
+      missing.push(el);
+    }
+  });
+
+  return missing;
 };
 // invoke the function
-var arr = [
-  ["Mwanika", "Stephen", "Crispin"],
-  ["Akoth", "Justine"],
-  ["Olweny", "John"],
+console.log(
+  missingElements([8, 7, 2, 5, 3, 5, 3], [7, 2, 5, 4, 6, 3, 5, 3, 4])
+); // [8, 4, 6, 4]
+
+// FIND MINIMUM IN ROTATED SORTED ARRAY
+var findMin = function (nums) {
+  let el = nums.sort(function (e1, e2) {
+    // descending numerical sort
+    return e1 - e2;
+  })[0];
+  return el;
+};
+// invoke the function
+console.log(findMin([3, 4, 5, 1, 2])); // 1
+console.log(findMin([4, 5, 6, 7, 0, 1, 2])); // 0
+console.log(findMin([11, 13, 15, 17])); // 11
+
+// ROTATE ARRAY RIGHT (CLOCKWISE) BY K PLACES
+var rotateRight = function (nums, k) {
+  var merge_array = null;
+  k = nums.length - k;
+  let arr1 = nums.slice(k, nums.length);
+  let arr2 = nums.slice(0, k);
+  merge_array = arr1.concat(arr2);
+  return merge_array;
+};
+// invoke the function
+console.log(rotateRight([1, 2, 3, 4, 5], 2)); // [4,5,1,2,3]
+
+// ROTATE MATRIX RIGHT (CLOCKWISE)
+var rotateMatrixRight = function (matrix) {
+  let n = matrix.length;
+
+  for (let row = 0; row < n; row++) {
+    for (let col = row; col < n - 1 - row; col++) {
+      let last = n - 1 - row;
+      let offset = col - row;
+
+      // implement the swap index by index:
+      let top = matrix[row][col];
+
+      // left edge -> top edge
+      matrix[row][col] = matrix[last - offset][row];
+
+      // bottom edge -> left edge
+      matrix[last - offset][row] = matrix[last][last - offset];
+
+      // right edge -> bottom edge
+      matrix[last][last - offset] = matrix[col][last];
+
+      // top edge -> right edge
+      matrix[col][last] = top;
+    }
+  }
+
+  return matrix;
+};
+// invoke the function
+var matrix = [
+  [5, 1, 9, 11],
+  [2, 4, 8, 10],
+  [13, 3, 6, 7],
+  [15, 14, 12, 16],
 ];
-console.log(flattenArray(arr));
+console.log(rotateMatrixRight(matrix));
+/*
+[
+  [15, 13, 2, 5],
+  [14, 3, 4, 1],
+  [12, 6, 8, 9],
+  [16, 7, 10, 11],
+];
+*/
 
-// REMOVE THE FIRST TWO ELEMENTS OF AN ARRAY USING ARRAY DESTRUCTURING
-function removeFirstTwoElements(arr) {
-  const [, , ...list] = arr;
-  return list;
-}
+// SET MATRIX ZEROES
+var setZeroes = function (matrix) {};
 // invoke the function
-var arr = [8, 9, 10, 11, 12];
-console.log(removeFirstTwoElements(arr)); // [10, 11, 12]
 
-// Application of Set()
-// Return count of duplicates in array:
-function countDuplicates(arr) {
-  // remove duplicates
-  let set = [...new Set(arr)];
-
-  // count = length of superset - length of subset ()
-  return arr.length - set.length;
-}
+// SPIRAL MATRIX
+var spiralOrder = function (matrix) {};
 // invoke the function
-var arr = ["cat", "book", "pencil", "book", "cat", "cat"];
-console.log(countDuplicates(arr)); // 3
+
+// MAXIMUM SUM SUBARRAY
+var maxSum = function (nums) {
+  let presum = 0;
+  let sum = 0;
+  let accumulator = [];
+  if (Math.max(...nums) < 0) return Math.max(...nums);
+  else
+    nums.forEach((el) => {
+      sum = Math.max(presum, sum + el);
+      accumulator.push(sum);
+    });
+
+  return Math.max(...accumulator);
+};
+// invoke the function
+console.log(maxSum([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // 6
+console.log(maxSum([1])); // 1
+console.log(maxSum([-1])); // -1
+console.log(maxSum([-2])); // -2
+console.log(maxSum([-2, -1, -3])); // -1
+console.log(maxSum([5, 4, -1, 7, 8])); // 23
+
+// // MAXIMUM PRODUCT SUBARRAY
+// var maxProduct = function (nums) {
+//   let product = 0;
+//   let accumulator = [];
+//   if (Math.max(...nums) < 0) return Math.max(...nums);
+//   else
+//     nums.forEach((el) => {
+//       product = Math.max(el, product * el);
+//       accumulator.push(product);
+//     });
+
+//   return Math.max(...accumulator);
+// };
+// // invoke the function
+// console.log(maxProduct([2, 3, -2, 4])); // 6
+// console.log(maxProduct([-2, 0, -1])); // 0
+// console.log(maxProduct([-1])); // -1
+// console.log(maxProduct([-2])); // -2
+// console.log(maxProduct([-2, -1, -3])); // 3
+
+// COUNT PERMUTATIONS OF A STRING
+
+// let ob = { name: "Mwanika", age: 42, gender: "M" };
+// console.log(ob["age"]); // same as ob.age -> 42
+
+// VALID ANAGRAM | PERMUTATION
+var isAnagram = function (s, t) {
+  return s.split("").sort().join("") === t.split("").sort().join("");
+};
+// invoke the function
+console.log(isAnagram("anagram", "nagaram")); // true
+console.log(isAnagram("rat", "car")); // false
+
+// ADDITIVE SEQUENCE
+var isAdditiveSeries = function (arr) {
+  // sort the array and
+  // check if every element is equal to the sum of the previous 2 elements
+  arr.sort(function (e1, e2) {
+    return e1 - e2;
+  });
+
+  for (i = 2; i < arr.length; i++) {
+    if (arr[i - 1] + arr[i - 2] != arr[i]) return false;
+  }
+  return true;
+};
+// invoke the function
+console.log(isAdditiveSeries([1, 1, 2, 3, 5, 8])); // true
+console.log(isAdditiveSeries([8, 3, 5, 13])); // true
+
+// // ADDITIVE NUMBER
+// var isAdditiveNumber = function (num) {
+//   // sort the array and
+//   // check if every element is equal to the sum of the previous 2 elements
+//   num = num.split("").sort(function (e1, e2) {
+//     return e1 - e2;
+//   });
+
+//   for (i = 2; i < num.length; i++) {
+//     if (Number(num[i - 1]) + Number(num[i - 2]) != Number(num[i])) return false;
+//   }
+//   return true;
+// };
+// // invoke the function
+// console.log(isAdditiveNumber("112358")); // true
+// console.log(isAdditiveNumber("199100199")); // true
