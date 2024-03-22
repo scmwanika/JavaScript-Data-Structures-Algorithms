@@ -24,7 +24,7 @@ is a rearrangement of letters. The palindrome does not need to be limited to jus
 dictionary words.<br />
 EXAMPLE<br />
 Input: Tact Coa<br />
-Output: True (permutations: "taco cat", "atco eta", etc.)
+Output: True (permutations: "taco cat", "atco cta", etc.)
 
 <b>One Away:</b>
 There are three types of edits that can be performed on strings: insert a character,
