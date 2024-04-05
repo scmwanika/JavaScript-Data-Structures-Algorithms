@@ -883,42 +883,6 @@ var subtractDays = function (date, days) {
 
 /* ------------------------------------------------------------------------------------ */
 
-// ROTATE MATRIX LEFT (Anti-Clockwise)
-var rotateMatrixLeft = function (matrix) {
-  let n = matrix.length;
-
-  for (let row = 0; row < n; row++) {
-    for (let col = row; col < n - 1 - row; col++) {
-      let last = n - 1 - row;
-      let offset = col - row;
-
-      // swap index by index:
-      let top = matrix[row][col];
-
-      // right edge -> top edge
-      matrix[row][col] = matrix[col][last];
-
-      // bottom edge -> right edge
-      matrix[col][last] = matrix[last][last - offset];
-
-      // left edge -> bottom edge
-      matrix[last][last - offset] = matrix[last - offset][row];
-
-      // top edge -> left edge
-      matrix[last - offset][row] = top;
-    }
-  }
-  return matrix;
-};
-// invoke the function
-var matrix = [
-  [5, 1, 9, 11],
-  [2, 4, 8, 10],
-  [13, 3, 6, 7],
-  [15, 14, 12, 16],
-];
-rotateMatrixLeft(matrix);
-
 // ROTATE STRING BY K PLACES
 var rotateString = function (string, k, direction) {
   // Rotate Right (Clockwise)
@@ -1066,30 +1030,6 @@ var isPermutation = function (s1, s2) {
 console.log(isPermutation("anagram", "nagaram")); // true
 console.log(isPermutation("rat", "car")); // false
 
-// RETURN ANAGRAMS (PERMUTATIONS) OF STRING WITHOUT REPEATING CHARACTERS
-var generatePermutation = (string) => {
-  let anagrams_permutations = [];
-  if (string.length === 0) return anagrams_permutations;
-  if (string.length === 1) {
-    anagrams_permutations.push(string);
-  }
-
-  for (let i = 0; i < string.length; i++) {
-    let cha1 = string.charAt(i);
-    let cha2 = string.slice(0, i) + string.slice(i + 1, string.length);
-
-    generatePermutation(cha2).filter((item) => {
-      anagrams_permutations.push(cha1 + item);
-    });
-  }
-
-  return [...new Set(anagrams_permutations)];
-};
-// invoke the function
-console.log(generatePermutation("aabc"));
-//console.log(generatePermutation(["S", "t", "e", "p", "h", "e", "n"]));
-//console.log(generatePermutation([1, 2, 3]));
-
 /* ------------------------------------------------------------------------------------ */
 
 // SORT THE ARRAY IN A WAY THAT NUMBERS COME FIRST AND STRINGS SECOND
@@ -1190,57 +1130,6 @@ var commonElements = function (a1, a2) {
 
 /* ------------------------------------------------------------------------------------ */
 
-// THE OCCURRENCE OF A LETTER IN STRING
-var letterCount = function (s, letter) {
-  let indices = [];
-  let a = s.toLowerCase().split("");
-
-  for (let [idx, el] of a.entries()) {
-    if (el.includes(letter.toLowerCase())) {
-      indices.push(idx);
-    }
-  }
-
-  return [letter, indices.length];
-};
-
-// THE OCCURRENCE OF A WORD IN STRING
-var wordCount = function (s, word) {
-  let indices = [];
-  word = word.toLowerCase();
-  let a = s.toLowerCase().replaceAll(" ", ",").split(",");
-
-  for (let [idx, el] of a.entries()) {
-    if (el.includes(word)) {
-      indices.push(idx);
-    }
-  }
-
-  return [word, indices.length];
-};
-
-// THE OCCURRENCE OF SUBSTRING IN STRING
-var countSubstrings = function (str, substr) {
-  let regexp = new RegExp(substr, "gi");
-  let count = str.match(regexp).length;
-  return count;
-};
-
-// THE WORDS / NUMBER OF WORDS WITH SUBSTRING
-var wordHasSubstring = function (string, substring) {
-  let words = [];
-  substring = substring.toLowerCase();
-  let arr = string.toLowerCase().replaceAll(" ", ",").split(",");
-
-  arr.filter((item) => {
-    if (item.includes(substring)) {
-      words.push(item);
-    }
-  });
-
-  return words;
-};
-
 // FILTER STRINGS WITH "cie"
 // method 1:
 var spellingRule = function (words_array) {
@@ -1265,44 +1154,6 @@ var spellingRule = function (words_array, str) {
   });
 
   return filtered_array;
-};
-
-// SWAP UPPERCASE AND LOWERCASE LETTERS
-var swapCase = function (str) {
-  let new_array = [];
-
-  for (var i = 0; i < str.length; i++) {
-    if (str[i].includes(str.toLowerCase()[i]))
-      new_array.push(str[i].toUpperCase());
-    else new_array.push(str[i].toLowerCase());
-  }
-
-  return new_array.join("");
-};
-
-// SWITCH REVERSER
-var switchReverser = function (a) {
-  let alps = [];
-  let nums = [];
-
-  a.forEach((el) => {
-    if (typeof el === "string") alps.push(el.toUpperCase());
-    else nums.push(el);
-  });
-
-  if (alps.length === a.length) return alps;
-  if (nums.length === a.length) return nums.reverse();
-  return a;
-};
-
-// PIG LATIN CONVERTER
-var pigLatinConverter = function (str) {
-  str = str.toLowerCase();
-  let start = str.match(/[aeiou]/gi);
-  let end = str.indexOf(start[0]);
-
-  if ("aeiou".includes(str[0])) return str + "way";
-  else return str.substring(end) + str.substring(0, end) + "ay";
 };
 
 // COUNT VOWELS AND CONSONANTS
@@ -1612,7 +1463,7 @@ var s = "{[}";
 if (isValid(s)) console.log("valid");
 else console.log("invalid");
 
-// // MAXIMUM PRODUCT SUBARRAY
+// // MAXIMUM PRODUCT SUBARRAY:
 // var maxProduct = function (nums) {
 //   let product = 0;
 //   let accumulator = [];
@@ -1631,3 +1482,18 @@ else console.log("invalid");
 // console.log(maxProduct([-1])); // -1
 // console.log(maxProduct([-2])); // -2
 // console.log(maxProduct([-2, -1, -3])); // 3
+
+// // CHECK IF s2 CONTAINS A PERMUTATION OF s1:
+// var checkInclusion = function (s1, s2) {
+//   if (s2 === s1) return true;
+//   if (s2.includes(s1.split("").reverse().join(""))) return true;
+//   if ([...new Set(s2)].sort().join("") === [...new Set(s1)].sort().join(""))
+//     return true;
+//   return false;
+// };
+// // invoke the function
+// console.log(checkInclusion("ab", "eidbaooo")); // true
+// console.log(checkInclusion("ab", "eidboaoo")); // false
+// console.log(checkInclusion("ab", "ab")); // true
+// console.log(checkInclusion("abc", "bbbca")); // true
+// console.log(checkInclusion("hello", "ooolleoooleh")); // false

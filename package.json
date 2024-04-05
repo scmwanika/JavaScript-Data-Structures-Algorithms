@@ -2,7 +2,7 @@
   "name": "testing-functionality-of-javascript-programs-with-jest",
   "version": "1.0.0",
   "description": "Testing Functionality of Javascript Programs With Jest",
-  "main": "code.js",
+  "main": "programs.js",
   "scripts": {
     "start": "nodemon",
     "test": "jest"

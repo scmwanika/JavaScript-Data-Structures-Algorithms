@@ -2,129 +2,7 @@ const programs = require("./programs");
 
 console.log("TESTING FUNCTIONALITY OF JAVASCRIPT PROGRAMS WITH JEST");
 
-// CONVERT 12HOURS TO 24HOURS
-describe("CONVERT 12HOURS TO 24HOURS", () => {
-  test("should return 17:00", () => {
-    expect(programs.convertTwelveHoursToTwentyFourHours("5:00 PM")).toBe(
-      "17:00"
-    );
-  });
-  test("should return 23:42", () => {
-    expect(programs.convertTwelveHoursToTwentyFourHours("11:42 PM")).toBe(
-      "23:42"
-    );
-  });
-  test("should return 12:00", () => {
-    expect(programs.convertTwelveHoursToTwentyFourHours("12:00 PM")).toBe(
-      "12:00"
-    );
-  });
-  test("should return 00:00", () => {
-    expect(programs.convertTwelveHoursToTwentyFourHours("12:00 AM")).toBe(
-      "00:00"
-    );
-  });
-});
-
-// CONVERT 24HOURS TO 12HOURS
-describe("CONVERT 24HOURS TO 12HOURS", () => {
-  test("should return 5:00 PM", () => {
-    expect(programs.convertTwentyFourHoursToTwelveHours("17:00")).toBe(
-      "5:00 PM"
-    );
-  });
-  test("should return 11:42 PM", () => {
-    expect(programs.convertTwentyFourHoursToTwelveHours("23:42")).toBe(
-      "11:42 PM"
-    );
-  });
-  test("should return 12:00 PM", () => {
-    expect(programs.convertTwentyFourHoursToTwelveHours("12:00")).toBe(
-      "12:00 PM"
-    );
-  });
-  test("should return 11:00 AM", () => {
-    expect(programs.convertTwentyFourHoursToTwelveHours("11:00")).toBe(
-      "11:00 AM"
-    );
-  });
-});
-
-// NUMBER OF DAYS BETWEEN TWO DATES
-describe("NUMBER OF DAYS BETWEEN TWO DATES", () => {
-  test("should return 6", () => {
-    expect(programs.daysBetweenDates("12/25/2022", "12/31/2022")).toBe(6);
-  });
-});
-
-// SUBTRACT DAYS
-describe("SUBTRACT DAYS", () => {
-  test("should return 2022-12-25T00:00:00.000Z", () => {
-    expect(programs.subtractDays("2022-12-31", 6)).toBe(
-      "2022-12-25T00:00:00.000Z"
-    );
-  });
-});
-
-// ROTATE MATRIX RIGHT (2D Array)
-describe("ROTATE MATRIX RIGHT (2D Array)", () => {
-  test("should return [[6, 3, 0], [7, 4, 1], [8, 5, 2]]", () => {
-    expect(
-      programs.rotateMatrixRight([
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-      ])
-    ).toStrictEqual([
-      [6, 3, 0],
-      [7, 4, 1],
-      [8, 5, 2],
-    ]);
-  });
-});
-
-// ROTATE MATRIX LEFT (2D Array)
-describe("ROTATE MATRIX LEFT (2D Array)", () => {
-  test("should return [[2, 5, 8], [1, 4, 7], [0, 3, 6]]", () => {
-    expect(
-      programs.rotateMatrixLeft([
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-      ])
-    ).toStrictEqual([
-      [2, 5, 8],
-      [1, 4, 7],
-      [0, 3, 6],
-    ]);
-  });
-});
-
-// IS ROTATION
-describe("IS ROTATION", () => {
-  test("should return true", () => {
-    expect(programs.isRotation("waterbottle", "erbottlewat")).toBe(true);
-  });
-});
-
-// ROTATE STRING
-describe("ROTATE STRING", () => {
-  test("should return ptJavaScri", () => {
-    expect(programs.rotateString("JavaScript", 2, "right")).toBe("ptJavaScri");
-  });
-});
-
-// ROTATE ARRAY
-describe("ROTATE ARRAY", () => {
-  test("should return [[4, 5, 1, 2, 3], [3]]", () => {
-    expect(programs.rotateArray([1, 2, 3, 4, 5], 2, "right", 2)).toStrictEqual([
-      [4, 5, 1, 2, 3],
-      [3],
-    ]);
-  });
-});
-
-// SUBSTRINGS AND SUBARRAYS
+// SUBSTRINGS AND SUBARRAYS:
 describe("SUBSTRINGS AND SUBARRAYS", () => {
   test("should return ['d', 'do', 'dog', 'o', 'og', 'g']", () => {
     expect(programs.subStringsArrays("dog")).toStrictEqual([
@@ -148,7 +26,7 @@ describe("SUBSTRINGS AND SUBARRAYS", () => {
   });
 });
 
-// SUBSEQUENCES AND SUBSETS
+// SUBSEQUENCES AND SUBSETS:
 describe("SUBSEQUENCES AND SUBSETS", () => {
   test("should return [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]", () => {
     expect(programs.subSequencesSubsets([1, 2, 3])).toStrictEqual([
@@ -164,7 +42,7 @@ describe("SUBSEQUENCES AND SUBSETS", () => {
   });
 });
 
-// IS SUBSTRING / COMBINATION OF ANOTHER STRING
+// IS SUBSTRING / COMBINATION OF ANOTHER STRING:
 describe("IS SUBSTRING / COMBINATION OF ANOTHER STRING", () => {
   test("should return true", () => {
     expect(programs.isSubString("Stephen", "Hen")).toBe(true);
@@ -183,7 +61,7 @@ describe("IS SUBSTRING / COMBINATION OF ANOTHER STRING", () => {
   });
 });
 
-// IS SUBSEQUENCE OF ANOTHER STRING
+// IS SUBSEQUENCE OF ANOTHER STRING:
 describe("IS SUBSEQUENCE OF ANOTHER STRING", () => {
   test("should return true", () => {
     expect(programs.isSubStringSequence("Stephen", "Hen")).toBe(true);
@@ -202,7 +80,7 @@ describe("IS SUBSEQUENCE OF ANOTHER STRING", () => {
   });
 });
 
-// IS SUBSET OF ANOTHER STRING
+// IS SUBSET OF ANOTHER STRING:
 describe("IS SUBSET OF ANOTHER STRING", () => {
   test("should return true", () => {
     expect(programs.isSubSetStr("Stephen", "Hen")).toBe(true);
@@ -221,7 +99,7 @@ describe("IS SUBSET OF ANOTHER STRING", () => {
   });
 });
 
-// IS SUBARRAY / COMBINATION OF ANOTHER ARRAY
+// IS SUBARRAY / COMBINATION OF ANOTHER ARRAY:
 describe("IS SUBARRAY / COMBINATION OF ANOTHER ARRAY", () => {
   test("should return true", () => {
     expect(
@@ -246,7 +124,7 @@ describe("IS SUBARRAY / COMBINATION OF ANOTHER ARRAY", () => {
   });
 });
 
-// IS SUBSEQUENCE OF ANOTHER ARRAY
+// IS SUBSEQUENCE OF ANOTHER ARRAY:
 describe("IS SUBSEQUENCE OF ANOTHER ARRAY", () => {
   test("should return true", () => {
     expect(
@@ -280,7 +158,7 @@ describe("IS SUBSEQUENCE OF ANOTHER ARRAY", () => {
   });
 });
 
-// IS SUBSET OF ANOTHER ARRAY
+// IS SUBSET OF ANOTHER ARRAY:
 describe("IS SUBSET OF ANOTHER ARRAY", () => {
   test("should return true", () => {
     expect(
@@ -305,291 +183,275 @@ describe("IS SUBSET OF ANOTHER ARRAY", () => {
   });
 });
 
-// LARGEST SUBARRAY SUM
-describe("LARGEST SUBARRAY SUM", () => {
-  test("should return 159", () => {
-    expect(programs.largestSubarraySum([1, 100, 4, 15, 9, 30])).toBe(159);
+// IS UNIQUE:
+describe("IS UNIQUE", () => {
+  test("should return false", () => {
+    expect(programs.isUnique([2, 2, 1])).toBe(false);
   });
-  test("should return 159", () => {
-    expect(programs.largestSubarraySum([-3, 1, 100, 4, 15, 9, 30, -1])).toBe(
-      159
-    );
-  });
-  test("should return 5", () => {
-    expect(programs.largestSubarraySum([2, -8, 3, -2, 4, -10])).toBe(5);
+  test("should return true", () => {
+    expect(programs.isUnique([1])).toBe(true);
   });
 });
 
-// COUNT SUBARRAYS EQUAL TO SUM
-describe("COUNT SUBARRAYS EQUAL TO SUM", () => {
-  test("should return 1", () => {
-    expect(programs.countSubArraysEqualToSum([2, 2, -4, 1, 1, 2], -3)).toBe(1);
-  });
-  test("should return 2", () => {
-    expect(programs.countSubArraysEqualToSum([2, 2, 2], 4)).toBe(2);
-  });
-  test("should return 2", () => {
-    expect(programs.countSubArraysEqualToSum([3, 2, 1], 3)).toBe(2);
-  });
-});
-
-// LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS
-describe("LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS", () => {
-  test("should return 0", () => {
-    expect(programs.lengthOfLongestSubstring("")).toBe(0);
-  });
-  test("should return 3", () => {
-    expect(programs.lengthOfLongestSubstring("dvdf")).toBe(3);
-  });
-  test("should return 6", () => {
-    expect(programs.lengthOfLongestSubstring("abbbcabcdefef")).toBe(6);
-  });
-  test("should return 3", () => {
-    expect(programs.lengthOfLongestSubstring("pwwkew")).toBe(3);
-  });
-});
-
-// LONGEST COMMON SUBSEQUENCE
-describe("LONGEST COMMON SUBSEQUENCE", () => {
-  test("should return ACD", () => {
-    expect(programs.longestCommonSubsequence("ABCD", "ACBAD")).toBe("ACD");
-  });
-  test("should return ABCD", () => {
-    expect(programs.longestCommonSubsequence("ABCD", "ABCAD")).toBe("ABCD");
-  });
-  test("should return AV", () => {
-    expect(programs.longestCommonSubsequence("RAVEN", "HAVOC")).toBe("AV");
-  });
-  test("should return BBCC", () => {
-    expect(programs.longestCommonSubsequence("ABBCC", "DBBCC")).toBe("BBCC");
-  });
-});
-
-// IS PALINDROME / IS REVERSE
-describe("IS PALINDROME / IS REVERSE", () => {
+// CHECK PALINDROME:
+describe("CHECK PALINDROME", () => {
   test("should return true", () => {
     expect(programs.isPalindrome("A man, a plan, a canal: Panama")).toBe(true);
   });
   test("should return false", () => {
     expect(programs.isPalindrome("race a car")).toBe(false);
   });
-  test("should return true", () => {
-    expect(programs.isPalindrome("")).toBe(true);
-  });
 });
 
-// IS PALINDROMES / IS REVERSE
-describe("IS PALINDROMES / IS REVERSE", () => {
+// IS PALINDROME NUMBER:
+describe("IS PALINDROME NUMBER", () => {
   test("should return true", () => {
-    expect(programs.isPalindromes("pots", "stop")).toBe(true);
+    expect(programs.isPalindromeNumber(121)).toBe(true);
   });
   test("should return false", () => {
-    expect(programs.isPalindromes("pots", "stops")).toBe(false);
+    expect(programs.isPalindromeNumber(-121)).toBe(false);
   });
 });
 
-// IS PERMUTATION / IS ANAGRAM
-describe("IS PERMUTATION / IS ANAGRAM", () => {
+// CHECK PERMUTATION:
+describe("CHECK PERMUTATION", () => {
   test("should return true", () => {
-    expect(programs.isPermutation("amadm", "madam")).toBe(true);
+    expect(programs.checkPermutation("amadm", "madam")).toBe(true);
   });
 });
 
-// IS PERMUTATION OF A PALINDROME
-describe("IS PERMUTATION OF A PALINDROME", () => {
+// IS PALINDROME PERMUTATION:
+describe("IS PALINDROME PERMUTATION", () => {
   test("should return true", () => {
-    expect(programs.isPalindromePermutation("refer")).toBe(true);
+    expect(programs.isPalindromePermutation("Tact Coa")).toBe(true);
+  });
+  test("should return false", () => {
+    expect(programs.isPalindromePermutation("Tact Coai")).toBe(false);
   });
   test("should return true", () => {
     expect(programs.isPalindromePermutation("rrfee")).toBe(true);
   });
-  test("should return true", () => {
-    expect(programs.isPalindromePermutation("taco cat")).toBe(true);
-  });
-  test("should return true", () => {
-    expect(programs.isPalindromePermutation("atco cta")).toBe(true);
-  });
 });
 
-// PERMUTATIONS -> ANAGRAMS
-
-//....................................
-
-// SORTING ALPHABET AND NUMBERS THE RIGHT WAY
-describe("SORTING ALPHABET AND NUMBERS THE RIGHT WAY", () => {
-  test("should return ['a', 'A', 'B', 'b', 'c']", () => {
-    expect(programs.sortAlpsNums(["a", "B", "A", "c", "b"])).toStrictEqual([
-      "a",
-      "A",
-      "B",
-      "b",
-      "c",
-    ]);
-  });
-  test("should return [2, 3, 4, 10, 100]", () => {
-    expect(programs.sortAlpsNums([2, 3, 10, 4, 100])).toStrictEqual([
-      2, 3, 4, 10, 100,
-    ]);
-  });
-  test("should return ['1111','222','33','4','ant','Bug','cat','Dog']", () => {
-    expect(
-      programs.sortAlpsNums([
-        "ant",
-        "33",
-        "Bug",
-        "4",
-        "cat",
-        "1111",
-        "Dog",
-        "222",
-      ])
-    ).toStrictEqual(["1111", "222", "33", "4", "ant", "Bug", "cat", "Dog"]);
-  });
-});
-
-// SORT THE ARRAY IN A WAY THAT NUMBERS COME FIRST AND STRINGS SECOND
-describe("SORT THE ARRAY IN A WAY THAT NUMBERS COME FIRST AND STRINGS SECOND", () => {
-  test("should return [4, 33, 222, 1111, 'ant', 'Bug', 'cat', 'Dog']", () => {
-    expect(
-      programs.firstNumsSecondAlps([
-        "ant",
-        33,
-        "Bug",
-        4,
-        "cat",
-        1111,
-        "Dog",
-        222,
-      ])
-    ).toStrictEqual([4, 33, 222, 1111, "ant", "Bug", "cat", "Dog"]);
-  });
-});
-
-// SORT PRODUCTS
-describe("SORT PRODUCTS", () => {
-  test("should return [0, 1, 9, 25, 100]", () => {
-    expect(programs.sortProducts([-5, -1, 0, 3, 10])).toStrictEqual([
-      0, 1, 9, 25, 100,
-    ]);
-  });
-});
-
-// REGULAR EXPRESSION -> RegExp
-describe("REGULAR EXPRESSION -> RegExp", () => {
-  test("should return aaCeehiiikMnnnpprSstw", () => {
-    expect(programs.regExp(" M@wa'n'ik$a 'Step&&hen' #3-|Crisp|in ")).toBe(
-      "aaCeehiiikMnnnpprSstw"
-    );
-  });
-});
-
-// SORT THE OBJECT BY SALARY
-var employees = [
-  { name: "John", salary: 90000, hireDate: "July 1, 2010" },
-  { name: "David", salary: 75000, hireDate: "August 15, 2009" },
-  { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
-  { name: "John", salary: 90000, hireDate: "July 1, 2010" },
-  { name: "David", salary: 75000, hireDate: "August 15, 2009" },
-  { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
-];
-describe("SORT THE OBJECT BY SALARY", () => {
-  test(`should return [
-    { hireDate: "August 15, 2009", name: "David", salary: 75000 },
-    { hireDate: "August 15, 2009", name: "David", salary: 75000 },
-    { hireDate: "December 12, 2011", name: "Ana", salary: 80000 },
-    { hireDate: "December 12, 2011", name: "Ana", salary: 80000 },
-    { hireDate: "July 1, 2010", name: "John", salary: 90000 },
-    { hireDate: "July 1, 2010", name: "John", salary: 90000 },
-  ]`, () => {
-    expect(programs.sortEmployeesBySalary(employees)).toStrictEqual([
-      { hireDate: "August 15, 2009", name: "David", salary: 75000 },
-      { hireDate: "August 15, 2009", name: "David", salary: 75000 },
-      { hireDate: "December 12, 2011", name: "Ana", salary: 80000 },
-      { hireDate: "December 12, 2011", name: "Ana", salary: 80000 },
-      { hireDate: "July 1, 2010", name: "John", salary: 90000 },
-      { hireDate: "July 1, 2010", name: "John", salary: 90000 },
-    ]);
-  });
-});
-
-// EXTRACT THE VALUES OF A GIVEN PROPERTY FROM AN ARRAY OF OBJECTS
-
-// COMMON CHARACTERS
-describe("COMMON CHARACTERS", () => {
-  test("should return ple", () => {
-    expect(programs.commonCharacters("pale", "ple")).toBe("ple");
-  });
-  test("should return pale", () => {
-    expect(programs.commonCharacters("pales", "pale")).toBe("pale");
-  });
-  test("should return ale", () => {
-    expect(programs.commonCharacters("pale", "bale")).toBe("ale");
-  });
-  test("should return ae", () => {
-    expect(programs.commonCharacters("pale", "bae")).toBe("ae");
-  });
-});
-
-// NOT COMMON CHARACTERS
-describe("NOT COMMON CHARACTERS", () => {
-  test("should return a", () => {
-    expect(programs.notCommonCharacters("pale", "ple")).toBe("a");
-  });
-  test("should return s", () => {
-    expect(programs.notCommonCharacters("pales", "pale")).toBe("s");
-  });
-  test("should return pb", () => {
-    expect(programs.notCommonCharacters("pale", "bale")).toBe("pb");
-  });
-  test("should return plb", () => {
-    expect(programs.notCommonCharacters("pale", "bae")).toBe("plb");
-  });
-});
-
-// IS ONEAWAY -> ZERO OR ONE EDIT AWAY
-describe("IS ONEAWAY -> ZERO OR ONE EDIT AWAY", () => {
-  test("should return true", () => {
-    expect(programs.isOneAway("pale", "pale")).toBe(true);
-  });
+// IS ONE AWAY:
+describe("IS ONE AWAY", () => {
   test("should return true", () => {
     expect(programs.isOneAway("pale", "ple")).toBe(true);
   });
-  test("should return true", () => {
-    expect(programs.isOneAway("pales", "pale")).toBe(true);
+  test("should return false", () => {
+    expect(programs.isOneAway("pale", "bake")).toBe(false);
   });
   test("should return true", () => {
     expect(programs.isOneAway("pale", "bale")).toBe(true);
   });
-  test("should return false", () => {
-    expect(programs.isOneAway("pale", "bae")).toBe(false);
+});
+
+// STRING COMPRESSION:
+describe("STRING COMPRESSION", () => {
+  test("should return a2b1c5a3", () => {
+    expect(programs.stringCompression("aabCccccaaa")).toBe("a2b1c5a3");
   });
-  test("should return false", () => {
-    expect(programs.isOneAway("programming-CCC", "programming-ccc")).toBe(
-      false
+  test("should return w3a2b4", () => {
+    expect(programs.stringCompression("wwwaabbbb")).toBe("w3a2b4");
+  });
+  test("should return aab", () => {
+    expect(programs.stringCompression("aab")).toBe("aab");
+  });
+});
+
+// ROTATE MATRIX RIGHT (CLOCKWISE):
+describe("ROTATE MATRIX RIGHT (CLOCKWISE)", () => {
+  test("should return [[15, 13, 2, 5], [14, 3, 4, 1], [12, 6, 8, 9], [16, 7, 10, 11]]", () => {
+    expect(
+      programs.rotateMatrixRight([
+        [5, 1, 9, 11],
+        [2, 4, 8, 10],
+        [13, 3, 6, 7],
+        [15, 14, 12, 16],
+      ])
+    ).toStrictEqual([
+      [15, 13, 2, 5],
+      [14, 3, 4, 1],
+      [12, 6, 8, 9],
+      [16, 7, 10, 11],
+    ]);
+  });
+});
+
+// ROTATE MATRIX LEFT (ANTI-CLOCKWISE):
+describe("ROTATE MATRIX LEFT (ANTI-CLOCKWISE)", () => {
+  test("should return [[11, 10, 7, 16], [9, 8, 6, 12], [1, 4, 3, 14], [5, 2, 13, 15]]", () => {
+    expect(
+      programs.rotateMatrixLeft([
+        [5, 1, 9, 11],
+        [2, 4, 8, 10],
+        [13, 3, 6, 7],
+        [15, 14, 12, 16],
+      ])
+    ).toStrictEqual([
+      [11, 10, 7, 16],
+      [9, 8, 6, 12],
+      [1, 4, 3, 14],
+      [5, 2, 13, 15],
+    ]);
+  });
+});
+
+// IS STRING ROTATION:
+describe("IS STRING ROTATION", () => {
+  test("should return true", () => {
+    expect(programs.isSubstring("waterbottle", "erbottlewat")).toBe(true);
+  });
+});
+
+// GROUP ANAGRAMS:
+describe("GROUP ANAGRAMS", () => {
+  test("should return [['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]", () => {
+    expect(
+      programs.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"])
+    ).toStrictEqual([["eat", "tea", "ate"], ["tan", "nat"], ["bat"]]);
+  });
+  test("should return [['321', '213'], ['897', '987', '798'], ['456']]", () => {
+    expect(
+      programs.groupAnagrams(["321", "213", "897", "456", "987", "798"])
+    ).toStrictEqual([["321", "213"], ["897", "987", "798"], ["456"]]);
+  });
+  test("should return [['']]", () => {
+    expect(programs.groupAnagrams([""])).toStrictEqual([[""]]);
+  });
+  test("should return [['a']]", () => {
+    expect(programs.groupAnagrams(["a"])).toStrictEqual([["a"]]);
+  });
+});
+
+// SEARCH IN ROTATED ARRAY:
+describe("SEARCH IN ROTATED ARRAY", () => {
+  test("should return [3, 4]", () => {
+    expect(programs.searchRotatedArray([2, 5, 6, 0, 0, 1, 2], 0)).toStrictEqual(
+      [3, 4]
     );
   });
 });
 
-// COMMON ELEMENTS SUM -> type insensitive
-describe("COMMON ELEMENTS SUM -> type insensitive", () => {
-  test("should return 5", () => {
-    expect(programs.commonElements([1, "2", 3], [2, "3", 4])).toBe(5);
+// SPARSE SEARCH:
+describe("SPARSE SEARCH", () => {
+  test("should return 4", () => {
+    expect(
+      programs.sparseSearch(
+        ["at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""],
+        "ball"
+      )
+    ).toStrictEqual(4);
   });
 });
 
-// THE OCCURRENCE OF A WORD IN STRING
-describe("THE OCCURRENCE OF A WORD IN STRING", () => {
-  test("should return ['the', 2]", () => {
+// MISSING INT:
+describe("MISSING INT", () => {
+  test("should return 2", () => {
+    expect(programs.missingInt([3, 0, 1])).toStrictEqual(2);
+  });
+  test("should return 2", () => {
+    expect(programs.missingInt([0, 1])).toStrictEqual(2);
+  });
+  test("should return 8", () => {
+    expect(programs.missingInt([9, 6, 4, 2, 3, 5, 7, 0, 1])).toStrictEqual(8);
+  });
+});
+
+// FIND DUPLICATES:
+describe("FIND DUPLICATES", () => {
+  test("should return 2", () => {
+    expect(programs.findDuplicate([2, 2, 1])).toStrictEqual(2);
+  });
+  test("should return [1, 2]", () => {
+    expect(programs.findDuplicate([-4, 1, 2, 1, 2])).toStrictEqual([1, 2]);
+  });
+});
+
+// SORTED MATRIX SEARCH:
+describe("SORTED MATRIX SEARCH", () => {
+  test("should return true]", () => {
     expect(
-      programs.wordCount("The quick brown fox jumps over the lazy dog", "the")
-    ).toStrictEqual(["the", 2]);
+      programs.searchSortedMatrix(
+        [
+          [10, 20, 30, 40],
+          [15, 25, 35, 45],
+          [27, 29, 37, 48],
+          [32, 33, 39, 50],
+        ],
+        29
+      )
+    ).toStrictEqual(true);
+  });
+});
+
+// PEAKS AND VALLEYS:
+describe("PEAKS AND VALLEYS", () => {
+  test("should return [5, 1, 3, 2, 3]", () => {
+    expect(programs.peaksValleys([5, 3, 1, 2, 3])).toStrictEqual([
+      5, 1, 3, 2, 3,
+    ]);
+  });
+});
+
+// MAXIMUM SUM SUBARRAY:
+describe("MAXIMUM SUM SUBARRAY", () => {
+  test("should return 6", () => {
+    expect(programs.maxSum([-2, 1, -3, 4, -1, 2, 1, -5, 4])).toStrictEqual(6);
+  });
+  test("should return -1", () => {
+    expect(programs.maxSum([-2, -1, -3])).toStrictEqual(-1);
+  });
+  test("should return -2", () => {
+    expect(programs.maxSum([-2])).toStrictEqual(-2);
+  });
+});
+
+// NUMBER OF SUBARRAYS EQUAL TO SUM
+describe("NUMBER OF SUBARRAYS EQUAL TO SUM", () => {
+  test("should return 1", () => {
+    expect(programs.subarraySum([-2], -2)).toStrictEqual(1);
+  });
+  test("should return 1", () => {
+    expect(programs.subarraySum([-2, -1], -1)).toStrictEqual(1);
+  });
+  test("should return 2", () => {
+    expect(programs.subarraySum([-2, -1, -1], -1)).toStrictEqual(2);
+  });
+  test("should return 2", () => {
+    expect(programs.subarraySum([-1, -2, -1], -1)).toStrictEqual(2);
+  });
+});
+
+// IS ADDITIVE SEQUENCE:
+describe("IS ADDITIVE SEQUENCE", () => {
+  test("should return true", () => {
+    expect(programs.isAdditiveSeries([8, 3, 5, 13])).toBe(true);
+  });
+  test("should return true", () => {
+    expect(programs.isAdditiveSeries([1, 1, 2, 3, 5, 8])).toBe(true);
+  });
+  test("should return false", () => {
+    expect(programs.isAdditiveSeries([-4, -4, -8, -12, -20, -32])).toBe(false);
+  });
+  test("should return false", () => {
+    expect(programs.isAdditiveSeries([-4, 0, -4, -4, -8, -12])).toBe(false);
   });
 });
 
 // THE OCCURRENCE OF A LETTER IN STRING
 describe("THE OCCURRENCE OF A LETTER IN STRING", () => {
-  test("should return ['o', 2]", () => {
-    expect(programs.letterCount("Olweny John", "o")).toStrictEqual(["o", 2]);
+  test("should return 2", () => {
+    expect(programs.letterCount("Olweny John", "o")).toStrictEqual(2);
+  });
+});
+
+// THE OCCURRENCE OF A WORD IN STRING
+describe("THE OCCURRENCE OF A WORD IN STRING", () => {
+  test("should return 2", () => {
+    expect(
+      programs.wordCount("The quick brown fox jumps over the lazy dog", "the")
+    ).toStrictEqual(2);
   });
 });
 
@@ -611,58 +473,22 @@ describe("THE OCCURRENCE OF SUBSTRING IN STRING", () => {
 
 // THE WORDS / NUMBER OF WORDS WITH SUBSTRING
 describe("THE WORDS / NUMBER OF WORDS WITH SUBSTRING", () => {
-  test("should return ", () => {
+  test("should return 4", () => {
     expect(
       programs.wordHasSubstring(
         "The quick brown fox jumps over the lazy dog",
         "o"
       )
-    ).toStrictEqual(["brown", "fox", "over", "dog"]);
+    ).toStrictEqual(4);
   });
-  test("should return ", () => {
+  test("should return 4", () => {
     expect(
       programs.wordHasSubstring(
         "John Doe has 5 oranges while Jane Doe has only 2 oranges, Jane \
     gave Mike 1 of her orange so she is now left with only 1 Orange.",
         "ORaNGe"
       )
-    ).toStrictEqual(["oranges", "oranges", "orange", "orange."]);
-  });
-});
-
-// SORTED MATRIX SEARCH
-describe("SORTED MATRIX SEARCH", () => {
-  test("should return [[ 2, 1 ], true]", () => {
-    expect(
-      programs.findElement(
-        [
-          [10, 20, 30, 40],
-          [15, 25, 35, 45],
-          [27, 29, 37, 48],
-          [32, 33, 39, 50],
-        ],
-        29
-      )
-    ).toStrictEqual([[2, 1], true]);
-  });
-});
-
-// WORD WEIGHT
-describe("WORD WEIGHT", () => {
-  test("should return 8", () => {
-    expect(programs.wordWeight("turing", 2)).toBe(8);
-  });
-});
-
-// APPLY SPELLING RULE TO FILTER() STRINGS -> cie
-describe("APPLY SPELLING RULE TO FILTER() STRINGS -> cie", () => {
-  test("should return ['recieve', 'percieve', 'concieve']", () => {
-    expect(
-      programs.spellingRule(
-        ["recieve", "deceive", "percieve", "deceit", "concieve"],
-        "cie"
-      )
-    ).toStrictEqual(["recieve", "percieve", "concieve"]);
+    ).toStrictEqual(4);
   });
 });
 
@@ -722,121 +548,167 @@ describe("PIG LATIN CONVERTER", () => {
   });
 });
 
-// STRING COMPRESSION
-describe("STRING COMPRESSION", () => {
-  test("should return a2b1c5a3", () => {
-    expect(programs.strCompression("aabCccccaaa")).toBe("a2b1c5a3");
+// LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS:
+describe("LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS", () => {
+  test("should return 0", () => {
+    expect(programs.lengthOfLongestSubstring("")).toBe(0);
   });
-  test("should return w3a2b4", () => {
-    expect(programs.strCompression("wwwaabbbb")).toBe("w3a2b4");
+  test("should return 3", () => {
+    expect(programs.lengthOfLongestSubstring("dvdf")).toBe(3);
   });
-  test("should return k4j1", () => {
-    expect(programs.strCompression("kkkkj")).toBe("k4j1");
+  test("should return 6", () => {
+    expect(programs.lengthOfLongestSubstring("abbbcabcdefef")).toBe(6);
   });
-  test("should return aab", () => {
-    expect(programs.strCompression("aab")).toBe("aab");
-  });
-});
-
-// GROUP ANAGRAMS -> SORT AN ARRAY OF STRINGS SO THAT ALL THE ANAGRAMS ARE NEXT TO EACH OTHER
-describe("GROUP ANAGRAMS -> SORT AN ARRAY OF STRINGS SO THAT ALL THE ANAGRAMS ARE NEXT TO EACH OTHER", () => {
-  test("should return [['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]", () => {
-    expect(
-      programs.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"])
-    ).toStrictEqual([["eat", "tea", "ate"], ["tan", "nat"], ["bat"]]);
-  });
-  test("should return [['321', '213'], ['897', '987', '798'], ['456']]", () => {
-    expect(
-      programs.groupAnagrams(["321", "213", "897", "456", "987", "798"])
-    ).toStrictEqual([["321", "213"], ["897", "987", "798"], ["456"]]);
-  });
-  test("should return [['']]", () => {
-    expect(programs.groupAnagrams([""])).toStrictEqual([[""]]);
-  });
-  test("should return [['a']]", () => {
-    expect(programs.groupAnagrams(["a"])).toStrictEqual([["a"]]);
+  test("should return 3", () => {
+    expect(programs.lengthOfLongestSubstring("pwwkew")).toBe(3);
   });
 });
 
-// ALTERNATING SEQUENCE -> Peaks and Valleys
-describe("ALTERNATING SEQUENCE -> Peaks and Valleys", () => {
-  test("should return [5, 1, 3, 2, 3]", () => {
-    expect(programs.peaksValleys([5, 3, 1, 2, 3])).toStrictEqual([
-      5, 1, 3, 2, 3,
-    ]);
+// LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS:
+describe("LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS", () => {
+  test("should return ACD", () => {
+    expect(programs.longestCommonSubsequence("ABCD", "ACBAD")).toBe("ACD");
   });
-  test("should return [12, 1, 10, 4, 7, 6]", () => {
-    expect(programs.peaksValleys([1, 12, 4, 6, 7, 10])).toStrictEqual([
-      12, 1, 10, 4, 7, 6,
-    ]);
+  test("should return ABCD", () => {
+    expect(programs.longestCommonSubsequence("ABCD", "ABCAD")).toBe("ABCD");
   });
-  test("should return -1", () => {
-    expect(programs.peaksValleys([])).toStrictEqual(-1);
+  test("should return AV", () => {
+    expect(programs.longestCommonSubsequence("RAVEN", "HAVOC")).toBe("AV");
   });
-  test("should return [7, 1, 6, 2, 5, 3, 4]", () => {
-    expect(programs.peaksValleys([7, 1, 2, 3, 4, 5, 6])).toStrictEqual([
-      7, 1, 6, 2, 5, 3, 4,
-    ]);
-  });
-  test("should return [9, 1, 8, 2, 7, 3, 6, 4]", () => {
-    expect(programs.peaksValleys([1, 6, 9, 4, 3, 7, 8, 2])).toStrictEqual([
-      9, 1, 8, 2, 7, 3, 6, 4,
-    ]);
+  test("should return BC", () => {
+    expect(programs.longestCommonSubsequence("ABBCC", "DBBCC")).toBe("BC");
   });
 });
 
-// COUNT VOWELS AND CONSONANTS
+// // ROTATE STRING
+// describe("ROTATE STRING", () => {
+//   test("should return ptJavaScri", () => {
+//     expect(programs.rotateString("JavaScript", 2, "right")).toBe("ptJavaScri");
+//   });
+// });
 
-// WORDS WITH MORE THAN ONE VOWEL
+// // ROTATE ARRAY
+// describe("ROTATE ARRAY", () => {
+//   test("should return [[4, 5, 1, 2, 3], [3]]", () => {
+//     expect(programs.rotateArray([1, 2, 3, 4, 5], 2, "right", 2)).toStrictEqual([
+//       [4, 5, 1, 2, 3],
+//       [3],
+//     ]);
+//   });
+// });
 
-// AN ARRAY OF EVEN SQUARE IN THE RANGE
-describe("AN ARRAY OF EVEN SQUARE IN THE RANGE", () => {
-  test("should return [0, 4, 16, 36, 64, 100]", () => {
-    expect(programs.even_squares(0, 10)).toStrictEqual([0, 4, 16, 36, 64, 100]);
-  });
-});
+// // APPLY SPELLING RULE TO FILTER() STRINGS -> cie
+// describe("APPLY SPELLING RULE TO FILTER() STRINGS -> cie", () => {
+//   test("should return ['recieve', 'percieve', 'concieve']", () => {
+//     expect(
+//       programs.spellingRule(
+//         ["recieve", "deceive", "percieve", "deceit", "concieve"],
+//         "cie"
+//       )
+//     ).toStrictEqual(["recieve", "percieve", "concieve"]);
+//   });
+// });
 
-// FIRST AND LAST CHARACTER OF EACH WORD
-describe("FIRST AND LAST CHARACTER OF EACH WORD", () => {
-  test("should return ['fr', 'yr', 'in']", () => {
-    expect(
-      programs.firstLastCharacter(["for", "your", "information"])
-    ).toStrictEqual(["fr", "yr", "in"]);
-  });
-});
+// // AN ARRAY OF EVEN SQUARE IN THE RANGE
+// describe("AN ARRAY OF EVEN SQUARE IN THE RANGE", () => {
+//   test("should return [0, 4, 16, 36, 64, 100]", () => {
+//     expect(programs.even_squares(0, 10)).toStrictEqual([0, 4, 16, 36, 64, 100]);
+//   });
+// });
 
-// IS MULTIPLE
-describe("IS MULTIPLE", () => {
-  test("should return buzz", () => {
-    expect(programs.fizzBuzz(5)).toBe("buzz");
-  });
-});
+// // FIRST AND LAST CHARACTER OF EACH WORD
+// describe("FIRST AND LAST CHARACTER OF EACH WORD", () => {
+//   test("should return ['fr', 'yr', 'in']", () => {
+//     expect(
+//       programs.firstLastCharacter(["for", "your", "information"])
+//     ).toStrictEqual(["fr", "yr", "in"]);
+//   });
+// });
 
-// IS ADDITIVE SEQUENCE / FIBONACCI SERIES
-describe("IS ADDITIVE SEQUENCE / FIBONACCI SERIES", () => {
-  test("should return true", () => {
-    expect(programs.isFibonacciSeries([8, 3, 5, 13])).toBe(true);
-  });
-  test("should return true", () => {
-    expect(programs.isFibonacciSeries([4, 4, 8, 12, 20, 32])).toBe(true);
-  });
-  test("should return false", () => {
-    expect(programs.isFibonacciSeries([-4, -4, -8, -12, -20, -32])).toBe(false);
-  });
-  test("should return false", () => {
-    expect(programs.isFibonacciSeries([-4, 0, -4, -4, -8, -12])).toBe(false);
-  });
-});
+// // SORTING ALPHABET AND NUMBERS THE RIGHT WAY
+// describe("SORTING ALPHABET AND NUMBERS THE RIGHT WAY", () => {
+//   test("should return ['a', 'A', 'B', 'b', 'c']", () => {
+//     expect(programs.sortAlpsNums(["a", "B", "A", "c", "b"])).toStrictEqual([
+//       "a",
+//       "A",
+//       "B",
+//       "b",
+//       "c",
+//     ]);
+//   });
+//   test("should return [2, 3, 4, 10, 100]", () => {
+//     expect(programs.sortAlpsNums([2, 3, 10, 4, 100])).toStrictEqual([
+//       2, 3, 4, 10, 100,
+//     ]);
+//   });
+//   test("should return ['1111','222','33','4','ant','Bug','cat','Dog']", () => {
+//     expect(
+//       programs.sortAlpsNums([
+//         "ant",
+//         "33",
+//         "Bug",
+//         "4",
+//         "cat",
+//         "1111",
+//         "Dog",
+//         "222",
+//       ])
+//     ).toStrictEqual(["1111", "222", "33", "4", "ant", "Bug", "cat", "Dog"]);
+//   });
+// });
 
-// IS PRIME NUMBER
-describe("IS PRIME NUMBER", () => {
-  test("should return false", () => {
-    expect(programs.isPrimeNumber(0)).toBe(false);
-  });
-  test("should return false", () => {
-    expect(programs.isPrimeNumber(1)).toBe(false);
-  });
-  test("should return true", () => {
-    expect(programs.isPrimeNumber(7)).toBe(true);
-  });
-});
+// // SORT THE ARRAY IN A WAY THAT NUMBERS COME FIRST AND STRINGS SECOND
+// describe("SORT THE ARRAY IN A WAY THAT NUMBERS COME FIRST AND STRINGS SECOND", () => {
+//   test("should return [4, 33, 222, 1111, 'ant', 'Bug', 'cat', 'Dog']", () => {
+//     expect(
+//       programs.firstNumsSecondAlps([
+//         "ant",
+//         33,
+//         "Bug",
+//         4,
+//         "cat",
+//         1111,
+//         "Dog",
+//         222,
+//       ])
+//     ).toStrictEqual([4, 33, 222, 1111, "ant", "Bug", "cat", "Dog"]);
+//   });
+// });
+
+// // SORT PRODUCTS
+// describe("SORT PRODUCTS", () => {
+//   test("should return [0, 1, 9, 25, 100]", () => {
+//     expect(programs.sortProducts([-5, -1, 0, 3, 10])).toStrictEqual([
+//       0, 1, 9, 25, 100,
+//     ]);
+//   });
+// });
+
+// // SORT THE OBJECT BY SALARY
+// var employees = [
+//   { name: "John", salary: 90000, hireDate: "July 1, 2010" },
+//   { name: "David", salary: 75000, hireDate: "August 15, 2009" },
+//   { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
+//   { name: "John", salary: 90000, hireDate: "July 1, 2010" },
+//   { name: "David", salary: 75000, hireDate: "August 15, 2009" },
+//   { name: "Ana", salary: 80000, hireDate: "December 12, 2011" },
+// ];
+// describe("SORT THE OBJECT BY SALARY", () => {
+//   test(`should return [
+//     { hireDate: "August 15, 2009", name: "David", salary: 75000 },
+//     { hireDate: "August 15, 2009", name: "David", salary: 75000 },
+//     { hireDate: "December 12, 2011", name: "Ana", salary: 80000 },
+//     { hireDate: "December 12, 2011", name: "Ana", salary: 80000 },
+//     { hireDate: "July 1, 2010", name: "John", salary: 90000 },
+//     { hireDate: "July 1, 2010", name: "John", salary: 90000 },
+//   ]`, () => {
+//     expect(programs.sortEmployeesBySalary(employees)).toStrictEqual([
+//       { hireDate: "August 15, 2009", name: "David", salary: 75000 },
+//       { hireDate: "August 15, 2009", name: "David", salary: 75000 },
+//       { hireDate: "December 12, 2011", name: "Ana", salary: 80000 },
+//       { hireDate: "December 12, 2011", name: "Ana", salary: 80000 },
+//       { hireDate: "July 1, 2010", name: "John", salary: 90000 },
+//       { hireDate: "July 1, 2010", name: "John", salary: 90000 },
+//     ]);
+//   });
+// });
