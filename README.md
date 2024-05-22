@@ -1,4 +1,4 @@
-# Testing Javascript Programs With Jest
+# Testing Javascript Programs with Jest
 
 ARRAYS AND STRINGS
 
