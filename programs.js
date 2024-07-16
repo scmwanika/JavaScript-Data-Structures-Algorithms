@@ -9,7 +9,8 @@ exports.subStringsArrays = function (str) {
   let result = [];
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
-      result.push(str.slice(i, j));
+      result.push([...new Set(str.slice(i, j).split(""))])
+      //result.push(str.slice(i, j));
     }
   }
   return result;
@@ -847,7 +848,7 @@ exports.maxSum = function (nums) {
   return Math.max(...accumulator);
 };
 
-// NUMBER OF SUBARRAYS EQUAL TO SUM -> method1:
+// NUMBER OF SUBARRAYS EQUAL TO SUM -> method 1:
 exports.subarraySum = function (nums, k) {
   let count = 0;
   for (let i = 0; i < nums.length; i++) {
@@ -860,30 +861,28 @@ exports.subarraySum = function (nums, k) {
   return count;
 };
 
-// NUMBER OF SUBARRAYS EQUAL TO SUM -> method2:
-exports.subarraySum1 = function (arr, k) {
-  let new_array = [];
-  let result = [];
-
-  for (i = 0; i < arr.length; i++) {
-    for (j = i + 1; j < arr.length + 1; j++) {
-      new_array.push(arr.slice(i, j));
+// COUNT SUBARRAYS EQUAL TO SUM -> method 2:
+exports.subarraySum1 = function (nums, k) {
+  let res = [];
+  let count = 0;
+  for (i = 0; i < nums.length; i++) {
+    for (j = i + 1; j < nums.length + 1; j++) {
+      res.push(nums.slice(i, j));
     }
   }
-
-  // compute sum
-  function sum(e1, e2) {
-    return +e1 + +e2;
+  // helper function to sum subarrays
+  function sum(el) {
+    return +el + +el;
   }
 
-  // push sum of subsequences to result
-  new_array.filter((item) => {
-    if (item.reduce(sum) === k) {
-      result.push(item);
+  res.filter((subarr) => {
+    // count subarrays equal to k
+    if (subarr.reduce(sum) === k) {
+      count++;
     }
   });
 
-  if (result.length > 0) return result.length;
+  if (count > 0) return count;
   return -1;
 };
 
@@ -1319,6 +1318,22 @@ exports.balancedDigit = function (nums, target) {
 };
 
 // REORDER AN ARRAY:
+var reorderArray = function (x, y) {
+  let arr = [];
+  let res = [];
+  for (let i = 0, j = 0; i < x.length, j < y.length; i++, j++) {
+    //
+    arr[y[i]] = [x[i], arr[y[i]]].flat();
+    arr = arr.flat();
+  }
+  //
+  arr.forEach((el) => {
+    if (typeof el === "number") res.push(el);
+  });
+  return res;
+};
+// invoke the function
+console.log(reorderArray([1, 2, 3, 4, 5], [0, 1, 2, 2, 1]));
 
 // FIND DUPLICATE AND MISSING NUMBER:
 exports.duplicateAndMissing = function (nums) {
