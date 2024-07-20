@@ -9,7 +9,7 @@ exports.subStringsArrays = function (str) {
   let result = [];
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
-      result.push([...new Set(str.slice(i, j).split(""))])
+      result.push([...new Set(str.slice(i, j).split(""))]);
       //result.push(str.slice(i, j));
     }
   }
@@ -1356,13 +1356,10 @@ exports.duplicateAndMissing = function (nums) {
 // SWAP UPPERCASE AND LOWERCASE LETTERS:
 exports.swapCase = function (str) {
   let new_array = [];
-
-  for (let i = 0; i < str.length; i++) {
-    if (str[i].includes(str.toLowerCase()[i]))
-      new_array.push(str[i].toUpperCase());
-    else new_array.push(str[i].toLowerCase());
-  }
-
+  str.split("").filter((el) => {
+    if (el === el.toLowerCase()) new_array.push(el.toUpperCase());
+    else new_array.push(el.toLowerCase());
+  });
   return new_array.join("");
 };
 
@@ -1424,145 +1421,113 @@ exports.lengthOfLongestSubstring = function (s) {
 
 // LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 exports.longestSubstring = function (str) {
-  let substrings = [];
+  let res;
+  let unique_substr = [];
+  let len = [];
 
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
-      substrings.push(str.slice(i, j));
-    }
-  }
+      unique_substr.push([...new Set(str.slice(i, j))].join(""));
 
-  //
-  let uniqueSubStr = [];
-  let lenUniqueSubStr = [];
-  let maxlen;
-  let result;
+      for (substr of unique_substr) {
+        // Length of each substr
+        if (str.includes(substr)) len.push(substr.length);
 
-  substrings.filter((el) => {
-    let set = [...new Set(el)];
-    uniqueSubStr.push(set.join("")); // abcdef
-  });
-
-  uniqueSubStr.filter((el) => {
-    if (str.includes(el)) {
-      lenUniqueSubStr.push(el.length);
-      maxlen = Math.max(...lenUniqueSubStr);
-
-      // Output substring with maximum length
-      if (str.includes(el) && el.length === maxlen) {
-        result = el;
+        // Substring with maximum length
+        if (str.includes(substr) && substr.length === Math.max(...len))
+          res = substr;
       }
     }
-  });
-
-  return result;
+  }
+  return res;
 };
 
 // LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
-exports.longestSubstrings = function (str1, str2) {
-  let substrings1 = [];
-  let substrings2 = [];
+exports.longestCommonSubstring = function (str1, str2) {
+  let res;
+  let substrs1 = [];
+  let substrs2 = [];
+  let comsubstr = [];
+  let len = [];
 
-  // string1
+  // String 1
   for (i = 0; i < str1.length; i++) {
     for (j = i + 1; j < str1.length + 1; j++) {
-      substrings1.push(str1.slice(i, j));
+      substrs1.push(str1.slice(i, j));
     }
   }
-  // string2
+  // String 2
   for (i = 0; i < str2.length; i++) {
     for (j = i + 1; j < str2.length + 1; j++) {
-      substrings2.push(str2.slice(i, j));
+      substrs2.push(str2.slice(i, j));
+    }
+  }
+  // Common unique substring
+  for (substr1 of substrs1) {
+    for (substr2 of substrs2) {
+      if (substr2.includes(substr1)) {
+        comsubstr.push([...new Set(substr1)].join(""));
+      }
     }
   }
 
-  //
-  let comSubStr = [];
-  let uniqueSubStr = [];
-  let lenUniqueSubStr = [];
-  let maxlen;
-  let result;
+  for (substr of comsubstr) {
+    // Length of each substr
+    len.push(substr.length);
 
-  substrings1.filter((el) => {
-    substrings2.filter((item) => {
-      if (item.includes(el)) {
-        comSubStr.push(el);
-      }
-    });
-  });
+    // Substring with maximum length
+    if (substr.length === Math.max(...len)) res = substr;
+  }
 
-  // unique substrings -> can be adjusted for repeating characters as shown in comments
-  comSubStr.filter((el) => {
-    let set = [...new Set(el)]; // OR remove, then;
-    uniqueSubStr.push(set.join("")); // uniqueSubStr.push(el);
-    lenUniqueSubStr.push(set.join("").length); // lenUniqueSubStr.push(el.length);
-    maxlen = Math.max(...lenUniqueSubStr);
-
-    // Output substring with maximum length
-    uniqueSubStr.filter((el) => {
-      if (el.length === maxlen) {
-        result = el;
-      }
-    });
-  });
-  return result;
+  return res;
 };
 
 // LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 exports.longestCommonSubsequence = function (str1, str2) {
-  let subseq1 = [];
-  let subseq2 = [];
-  let ressubseq1 = [];
-  let ressubseq2 = [];
+  let res;
+  let subseqs1 = [];
+  let subseqs2 = [];
+  let comsubseq = [];
+  let len = [];
 
-  // subsequence1
+  // Subsequence 1
   let subs1 = (subsets, value) =>
     subsets.concat(subsets.map((set) => [...set, value]));
-  subseq1 = str1.split("").reduce(subs1, [subseq1]);
-  // .....
-  subseq1.filter((el) => {
-    ressubseq1.push(el.join(""));
-  });
+  str1
+    .split("")
+    .reduce(subs1, [subseqs1])
+    .filter((el) => {
+      subseqs1.push(el.join(""));
+    });
 
-  // subsequence2
+  // Subsequence 2
   let subs2 = (subsets, value) =>
     subsets.concat(subsets.map((set) => [...set, value]));
-  subseq2 = str2.split("").reduce(subs2, [subseq2]);
-  // .....
-  subseq2.filter((el) => {
-    ressubseq2.push(el.join(""));
-  });
-
-  //
-  let comSubSeq = [];
-  let uniqueSubSeq = [];
-  let lenUniqueSubSeq = [];
-  let maxlen;
-  let result;
-
-  ressubseq1.filter((el) => {
-    ressubseq2.filter((item) => {
-      if (item.includes(el)) {
-        comSubSeq.push(el);
-      }
+  str2
+    .split("")
+    .reduce(subs2, [subseqs2])
+    .filter((el) => {
+      subseqs2.push(el.join(""));
     });
-  });
 
-  // unique subsequence -> can be adjusted for repeating characters as shown in comments
-  comSubSeq.filter((el) => {
-    let set = [...new Set(el)]; // OR remove, then;
-    uniqueSubSeq.push(set.join("")); // uniqueSubStr.push(el);
-    lenUniqueSubSeq.push(set.join("").length); // lenUniqueSubStr.push(el.length);
-    maxlen = Math.max(...lenUniqueSubSeq);
-
-    // Output subsequence with maximum length
-    uniqueSubSeq.filter((el) => {
-      if (el.length === maxlen) {
-        result = el;
+  // Common unique subsequence
+  for (subseq1 of subseqs1) {
+    for (subseq2 of subseqs2) {
+      if (subseq2.includes(subseq1)) {
+        comsubseq.push([...new Set(subseq1)].join(""));
       }
-    });
-  });
-  return result;
+    }
+  }
+
+  for (subseq of comsubseq) {
+    // Length of each subseq
+    len.push(subseq.length);
+
+    // Subsequence with maximum length
+    if (subseq.length === Math.max(...len)) res = subseq;
+  }
+
+  return res;
 };
 
 /* ------------------------------------------------------------------------------------ */
@@ -1619,3 +1584,130 @@ var splitArray = function (arr) {
 // invoke the function
 console.log(splitArray([1, 3, 5, 7, 9])); // [[1, 3, 5], [7, 9]]
 console.log(splitArray([1, 3, 7, 9])); // [[1, 3], [7, 9]]
+
+/* ------------------------------------------------------------------------------------ */
+
+// Substrings & Subarrays:
+var str1 = "123";
+var str2 = "1234";
+console.log(str2.includes(str1)); // true
+
+var arr1 = [1, 2, 3];
+var arr2 = [1, 2, 3, 4];
+console.log(arr2.join("").includes(arr1.join(""))); // true
+
+// Given:
+var str1 = "31";
+var str2 = "1234";
+
+// Subsequences:
+var subsequence = function (str1, str2) {
+  let idx = 0;
+  str2.split("").filter((el) => {
+    if (el.includes(str1[idx])) idx++;
+  });
+  return idx === str1.length;
+};
+// invoke the function
+console.log(subsequence(str1, str2)); // false
+
+// Subsets:
+var subset = function (str1, str2) {
+  let idx = 0;
+  str2
+    .split("")
+    .sort()
+    .filter((el) => {
+      if (el.includes(str1.split("").sort()[idx])) idx++;
+    });
+  return idx === str1.length;
+};
+// invoke the function
+console.log(subset(str1, str2)); // true
+
+// Index of last substring:
+var indexLastSubstring = function (string, substring) {
+  if (string.includes(substring)) return string.lastIndexOf(substring);
+  return -1;
+};
+// invoke the function
+console.log(indexLastSubstring("sadbutsad", "sad")); // 6
+console.log(indexLastSubstring("leetcode", "leeto")); // -1
+
+var str = "The quick brown fox jumps over the lazy dog";
+console.log(str.match(/the/gi)); // [ 'The', 'the' ]
+console.log(str.replace(/the/gi, "THE")); // THE quick brown fox jumps over THE lazy dog
+console.log(str.replace(/ /gi, ",").split(","));
+/*
+    [ 'The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog' ]
+*/
+
+/* ------------------------------------------------------------------------------------ */
+
+// Sum digits:
+var sumDigits = function (nums) {
+  let total = 0;
+  nums.forEach((el) => {
+    total += +el; // total = total + el;
+  });
+  return total;
+};
+// invoke the function
+console.log(sumDigits([1, 2, 3, 4, 5])); // 15
+
+var countWord = function (str) {
+  let nums = str
+    .toLowerCase()
+    .replace(/[^A-Za-z ]/g, "")
+    .replace(/ /gi, ",")
+    .split(",");
+
+  // Get object
+  let obj = {};
+  let obj1 = [];
+  nums.forEach((el) => {
+    if (obj[el]) return obj[el]++;
+    else obj[el] = 1;
+  });
+  Object.entries(obj).filter((el) => {
+    if (!el.includes("")) obj1.push(el);
+  });
+  return obj1.sort();
+};
+// invoke the function
+console.log(
+  countWord("This is the TEXT. Text, text, text - THIS TEXT! Is this the text?")
+); // [ [ 'is', 2 ], [ 'text', 6 ], [ 'the', 2 ], [ 'this', 3 ] ]
+
+var sequence = function (nums) {
+  let newseq = [];
+
+  nums.filter((el) => {
+    if (el % 2 === 0) newseq.push(el);
+    else newseq.push(-el);
+  });
+
+  return newseq;
+};
+// invoke the function
+console.log(sequence([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])); // [ -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12 ]
+
+// Swapping values:
+let [a, b, c] = [2, 1, 3];
+console.log([a, b, c]); // Prints [2, 1, 3]
+console.log([a, b, c].sort()); // Prints [1, 2, 3]
+
+let [x, y] = [1, 2]; // Same as var x=1, y=2
+[x, y] = [x + 1, y + 1]; // Same as x=x+1, y=y+1
+console.log([x, y]); // Prints [2,3]
+[x, y] = [y, x]; // Swap the value of the two variables
+console.log([x, y]); // Prints [3,2]
+
+var test = function (nums) {
+  nums.forEach((el) => {
+    if (el % 2 === 0) el.pop();
+  });
+  return nums.flat();
+};
+// invoke the function
+console.log(test([[1], [2], [3], [4], [5]])); // [ 1, 3, 5 ]

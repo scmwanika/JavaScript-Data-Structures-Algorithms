@@ -576,7 +576,7 @@ var duplicateAndMissing = function (nums) {
     if (e1 > e2) return -1;
     return 1;
   });
-  return [Number(dup[0]), nums[0] + 1];
+  return [Number(dup), nums[0] + 1];
 };
 // invoke the function
 console.log(duplicateAndMissing([1, 2, 3, 4, 3])); // [3, 5]
