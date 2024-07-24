@@ -501,35 +501,20 @@ var countCharacters = function (string) {
 console.log(countCharacters("The quick brown fox jumps over the lazy dog")); // o
 
 // BALANCED DIGIT:
-var balancedDigit1 = function (nums, target) {
+var balancedDigit = function (nums1, nums2) {
   // sum elements
   function sum(e1, e2) {
     return +e1 + +e2;
   }
 
   // compute missing value
-  let missing;
-  missing = target - nums.reduce(sum);
+  let missing = null;
+  missing = nums2.reduce(sum) - nums1.reduce(sum);
   return missing;
 };
 // invoke the function
-console.log(balancedDigit1([3, 7, 1, 8, 1, 3], 25)); // 2
-console.log(balancedDigit1([1, 2, 3, 4], 11)); // 1
-
-var balancedDigit2 = function (nums, target) {
-  // sum elements
-  function sum(e1, e2) {
-    return +e1 + +e2;
-  }
-
-  // compute missing value
-  let missing;
-  missing = target.reduce(sum) - nums.reduce(sum);
-  return missing;
-};
-// invoke the function
-console.log(balancedDigit2([3, 7, 1, 8, 1, 3], [5, 5, 15])); // 2
-console.log(balancedDigit2([1, 2, 3, 4], [11])); // 1
+console.log(balancedDigit([3, 7, 1, 8, 1, 3], [5, 5, 15])); // 2
+console.log(balancedDigit([1, 2, 3, 4], [11])); // 1
 
 // let arr = [];
 // arr[0] = 1;

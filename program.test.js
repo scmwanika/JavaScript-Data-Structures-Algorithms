@@ -439,59 +439,6 @@ describe("IS ADDITIVE SEQUENCE", () => {
   });
 });
 
-// THE OCCURRENCE OF A LETTER IN STRING
-describe("THE OCCURRENCE OF A LETTER IN STRING", () => {
-  test("should return 2", () => {
-    expect(programs.letterCount("Olweny John", "o")).toStrictEqual(2);
-  });
-});
-
-// THE OCCURRENCE OF A WORD IN STRING
-describe("THE OCCURRENCE OF A WORD IN STRING", () => {
-  test("should return 2", () => {
-    expect(
-      programs.wordCount("The quick brown fox jumps over the lazy dog", "the")
-    ).toStrictEqual(2);
-  });
-});
-
-// THE OCCURRENCE OF SUBSTRING IN STRING
-describe("THE OCCURRENCE OF SUBSTRING IN STRING", () => {
-  test("should return 2", () => {
-    expect(programs.countSubstrings("Mwanikan", "an")).toBe(2);
-  });
-  test("should return 4", () => {
-    expect(
-      programs.countSubstrings(
-        "John Doe has 5 oranges while Jane Doe has only 2 oranges, Jane \
-    gave Mike 1 of her orange so she is now left with only 1 Orange.",
-        "ORaNGe"
-      )
-    ).toBe(4);
-  });
-});
-
-// THE WORDS / NUMBER OF WORDS WITH SUBSTRING
-describe("THE WORDS / NUMBER OF WORDS WITH SUBSTRING", () => {
-  test("should return 4", () => {
-    expect(
-      programs.wordHasSubstring(
-        "The quick brown fox jumps over the lazy dog",
-        "o"
-      )
-    ).toStrictEqual(4);
-  });
-  test("should return 4", () => {
-    expect(
-      programs.wordHasSubstring(
-        "John Doe has 5 oranges while Jane Doe has only 2 oranges, Jane \
-    gave Mike 1 of her orange so she is now left with only 1 Orange.",
-        "ORaNGe"
-      )
-    ).toStrictEqual(4);
-  });
-});
-
 // SWAP UPPERCASE AND LOWERCASE LETTERS DURING TRAVERSING
 describe("SWAP UPPERCASE AND LOWERCASE LETTERS DURING TRAVERSING", () => {
   test("should return HEllO", () => {

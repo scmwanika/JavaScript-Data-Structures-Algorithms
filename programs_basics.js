@@ -374,99 +374,6 @@ console.log(flattenArray(arr));
 
 /* ------------------------------------------------------------------------------------ */
 
-// TRAVERSE A STRING (return consonants)
-var traverseString = function (s) {
-  let consonants = "";
-  for (let i = 0; i < s.length; i++) {
-    if (!"aeiou".includes(s[i])) consonants = consonants + s[i];
-  }
-  return consonants;
-};
-// invoke the function
-console.log(traverseString("Mwanika")); // Mwnk
-console.log(traverseString("The quick brown fox jumps over the lazy dog")); // Th qck brwn fx jmps vr th lzy dg
-
-// TRAVERSE A STRING (return consonants)
-var traverseString2 = function (s) {
-  let consonants = [];
-  for (let i = 0; i < s.length; i++) {
-    if (!"aeiou".includes(s[i])) consonants.push(s[i]);
-  }
-  return consonants.join("");
-};
-// invoke the function
-console.log(traverseString2("Mwanika")); // Mwnk
-console.log(traverseString2("The quick brown fox jumps over the lazy dog")); // Th qck brwn fx jmps vr th lzy dg
-
-// TRAVERSE AN ARRAY OF STRINGS
-var traverseArray = function (a) {
-  let characters = [];
-  a.forEach((el) => {
-    for (let i = 0; i < el.length; i++) {
-      characters.push(el[i]);
-    }
-  });
-  return characters;
-};
-// invoke the function
-console.log(traverseArray(["Mwanika", "Stephen", "Crispin"]));
-
-// same as:
-var a = ["Mwanika", "Stephen", "Crispin"];
-console.log(
-  String(a)
-    .replace(/[^A-Za-z]/g, "")
-    .split("")
-);
-
-// REVERSE STRING -> method1
-var reverseString = function (str) {
-  var reversed_string = "";
-  for (var i = str.length - 1; i > -1; i--) {
-    reversed_string = reversed_string + str[i];
-  }
-  return reversed_string;
-};
-// invoke the function
-console.log(reverseString("Mwanika")); // akinawM
-console.log(reverseString("JavaScript is awesome")); // emosewa si tpircSavaJ
-
-// REVERSE STRING -> method2
-var reverseString2 = function (str) {
-  var reversed_string = [];
-  str.split("").forEach((el) => {
-    reversed_string.unshift(el);
-  });
-  return reversed_string.join("");
-};
-// invoke the function
-console.log(reverseString2("Mwanika")); // akinawM
-console.log(reverseString2("JavaScript is awesome")); // emosewa si tpircSavaJ
-
-// Reverse words in a string:--------------------------------------
-function reverseWords(str) {
-  let reverseWordArr = str
-    .split(" ")
-    .map((word) => word.split("").reverse().join(""));
-  return reverseWordArr.join(" ");
-}
-// invoke the function
-console.log(reverseWords("JavaScript is awesome")); // tpircSavaJ si emosewa
-
-// Reverse an array:------------------------------------
-function reverseArray(arr) {
-  var reversed_array = [];
-  while (arr.length) {
-    reversed_array.push(arr.pop());
-  }
-
-  return reversed_array;
-}
-// invoke the function
-console.log(reverseArray([1, 2, 3, 4, 5, 6, 7])); // [7, 6, 5, 4, 3, 2, 1]
-
-/* ------------------------------------------------------------------------------------ */
-
 // Methods to remove duplicates from an array:
 var arr = ["scale", "happy", "strength", "peace", "happy", "happy"];
 
@@ -530,6 +437,46 @@ function countDuplicates(arr) {
 // invoke the function
 var arr = ["cat", "book", "pencil", "book", "cat", "cat"];
 console.log(countDuplicates(arr)); // 3
+
+/* ------------------------------------------------------------------------------------ */
+// MIN, MAX, GENERATING RANDOM VALUES:
+
+// Min:
+function findMin(arr) {
+  var min = arr[0];
+  for (var i = 1; i < arr.length; ++i) {
+    if (arr[i] < min) {
+      min = arr[i];
+    }
+  }
+  return min;
+}
+
+// Finding the minimum value of an array:
+var nums = [];
+for (var i = 0; i < 100; ++i) {
+  nums[i] = Math.floor(Math.random() * 101);
+}
+var minValue = findMin(nums);
+console.log(minValue);
+
+// Max:
+function findMax(arr) {
+  var max = arr[0];
+  for (var i = 1; i < arr.length; ++i) {
+    if (arr[i] > max) {
+      max = arr[i];
+    }
+  }
+  return max;
+}
+
+//
+var a = [];
+for (var i = 0; i < 10; ++i) {
+  a[i] = Math.floor(Math.random() * 100 + 1);
+}
+console.log(a);
 
 /* ------------------------------------------------------------------------------------ */
 
@@ -703,101 +650,54 @@ console.log(solution([1, 2, 3])); // 4
 console.log(solution([-1, -3])); // 1
 console.log(solution([1, 2, 4, 6, 3, 7, 8])); // 5
 
-/* 2SUM
-Given an array of integers nums and an integer target, return indices of the two numbers 
-such that they add up to target. You may assume that each input would have exactly one
-solution, and you may not use the same element twice.You can return the answer in any order. 
-*/
-var twoSum = function (nums, target) {
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      if (nums[i] + nums[j] === target) {
-        return [i, j];
-      }
-    }
-  }
-  return null;
-};
-// invoke the function
-console.log(twoSum([2222222, 2222222], 4444444)); // [0, 1]
-console.log(twoSum([2, 7, 11, 15], 18)); // [1, 2]
-console.log(twoSum([2, 7, 11, 15], 17)); // [0, 3]
-
-// 2SUM SORTED ARRAY
-var twoSum = function (nums, target) {
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      if (nums[i] + nums[j] === target) {
-        return [i + 1, j + 1];
-      }
-    }
-  }
-  return null;
-};
-// invoke the function
-console.log(twoSum([2, 7, 11, 15], 9)); // [1, 2]
-console.log(twoSum([2, 3, 4], 6)); // [1, 3]
-console.log(twoSum([-1, 0], -1)); // [1, 2]
-
 /* ------------------------------------------------------------------------------------ */
 
 // SORTING AND SEARCHING ALGORITHMS
 
 // (i) Implement Quick Sort Algorithm:
-const quickSort = (originalArr) => {
-  if (originalArr.length <= 1) {
-    return originalArr;
+function quickSort(nums) {
+  if (nums.length == 0) {
+    return [];
   }
-  var [leftArr, rightArr, sortedArr, pivot, len] = [
-    [],
-    [],
-    [],
-    originalArr.pop(), // originalArr.shift() --- refer to Stack & Queue
-    originalArr.length,
-  ];
-  for (var idx = 0; idx < len; idx++) {
-    if (originalArr[idx] <= pivot) {
-      // using pivot value start comparing
-      leftArr.push(originalArr[idx]); // leftArr.unshift(originalArr[idx])
-    } else {
-      rightArr.push(originalArr[idx]); // rightArr.unshift(originalArr[idx])
-    }
+  let left_of_pivote = [];
+  let pivot = nums[0];
+  let right_of_pivot = [];
+
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] < pivot) left_of_pivote.push(nums[i]);
+    else right_of_pivot.push(nums[i]);
   }
-  // array will be returned untill sorting occurs
-  return sortedArr.concat(quickSort(leftArr), pivot, quickSort(rightArr));
-};
+  return quickSort(left_of_pivote).concat(pivot, quickSort(right_of_pivot));
+}
 // invoke the function
 console.log(quickSort([1, 6, 3, 4, 5, 1, 0, 4, 8])); // [0, 1, 1, 3, 4, 4, 5, 6, 8]
 
 // (ii) Implement Merge Sort Algorithm:
 /* Sorted Merge: You are given two sorted arrays, A and B, where A has a large enough buffer at the
 end to hold B. Write a method to merge B into A in sorted order. */
-const mergeSort = (originalArr) => {
+// compare the arrays element by element and return the concatenated result
+var mergeArrays = function (arrA, arrB) {
+  let [sortedArr, leftIndex, rightIndex] = [[], 0, 0];
+  while (leftIndex < arrA.length && rightIndex < arrB.length) {
+    if (arrA[leftIndex] < arrB[rightIndex]) {
+      sortedArr.push(arrA[leftIndex]);
+      leftIndex++;
+    } else {
+      sortedArr.push(arrB[rightIndex]);
+      rightIndex++;
+    }
+  }
+  return sortedArr.concat(arrA.slice(leftIndex)).concat(arrB.slice(rightIndex));
+};
+//
+var mergeSort = function (originalArr) {
   if (originalArr.length <= 1) {
     return originalArr;
   }
-  var [middle] = [Math.floor(originalArr.length / 2)];
-  var [arrA, arrB] = [originalArr.slice(0, middle), originalArr.slice(middle)];
-
-  // compare the arrays element by element and return the concatenated result
-  const merge = (arrA, arrB) => {
-    var [sortedArr, leftIndex, rightIndex] = [[], 0, 0];
-    while (leftIndex < arrA.length && rightIndex < arrB.length) {
-      if (arrA[leftIndex] < arrB[rightIndex]) {
-        sortedArr.push(arrA[leftIndex]);
-        leftIndex++;
-      } else {
-        sortedArr.push(arrB[rightIndex]);
-        rightIndex++;
-      }
-    }
-    return sortedArr
-      .concat(arrA.slice(leftIndex))
-      .concat(arrB.slice(rightIndex));
-  };
-
+  let [middle] = [Math.floor(originalArr.length / 2)];
+  let [arrA, arrB] = [originalArr.slice(0, middle), originalArr.slice(middle)];
   // from previous function
-  return merge(mergeSort(arrA), mergeSort(arrB));
+  return mergeArrays(mergeSort(arrA), mergeSort(arrB));
 };
 // invoke the function
 var originalArr = [1, 6, 3, 4, 5, 1, 0, 4, 8];
@@ -811,25 +711,27 @@ EXAMPLE
 lnput: find 5 in {15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14}
 Output: 8 (the index of 5 in the array) */
 // BINARY SEARCH (return the index of an element searched in a sorted array):
-const binarySearch = (arr, ele) => {
-  var [lowIndex, highIndex] = [0, arr.length - 1];
-  while (lowIndex <= highIndex) {
-    var midIndex = Math.floor((lowIndex + highIndex) / 2);
-    if (arr[midIndex] === ele) {
-      return midIndex;
-    }
-    if (arr[midIndex] > ele) {
-      highIndex = midIndex - 1;
+// (iii) Implement Binary Search Algorithm:
+function binarySearch(arr, data) {
+  let lowestIdx = 0;
+  let highestIdx = arr.length - 1;
+
+  while (lowestIdx <= highestIdx) {
+    let midIdx = Math.floor((highestIdx + lowestIdx) / 2);
+    if (arr[midIdx] < data) {
+      lowestIdx = midIdx + 1;
+    } else if (arr[midIdx] > data) {
+      highestIdx = midIdx - 1;
     } else {
-      lowIndex = midIndex + 1;
+      return midIdx;
     }
   }
-  return null; // if not found: same as return -1
-};
+  return -1;
+}
 // invoke the function
 console.log(binarySearch([15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14], 5)); // 8
 console.log(binarySearch([1, 2, 3, 4, 5], 5)); // 4
-console.log(binarySearch([1, 2, 3, 4, 5], 6)); // null
+console.log(binarySearch([1, 2, 3, 4, 5], 6)); // -1
 
 /* ------------------------------------------------------------------------------------ */
 
@@ -883,106 +785,6 @@ var subtractDays = function (date, days) {
 
 /* ------------------------------------------------------------------------------------ */
 
-// ROTATE STRING BY K PLACES
-var rotateString = function (string, k, direction) {
-  // Rotate Right (Clockwise)
-  if (direction === "right") {
-    k = string.length - k;
-    let str1 = string.slice(k, string.length);
-    let str2 = string.slice(0, k);
-    let merge_string = str1 + str2;
-    return merge_string;
-  }
-
-  // Rotate Left (Anti-Clockwise)
-  if (direction === "left") {
-    let str1 = string.slice(k, string.length);
-    let str2 = string.slice(0, k);
-    let merge_string = str1 + str2;
-    return merge_string;
-  }
-};
-
-// ROTATE ARRAY BY K PLACES
-var rotateArray = function (array, k, direction) {
-  // Rotate Right (Clockwise)
-  if (direction === "right") {
-    var merge_array = null;
-    k = array.length - k;
-    let arr1 = array.slice(k, array.length);
-    let arr2 = array.slice(0, k);
-    merge_array = arr1.concat(arr2);
-    return merge_array;
-  }
-
-  // Rotate Left (Anti-Clockwise)
-  if (direction === "left") {
-    var merge_array = null;
-    let arr1 = array.slice(k, array.length);
-    let arr2 = array.slice(0, k);
-    merge_array = arr1.concat(arr2);
-    return merge_array;
-  }
-};
-
-/* ------------------------------------------------------------------------------------ */
-
-/* LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS -> USING POINTERS
-To Solve this problem we need to have two pointers that both start at 0 index, or the first char of the given
-string, and an empty set also a var for the longestSubstringLength We start looping over the string chars and
-check if the char is not in our set we add it to the set then we move the right pointer, increasing the sliding window, get
-the max between longestSubstringLength, which is intialized as 0 and our chars set size or length, and so on untill
-we find a char existed in the list, if so we delete the first char in our set then we increase the left pointer to start
-from the next Letter */
-
-var lengthOfLongestSubstring = function (s) {
-  // initialize variables
-  let i = 0;
-  let j = 0;
-  let longestSub = 0;
-  let uniquechars = [];
-
-  while (i < s.length) {
-    // The char is not found in the array
-    if (!uniquechars.includes(s[i])) {
-      uniquechars.push(s[i]);
-      longestSub = Math.max(longestSub, uniquechars.length);
-      i++;
-    } else {
-      // The char is found in the array
-      uniquechars.shift(s[j]);
-      j++;
-    }
-  }
-  return longestSub;
-};
-// invoke the function
-console.log(lengthOfLongestSubstring("")); // "" -> 0
-console.log(lengthOfLongestSubstring("dvdf")); // vdf -> 3
-console.log(lengthOfLongestSubstring("abbbcabcdefef")); // abcdef -> 6
-console.log(lengthOfLongestSubstring("pwwkew")); // wke, kew -> 3
-
-// LONGEST COMMON SUBSEQUENCE
-var longestCommonSubsequence = function (s1, s2) {
-  if (s1.length === 0 || s2.length === 0) return "";
-  if (s1.slice(-1) === s2.slice(-1))
-    return (
-      longestCommonSubsequence(s1.slice(0, -1), s2.slice(0, -1)) + s1.slice(-1)
-    );
-
-  let subseq1 = longestCommonSubsequence(s1.slice(0, -1), s2);
-  let subseq2 = longestCommonSubsequence(s1, s2.slice(0, -1));
-  if (subseq1.length > subseq2.length) return subseq1;
-  return subseq2;
-};
-// invoke the function
-// console.log(longestCommonSubsequence("ABCD", "ACBAD")); // ACD
-// console.log(longestCommonSubsequence("ABCD", "ABCAD")); // ABCD
-// console.log(longestCommonSubsequence("RAVEN", "HAVOC")); // AV
-// console.log(slongestCommonSubsequence("ABBCC", "DBBCC")); // BBCC
-
-/* ------------------------------------------------------------------------------------ */
-
 // PALINDROMES AND ANAGRAMS (PERMUTATIONS)
 
 /* VALID PALINDROME
@@ -1029,104 +831,6 @@ var isPermutation = function (s1, s2) {
 // invoke the function
 console.log(isPermutation("anagram", "nagaram")); // true
 console.log(isPermutation("rat", "car")); // false
-
-/* ------------------------------------------------------------------------------------ */
-
-// SORT THE ARRAY IN A WAY THAT NUMBERS COME FIRST AND STRINGS SECOND
-var firstNumsSecondAlps = function (arr) {
-  let [nums, alps] = [[], []];
-
-  nums = arr.filter((el) => typeof el === "number");
-  alps = arr.filter((el) => typeof el === "string");
-
-  nums.sort(function (e1, e2) {
-    if (e1 > e2) return 1;
-    return -1;
-  });
-  alps.sort(function (e1, e2) {
-    e1 = e1.toLowerCase();
-    e2 = e2.toLowerCase();
-    if (e1 > e2) return 1;
-    return -1;
-  });
-
-  return nums.concat(alps);
-};
-
-/* REGULAR EXPRESSION (RegExp)
-Return a sorted string without symbols and numbers. */
-var regExp = function (s) {
-  // transform string then sort
-  s = s
-    .replace(/[^A-Za-z]/g, "")
-    .split("")
-    .sort(function (e1, e2) {
-      // Alphabet Case-Insensitive Sort
-      e1 = e1.toLowerCase();
-      e2 = e2.toLowerCase();
-      if (e1 > e2) return 1;
-      return -1;
-    });
-  return s.join("");
-};
-
-/* ------------------------------------------------------------------------------------ */
-
-// CHECK IF A STRING CONTAINS ANOTHER STRING
-console.log("Programming language".includes("programming")); // false
-console.log("Programming language".includes("Programming")); // true
-console.log("Programming".includes("Programming language")); // false
-console.log(["Programming", "language"].includes("Programming")); // true
-
-// COMMON CHARACTERS
-var commonCharacters = function (s1, s2) {
-  let comChars = [];
-  // common characters
-  s1.split("").filter((el) => {
-    if (s2.split("").includes(el)) {
-      comChars.push(el);
-    }
-  });
-  return comChars.join("");
-};
-
-// NOT COMMON CHARACTERS
-var notCommonCharacters = function (s1, s2) {
-  let notComChars = [];
-  // not common characters in s1
-  s1.split("").filter((el) => {
-    if (!s2.split("").includes(el)) {
-      notComChars.push(el);
-    }
-  });
-  // not common characters in s2
-  s2.split("").filter((el) => {
-    if (!s1.split("").includes(el)) {
-      notComChars.push(el);
-    }
-  });
-
-  return notComChars.join("");
-};
-
-// COMMON ELEMENTS SUM -> type insensitive
-var commonElements = function (a1, a2) {
-  let comElements = [];
-  let sum = 0;
-
-  a1.filter((e1) => {
-    a2.filter((e2) => {
-      // type insensitive
-      if (e1 == e2) {
-        comElements.push(e1);
-      }
-    });
-  });
-
-  return comElements.reduce((e1, e2) => {
-    return +e1 + +e2;
-  }, sum);
-};
 
 /* ------------------------------------------------------------------------------------ */
 

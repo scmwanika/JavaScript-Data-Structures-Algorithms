@@ -9,8 +9,7 @@ exports.subStringsArrays = function (str) {
   let result = [];
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
-      result.push([...new Set(str.slice(i, j).split(""))]);
-      //result.push(str.slice(i, j));
+      result.push(str.slice(i, j));
     }
   }
   return result;
@@ -434,13 +433,14 @@ code to find an element in the array. You may assume that the array was original
 in increasing order. */
 
 exports.searchRotatedArray = function (nums, target) {
-  let index = [];
-  for (let [idx, el] of nums.entries()) {
-    if (el === target) {
-      index.push(idx);
+  let indices = [];
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === target) {
+      indices.push(i);
     }
   }
-  return index;
+
+  return indices;
 };
 
 /* SORTED SEARCH, NO SIZE: 
@@ -452,14 +452,14 @@ integers, find the index at which an element x occurs. If x occurs multiple time
 return any index. */
 
 exports.sortedSearch = function (listy, element) {
-  let indices = [];
-  for (let [idx, el] of listy.entries()) {
-    if (el === element) {
-      indices.push(idx);
+  let index = [];
+  for (let i = 0; i < listy.length; i++) {
+    if (listy[i] === element) {
+      index.push(i);
     }
   }
-  // index / indices of searched element
-  return indices[0]; // return only one index
+
+  return index[0];
 };
 
 /* SPARSE SEARCH: 
@@ -470,14 +470,14 @@ Input: ball, ["at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""]
 Output: 4 */
 
 exports.sparseSearch = function (array, element) {
-  let indices = [];
-  for (let [idx, el] of array.entries()) {
-    if (el === element) {
-      indices.push(idx);
+  let index = [];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === element) {
+      index.push(i);
     }
   }
-  // index / indices of searched element
-  return indices[0]; // return only one index
+
+  return index[0];
 };
 
 /* SORT BIG FILE: 
@@ -641,31 +641,28 @@ exports.reverseWords = function (s) {
   return reverseArr.join(" ");
 };
 
-// LENGTH OF LAST WORD
-exports.lengthOfLastWord = function (s) {
-  let arr = s.replaceAll(" ", ",").split(",");
-  let filtered_words = [];
-
-  arr.filter((word) => {
-    if (word.length > 0) filtered_words.push(word);
-  });
-
-  return filtered_words[filtered_words.length - 1].length;
+// Length of the last word:
+exports.lastWordLength = function (str) {
+  let reversedString = [];
+  str
+    .replace(/ /gi, ",")
+    .split(",")
+    .forEach((word) => {
+      reversedString.unshift(word);
+    });
+  return reversedString[0].length;
 };
 
-// COUNT MAXIMUM HEIGHT
-exports.countMax = function (nums) {
-  //let el = Math.max(...nums); or
-  let el = nums.sort(function (e1, e2) {
-    // descending numerical sort
-    return e2 - e1;
-  })[0];
-  let count = 0;
-
-  nums.filter((num) => {
-    if (num === el) count++;
+// Count maximum element in the array:
+exports.countMaxElement = function (nums) {
+  nums.sort(function (e1, e2) {
+    if (e1 > e2) return -1;
+    return 1;
   });
-
+  let count = 0;
+  nums.filter((el) => {
+    if (el === nums[0]) count++;
+  });
   return count;
 };
 
@@ -681,8 +678,8 @@ exports.singleLetter = function (s) {
       else obj[el] = 1;
     });
   // Get letters with count = 1
-  let letters = Object.keys(obj).filter((x) => {
-    return obj[x] === 1;
+  let letters = Object.keys(obj).filter((k) => {
+    return obj[k] === 1;
   });
 
   if (letters.length === 0) return -1;
@@ -701,8 +698,8 @@ exports.singleNumber = function (nums) {
   });
 
   // Get numbers with count = 1
-  let numbers = Object.keys(obj).filter((x) => {
-    return obj[x] === 1;
+  let numbers = Object.keys(obj).filter((k) => {
+    return obj[k] === 1;
   });
 
   // Convert numbers to datatype "number"
@@ -744,73 +741,6 @@ exports.searchInsert = function (nums, target) {
   }
   // index / indices of searched element
   return Number(indices); // if indices.length > 1, then element is Duplicate
-};
-
-// SEARCH IN ROTATED SORTED ARRAY
-exports.search = function (nums, target) {
-  for (let [idx, el] of nums.entries()) {
-    if (el === target) {
-      return true;
-    }
-  }
-  // else
-  return false;
-};
-
-// SORT ALPHABET AND NUMBERS ASCENDING
-exports.sortAlpsNums = function (a) {
-  a.sort(function (e1, e2) {
-    // alphabet case-insensitive sort
-    if ((typeof e1 && typeof e2) === "string") {
-      e1 = e1.toLowerCase();
-      e2 = e2.toLowerCase();
-      if (e1 > e2) return 1;
-      return -1;
-    }
-    // numerical sort
-    if ((typeof e1 && typeof e2) === "number") {
-      if (e1 > e2) return 1;
-      return -1;
-    }
-  });
-  return a;
-};
-
-// SORT DESCENDING
-exports.solution = function (a) {
-  a.sort(function (e1, e2) {
-    // numerical sort
-    return e2 - e1;
-  });
-  return a;
-};
-
-// MISSING NUMBER:
-exports.missingNumber = function (a1, a2) {
-  let missing = [];
-  // missing number in a2
-  a1.filter((el) => {
-    if (!a2.includes(el)) {
-      missing.push(el);
-    }
-  });
-  // missing number in a1
-  a2.filter((el) => {
-    if (!a1.includes(el)) {
-      missing.push(el);
-    }
-  });
-
-  return missing;
-};
-
-// FIND MINIMUM IN ROTATED SORTED ARRAY
-exports.findMin = function (nums) {
-  let el = nums.sort(function (e1, e2) {
-    // descending numerical sort
-    return e1 - e2;
-  })[0];
-  return el;
 };
 
 // ROTATE STRING RIGHT (CLOCKWISE) BY K PLACES
@@ -863,24 +793,20 @@ exports.subarraySum = function (nums, k) {
 
 // COUNT SUBARRAYS EQUAL TO SUM -> method 2:
 exports.subarraySum1 = function (nums, k) {
-  let res = [];
   let count = 0;
-  for (i = 0; i < nums.length; i++) {
-    for (j = i + 1; j < nums.length + 1; j++) {
-      res.push(nums.slice(i, j));
-    }
-  }
-  // helper function to sum subarrays
-  function sum(el) {
-    return +el + +el;
+
+  // sum elements
+  function sum(e1, e2) {
+    return +e1 + +e2;
   }
 
-  res.filter((subarr) => {
-    // count subarrays equal to k
-    if (subarr.reduce(sum) === k) {
-      count++;
+  for (i = 0; i < nums.length; i++) {
+    for (j = i + 1; j < nums.length + 1; j++) {
+      if (nums.slice(i, j).reduce(sum) === k) {
+        count++;
+      }
     }
-  });
+  }
 
   if (count > 0) return count;
   return -1;
@@ -914,8 +840,8 @@ let employees = [
 
 // SORT THE OBJECT BY SALARY (ASCENDING SORT)
 exports.sortEmployeesBySalary = function (employees) {
-  employees.sort((obj1, obj2) => {
-    if (obj1.salary > obj2.salary) return 1;
+  employees.sort((prop1, prop2) => {
+    if (prop1.salary > prop2.salary) return 1;
     return -1;
   });
   return employees;
@@ -958,54 +884,34 @@ exports.uniqueObjectArray2 = function (arr) {
 
 /* ------------------------------------------------------------------------------------ */
 
-// THE OCCURRENCE OF A LETTER IN STRING
-exports.letterCount = function (s, letter) {
-  let indices = [];
-  let a = s.toLowerCase().split("");
-
-  for (let [idx, el] of a.entries()) {
-    if (el.includes(letter.toLowerCase())) {
-      indices.push(idx);
-    }
-  }
-  return indices.length;
+// The count of a substring in a string:
+exports.countSubstring = function (char, string) {
+  let pattern = new RegExp(char, "gi");
+  let arr = string.match(pattern);
+  if (arr !== null) return arr.length;
+  return -1;
 };
 
-// THE OCCURRENCE OF A WORD IN STRING
-exports.wordCount = function (s, word) {
-  let indices = [];
-  word = word.toLowerCase();
-  let a = s.toLowerCase().replaceAll(" ", ",").split(",");
+// The count of a character in a string:
+exports.countCharacter = function (char, string) {
+  let count = 0;
+  string = string.replace(/ /gi, "").split("");
 
-  for (let [idx, el] of a.entries()) {
-    if (el.includes(word)) {
-      indices.push(idx);
-    }
-  }
-
-  return indices.length;
+  for ([idx, el] of string.entries())
+    if (el.toLowerCase() === char.toLowerCase()) count++;
+  if (count > 0) return count;
+  return -1;
 };
 
-// THE OCCURRENCE OF SUBSTRING IN STRING
-exports.countSubstrings = function (str, substr) {
-  let regexp = new RegExp(substr, "gi");
-  let count = str.match(regexp).length;
-  return count;
-};
+// The count of a word in a string:
+exports.countWord = function (char, string) {
+  let count = 0;
+  string = string.replace(/ /gi, ",").split(",");
 
-// THE WORDS / NUMBER OF WORDS WITH SUBSTRING
-exports.wordHasSubstring = function (string, substring) {
-  let words = [];
-  substring = substring.toLowerCase();
-  let arr = string.toLowerCase().replaceAll(" ", ",").split(",");
-
-  arr.filter((item) => {
-    if (item.includes(substring)) {
-      words.push(item);
-    }
-  });
-
-  return words.length; // ['oranges', 'oranges', 'orange', 'orange.']
+  for ([idx, el] of string.entries())
+    if (el.toLowerCase() === char.toLowerCase()) count++;
+  if (count > 0) return count;
+  return -1;
 };
 
 /* ------------------------------------------------------------------------------------ */
@@ -1083,31 +989,32 @@ exports.longestConsecutive = function (nums) {
 
 /* ------------------------------------------------------------------------------------ */
 
-// THE MOST FREQUENT CHARACTER OR WORD IN A STRING
-exports.mostFrequent = function (s) {
+// The count of characters in a string:
+exports.characterFrequency = function (string) {
   let obj = {};
-  s.toLowerCase()
-    .replace(/[^A-Za-z]/g, "")
+  string
+    .toLowerCase()
+    .replace(/ /gi, "")
     .split("")
-
-    // // for word count
-    // .replaceAll(" ", ",")
-    // .split(",")
-
     .forEach((el) => {
       if (obj[el]) return obj[el]++;
-      obj[el] = 1;
+      return (obj[el] = 1);
     });
+  //return obj;
+  /*
+      {
+        t: 2, h: 2, e: 3, q: 1, u: 2, i: 1, c: 1, k: 1, b: 1, r: 2, o: 4, w: 1, n: 1,
+        f: 1, x: 1, j: 1, m: 1, p: 1, s: 1, v: 1, l: 1, a: 1, z: 1, y: 1, d: 1, g: 1
+      }
+  */
 
-  //return obj; // {m: 1, w: 1, a: 2, n: 1, i: 1, k: 1}
-
-  //return Math.max(...Object.values(obj)); // 2 -> count of the most frequent character
+  //return Math.max(...Object.values(obj)); // 4
 
   return Object.keys(obj)
-    .filter((x) => {
-      return obj[x] === Math.max(...Object.values(obj));
+    .filter((k) => {
+      return obj[k] === Math.max(...Object.values(obj));
     })
-    .join(""); // a -> the most frequent character
+    .join(); // o
 };
 
 /* ------------------------------------------------------------------------------------ */
@@ -1167,78 +1074,32 @@ exports.moreThanOneVowel = function (words) {
   });
   //
   return Object.keys(obj)
-    .filter((x) => {
-      return obj[x] > 1;
+    .filter((k) => {
+      return obj[k] > 1;
     })
     .join(); // aeiou,FOUR -> words with more than one vowel
 };
 
 /* ------------------------------------------------------------------------------------ */
 
-// EVEN LENGTH SUBSETS:
-exports.subSequence = function (arr) {
-  let newArray = [];
-  let evenSubsequence = [];
-  let oldSubsequence = [];
+// EVEN LENGTH SUBSTRINGS:
+exports.evenLengthSubstring = function (arr) {
+  let res = [];
 
-  for (i = 0; i < arr.length; i++) {
-    for (j = i + 1; j < arr.length + 1; j++) {
-      newArray.push(arr.slice(i, j));
-    }
-  }
-
-  // filter subsequences from newArray
-  newArray.filter((item) => {
-    if (item.length % 2 === 0) evenSubsequence.push(item);
-    else oldSubsequence.push(item);
-  });
-
-  // sum even subsequences
+  // sum elements
   function sum(e1, e2) {
     return +e1 + +e2;
   }
-  if (evenSubsequence.length > 0)
-    // then compute total sum
-    return evenSubsequence.flat().reduce(sum);
-  // else
+
+  for (i = 0; i < arr.length; i++) {
+    for (j = i + 1; j < arr.length + 1; j++) {
+      if (arr.slice(i, j).length % 2 === 0)
+        res.push(arr.slice(i, j).reduce(sum)); // [ 5, 12, 6, 7 ]
+    }
+  }
+
+  if (res.length > 0) return res.reduce(sum);
   return -1;
-
-  // return { evenSubsequence, oldSubsequence };
-
-  // return {
-  //   even_sum: evenSubsequence.flat().reduce(sum),
-  //   old_sum: oldSubsequence.flat().reduce(sum),
-  // };
-
-  // return { Total: newArray.flat().reduce(sum) };
-};
-// // invoke the function
-// exports. array = [1, 4, 2, 5];
-// console.log(subSequence(array));
-/*
-{
-  evenSubsequence: [[1, 4], [1, 4, 2, 5], [4, 2], [2, 5]],
-  oldSubsequence: [[1], [1, 4, 2], [4], [4, 2, 5], [2], [5]]
-}
-
-{ even_sum: 30, old_sum: 30 }
-
-{ Total: 60 }
-*/
-
-// SORT PRODUCTS:
-exports.sortProducts = function (a) {
-  let res = [];
-  a.forEach((el) => {
-    // square element and append product to res array
-    res.push(el * el);
-    // then sort res array
-    res.sort(function (e1, e2) {
-      if (e1 > e2) return 1;
-      return -1;
-    });
-  });
-  return res;
 };
 
 // WORD WEIGHT:
@@ -1247,21 +1108,18 @@ exports.wordWeight = function (s, n) {
   let weight = "";
   let sum1 = 0;
   let sum2 = 0;
-  s = s.toLowerCase();
 
-  for (let i = 0; i < s.length; i++) {
-    weight += alphabet.indexOf(s[i]) + 1;
-  }
+  for (let char of s.toLowerCase()) weight += alphabet.indexOf(char) + 1;
 
-  // Step1: n = 1;
+  // Step1:
   if (n === 1) {
     weight.split("").forEach((item) => {
       sum1 += +item;
     });
-    return sum1;
+    return sum1; //
   }
 
-  // Step2: n = 2;
+  // Step2:
   if (n === 2) {
     weight.split("").forEach((item) => {
       sum1 += +item;
@@ -1272,53 +1130,54 @@ exports.wordWeight = function (s, n) {
       .forEach((item) => {
         sum2 += +item;
       });
-    return sum2;
+    return sum2; //
   }
 
   return -1;
 };
 
 // PAIRING:
-exports.pairing = function (nums) {
+exports.countPairs = function (nums) {
   let obj = {};
+
+  // sum elements
+  function sum(e1, e2) {
+    return +e1 + +e2;
+  }
+
   nums.forEach((el) => {
-    if (obj[el]) {
-      return obj[el]++;
-    }
-    obj[el] = 1;
+    if (obj[el]) return obj[el]++;
+    return (obj[el] = 1);
   });
 
   //
   let pairs = [];
-  obj = Object.values(obj); // [2, 4]
-  obj.filter((el) => {
+  let arr = Object.values(obj); // [2, 4]
+  arr.filter((el) => {
     if (el % 2 === 0) pairs.push(el / 2); // if no remainder
     else pairs.push((el - 1) / 2);
   });
 
-  // helper function to sum pairs array
-  function sum(e1, e2) {
-    return +e1 + +e2;
-  }
   // total pairs
-  if (pairs.reduce(sum) === 0) return "none";
+  if (pairs.reduce(sum) === 0) return -1; // "none"
   else return pairs.reduce(sum);
 };
 
 // BALANCED DIGIT:
-exports.balancedDigit = function (nums, target) {
-  // helper function to sum nums array
+exports.balancedDigit = function (nums1, nums2) {
+  // sum elements
   function sum(e1, e2) {
     return +e1 + +e2;
   }
+
   // compute missing value
-  let missing;
-  missing = target - nums.reduce(sum);
+  let missing = null;
+  missing = nums2.reduce(sum) - nums1.reduce(sum);
   return missing;
 };
 
 // REORDER AN ARRAY:
-var reorderArray = function (x, y) {
+exports.reorderArray = function (x, y) {
   let arr = [];
   let res = [];
   for (let i = 0, j = 0; i < x.length, j < y.length; i++, j++) {
@@ -1332,25 +1191,26 @@ var reorderArray = function (x, y) {
   });
   return res;
 };
-// invoke the function
-console.log(reorderArray([1, 2, 3, 4, 5], [0, 1, 2, 2, 1]));
 
-// FIND DUPLICATE AND MISSING NUMBER:
+// DUPLICATE AND MISSING NUMBER:
 exports.duplicateAndMissing = function (nums) {
   let obj = {};
   nums.forEach((el) => {
     if (obj[el]) return obj[el]++;
-    obj[el] = 1;
+    return (obj[el] = 1);
   });
-  //
+
+  // find duplicate
   let dup = Object.keys(obj).filter((x) => {
     return obj[x] > 1;
   });
-  //
+
+  // sort in descending order
   nums.sort(function (e1, e2) {
-    return e2 - e1;
+    if (e1 > e2) return -1;
+    return 1;
   });
-  return [Number(dup[0]), nums[0] + 1];
+  return [Number(dup), nums[0] + 1];
 };
 
 // SWAP UPPERCASE AND LOWERCASE LETTERS:
@@ -1421,22 +1281,23 @@ exports.lengthOfLongestSubstring = function (s) {
 
 // LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 exports.longestSubstring = function (str) {
-  let res;
-  let unique_substr = [];
+  let res = null;
+  let unique_substr = null;
   let len = [];
 
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
-      unique_substr.push([...new Set(str.slice(i, j))].join(""));
+      unique_substr = [...new Set(str.slice(i, j))].join("");
 
-      for (substr of unique_substr) {
-        // Length of each substr
-        if (str.includes(substr)) len.push(substr.length);
+      // Length of each substr
+      if (str.includes(unique_substr)) len.push(unique_substr.length);
 
-        // Substring with maximum length
-        if (str.includes(substr) && substr.length === Math.max(...len))
-          res = substr;
-      }
+      // Substring with maximum length
+      if (
+        str.includes(unique_substr) &&
+        unique_substr.length === Math.max(...len)
+      )
+        res = unique_substr;
     }
   }
   return res;
@@ -1444,39 +1305,33 @@ exports.longestSubstring = function (str) {
 
 // LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 exports.longestCommonSubstring = function (str1, str2) {
-  let res;
+  let res = null;
   let substrs1 = [];
   let substrs2 = [];
-  let comsubstr = [];
+  let comsubstr = null;
   let len = [];
 
-  // String 1
-  for (i = 0; i < str1.length; i++) {
-    for (j = i + 1; j < str1.length + 1; j++) {
+  // String 1 and String 2
+  for (i = 0; i < str1.length, i < str2.length; i++) {
+    for (j = i + 1; j < str1.length + 1, j < str2.length + 1; j++) {
       substrs1.push(str1.slice(i, j));
-    }
-  }
-  // String 2
-  for (i = 0; i < str2.length; i++) {
-    for (j = i + 1; j < str2.length + 1; j++) {
       substrs2.push(str2.slice(i, j));
     }
   }
+
   // Common unique substring
-  for (substr1 of substrs1) {
-    for (substr2 of substrs2) {
+  for (let substr1 of substrs1) {
+    for (let substr2 of substrs2) {
       if (substr2.includes(substr1)) {
-        comsubstr.push([...new Set(substr1)].join(""));
+        comsubstr = [...new Set(substr1)].join("");
+
+        // Length of each substr
+        len.push(comsubstr.length);
+
+        // Substring with maximum length
+        if (comsubstr.length === Math.max(...len)) res = comsubstr;
       }
     }
-  }
-
-  for (substr of comsubstr) {
-    // Length of each substr
-    len.push(substr.length);
-
-    // Substring with maximum length
-    if (substr.length === Math.max(...len)) res = substr;
   }
 
   return res;
@@ -1484,10 +1339,10 @@ exports.longestCommonSubstring = function (str1, str2) {
 
 // LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 exports.longestCommonSubsequence = function (str1, str2) {
-  let res;
+  let res = null;
   let subseqs1 = [];
   let subseqs2 = [];
-  let comsubseq = [];
+  let comsubseq = null;
   let len = [];
 
   // Subsequence 1
@@ -1511,43 +1366,24 @@ exports.longestCommonSubsequence = function (str1, str2) {
     });
 
   // Common unique subsequence
-  for (subseq1 of subseqs1) {
-    for (subseq2 of subseqs2) {
+  for (let subseq1 of subseqs1) {
+    for (let subseq2 of subseqs2) {
       if (subseq2.includes(subseq1)) {
-        comsubseq.push([...new Set(subseq1)].join(""));
+        comsubseq = [...new Set(subseq1)].join("");
+
+        // Length of each subseq
+        len.push(comsubseq.length);
+
+        // Subsequence with maximum length
+        if (comsubseq.length === Math.max(...len)) res = comsubseq;
       }
     }
-  }
-
-  for (subseq of comsubseq) {
-    // Length of each subseq
-    len.push(subseq.length);
-
-    // Subsequence with maximum length
-    if (subseq.length === Math.max(...len)) res = subseq;
   }
 
   return res;
 };
 
 /* ------------------------------------------------------------------------------------ */
-
-// CASE 1:
-var obj1 = { meow: 2, aeiou: 5, FOUR: 2 };
-console.log(Object.entries(obj1)); // [[ 'meow', 2 ], [ 'aeiou', 5 ], [ 'FOUR', 2 ]]
-console.log(Object.values(obj1)); // [2, 5, 2]
-console.log(Object.keys(obj1)); // ['meow', 'aeiou', 'FOUR']
-
-// CASE 2:
-var obj2 = [
-  ["meow", 2],
-  ["aeiou", 5],
-  ["FOUR", 2],
-];
-console.log(Object.entries(obj2));
-// [["0", ["meow", 2]], ["1", ["aeiou", 5]], ["2", ["FOUR", 2]]]
-console.log(Object.values(obj2)); // [[ 'meow', 2 ], [ 'aeiou', 5 ], [ 'FOUR', 2 ]]
-console.log(Object.keys(obj2)); // ['0', '1', '2']
 
 /* Given five positive integers, find the minimum and maximum values that can be
 calculated by summing exactly four of the five integers. Then print the respective minimum
@@ -1643,71 +1479,3 @@ console.log(str.replace(/ /gi, ",").split(","));
 */
 
 /* ------------------------------------------------------------------------------------ */
-
-// Sum digits:
-var sumDigits = function (nums) {
-  let total = 0;
-  nums.forEach((el) => {
-    total += +el; // total = total + el;
-  });
-  return total;
-};
-// invoke the function
-console.log(sumDigits([1, 2, 3, 4, 5])); // 15
-
-var countWord = function (str) {
-  let nums = str
-    .toLowerCase()
-    .replace(/[^A-Za-z ]/g, "")
-    .replace(/ /gi, ",")
-    .split(",");
-
-  // Get object
-  let obj = {};
-  let obj1 = [];
-  nums.forEach((el) => {
-    if (obj[el]) return obj[el]++;
-    else obj[el] = 1;
-  });
-  Object.entries(obj).filter((el) => {
-    if (!el.includes("")) obj1.push(el);
-  });
-  return obj1.sort();
-};
-// invoke the function
-console.log(
-  countWord("This is the TEXT. Text, text, text - THIS TEXT! Is this the text?")
-); // [ [ 'is', 2 ], [ 'text', 6 ], [ 'the', 2 ], [ 'this', 3 ] ]
-
-var sequence = function (nums) {
-  let newseq = [];
-
-  nums.filter((el) => {
-    if (el % 2 === 0) newseq.push(el);
-    else newseq.push(-el);
-  });
-
-  return newseq;
-};
-// invoke the function
-console.log(sequence([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])); // [ -1, 2, -3, 4, -5, 6, -7, 8, -9, 10, -11, 12 ]
-
-// Swapping values:
-let [a, b, c] = [2, 1, 3];
-console.log([a, b, c]); // Prints [2, 1, 3]
-console.log([a, b, c].sort()); // Prints [1, 2, 3]
-
-let [x, y] = [1, 2]; // Same as var x=1, y=2
-[x, y] = [x + 1, y + 1]; // Same as x=x+1, y=y+1
-console.log([x, y]); // Prints [2,3]
-[x, y] = [y, x]; // Swap the value of the two variables
-console.log([x, y]); // Prints [3,2]
-
-var test = function (nums) {
-  nums.forEach((el) => {
-    if (el % 2 === 0) el.pop();
-  });
-  return nums.flat();
-};
-// invoke the function
-console.log(test([[1], [2], [3], [4], [5]])); // [ 1, 3, 5 ]

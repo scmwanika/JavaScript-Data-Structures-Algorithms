@@ -1,7 +1,7 @@
 var count_email_domains = function (emails, urls) {
   /* Approach:
         - Initialize domains with empty array
-        - Extract domain from emails and urls and append to domains array 
+        - Extract domain from emails and urls and append to domains array
         */
   let domains = [];
 
@@ -46,18 +46,13 @@ console.log(
   )
 );
 
-// Multi Search: Given a string b and an array of smaller strings T, design a method to search b for
-// each small string in T.
-// T = {"is", "ppi", "hi", "sis", "i", "ssippi"}
-// b = "mississippi"
-
 // Missing Two: You are given an array with all the numbers from 1 to N appearing exactly once,
 // except for one number that is missing. How can you find the missing number in O(N) time and
 // 0( 1) space? What if there were two numbers missing?
 
 /* ------------------------------------------------------------------------------------ */
 
-// Pairs Sum:
+// Pairs Sum: -> also 3Sum and more ...
 var pairs_sum = function (nums, k) {
   let res = [];
   let pair = [];
@@ -81,6 +76,31 @@ var pairs_sum = function (nums, k) {
 console.log(pairs_sum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 4, 6 ], [ 3, 7 ], [ 2, 8 ], [ 1, 9 ] ]
 console.log(pairs_sum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 4, 6 ], [ 3, 7 ], [ 1, 9 ], [ 1, 9 ] ]
 console.log(pairs_sum([5, 6, 7, 8, 9], 10)); // -1
+console.log(pairs_sum([4, 5, 6, 6, 7], 11)); // [ [ 5, 6 ], [ 5, 6 ], [ 4, 7 ] ]
+
+/* 2Sum:
+Given an array of integers nums and an integer target, return indices of the two numbers 
+such that they add up to target. You may assume that each input would have exactly one
+solution, and you may not use the same element twice.You can return the answer in any order. 
+*/
+var twoSum = function (nums, target) {
+  let pair = [];
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] === target) {
+        pair.push([nums[i], nums[j]]);
+        //pair.push([i, j]);
+      }
+    }
+  }
+  if (pair.length > 0) return pair;
+  return -1;
+};
+// invoke the function
+console.log(twoSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 1, 9 ], [ 2, 8 ], [ 3, 7 ], [ 4, 6 ] ]
+console.log(twoSum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 1, 9 ], [ 1, 9 ], [ 3, 7 ], [ 4, 6 ] ]
+console.log(twoSum([5, 6, 7, 8, 9], 10)); // -1
+console.log(twoSum([4, 5, 6, 6, 7], 11)); // [ [ 4, 7 ], [ 5, 6 ], [ 5, 6 ] ]
 
 // Count Two's:
 var count_twos = function (nums) {
@@ -160,7 +180,7 @@ console.log(
 
 // Contiguous sequence with the largest sum:
 var largest_sequence = function (nums) {
-  let res;
+  let res = null;
   let total = [];
   let largest_total = [];
 
@@ -202,22 +222,23 @@ console.log(subSequencesSubsets([])); // [ ] -> -1
 
 // LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 var longestSubstring = function (str) {
-  let res;
-  let unique_substr = [];
+  let res = null;
+  let unique_substr = null;
   let len = [];
 
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
-      unique_substr.push([...new Set(str.slice(i, j))].join(""));
+      unique_substr = [...new Set(str.slice(i, j))].join("");
 
-      for (substr of unique_substr) {
-        // Length of each substr
-        if (str.includes(substr)) len.push(substr.length);
+      // Length of each substr
+      if (str.includes(unique_substr)) len.push(unique_substr.length);
 
-        // Substring with maximum length
-        if (str.includes(substr) && substr.length === Math.max(...len))
-          res = substr;
-      }
+      // Substring with maximum length
+      if (
+        str.includes(unique_substr) &&
+        unique_substr.length === Math.max(...len)
+      )
+        res = unique_substr;
     }
   }
   return res;
@@ -230,39 +251,33 @@ console.log(longestSubstring("")); // undefined
 
 // LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 var longestCommonSubstring = function (str1, str2) {
-  let res;
+  let res = null;
   let substrs1 = [];
   let substrs2 = [];
-  let comsubstr = [];
+  let comsubstr = null;
   let len = [];
 
-  // String 1
-  for (i = 0; i < str1.length; i++) {
-    for (j = i + 1; j < str1.length + 1; j++) {
+  // String 1 and String 2
+  for (i = 0; i < str1.length, i < str2.length; i++) {
+    for (j = i + 1; j < str1.length + 1, j < str2.length + 1; j++) {
       substrs1.push(str1.slice(i, j));
-    }
-  }
-  // String 2
-  for (i = 0; i < str2.length; i++) {
-    for (j = i + 1; j < str2.length + 1; j++) {
       substrs2.push(str2.slice(i, j));
     }
   }
+
   // Common unique substring
-  for (substr1 of substrs1) {
-    for (substr2 of substrs2) {
+  for (let substr1 of substrs1) {
+    for (let substr2 of substrs2) {
       if (substr2.includes(substr1)) {
-        comsubstr.push([...new Set(substr1)].join(""));
+        comsubstr = [...new Set(substr1)].join("");
+
+        // Length of each substr
+        len.push(comsubstr.length);
+
+        // Substring with maximum length
+        if (comsubstr.length === Math.max(...len)) res = comsubstr;
       }
     }
-  }
-
-  for (substr of comsubstr) {
-    // Length of each substr
-    len.push(substr.length);
-
-    // Substring with maximum length
-    if (substr.length === Math.max(...len)) res = substr;
   }
 
   return res;
@@ -275,10 +290,10 @@ console.log(longestCommonSubstring("ABCD", "ABCAD")); // ABC
 
 // LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 var longestCommonSubsequence = function (str1, str2) {
-  let res;
+  let res = null;
   let subseqs1 = [];
   let subseqs2 = [];
-  let comsubseq = [];
+  let comsubseq = null;
   let len = [];
 
   // Subsequence 1
@@ -302,20 +317,18 @@ var longestCommonSubsequence = function (str1, str2) {
     });
 
   // Common unique subsequence
-  for (subseq1 of subseqs1) {
-    for (subseq2 of subseqs2) {
+  for (let subseq1 of subseqs1) {
+    for (let subseq2 of subseqs2) {
       if (subseq2.includes(subseq1)) {
-        comsubseq.push([...new Set(subseq1)].join(""));
+        comsubseq = [...new Set(subseq1)].join("");
+
+        // Length of each subseq
+        len.push(comsubseq.length);
+
+        // Subsequence with maximum length
+        if (comsubseq.length === Math.max(...len)) res = comsubseq;
       }
     }
-  }
-
-  for (subseq of comsubseq) {
-    // Length of each subseq
-    len.push(subseq.length);
-
-    // Subsequence with maximum length
-    if (subseq.length === Math.max(...len)) res = subseq;
   }
 
   return res;
