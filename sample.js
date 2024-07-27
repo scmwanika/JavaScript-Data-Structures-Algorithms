@@ -127,7 +127,7 @@ have no more than one billion non-negative integers. */
 var missingInt = function (nums) {
   let missing = [];
 
-  for (let start = 1; start < nums.length; start++) {
+  for (let start = 1; start <= nums.length; start++) {
     if (!nums.includes(start)) {
       missing.push(start);
     }

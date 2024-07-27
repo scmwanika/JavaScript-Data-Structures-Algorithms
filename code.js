@@ -138,6 +138,7 @@ var multi_search = function (str, substr) {
 
   substr.forEach((el) => {
     if (str.includes(el)) idx.push(str.indexOf(el));
+    else idx.push(-1);
   });
 
   return idx;
@@ -145,7 +146,7 @@ var multi_search = function (str, substr) {
 // invoke the function
 console.log(
   multi_search("mississippi", ["is", "ppi", "hi", "sis", "i", "ssippi"])
-); // [ 1, 8, 3, 1, 5 ]
+); // [ 1, 8, -1, 3, 1, 5 ]
 
 // Word frequencies:
 var word_frequencies = function (book, word) {
@@ -203,7 +204,7 @@ var largest_sequence = function (nums) {
 // invoke the function
 console.log(largest_sequence([2, -8, 3, -2, 4, -10])); // [ 3, -2, 4 ] -> 5
 
-// Contiguous subsequence with the largest sum:.................................................
+// Contiguous subsequence with the largest sum:
 var subSequencesSubsets = function (nums) {
   let res = [];
 
@@ -247,7 +248,7 @@ var longestSubstring = function (str) {
 console.log(longestSubstring("abbbcabcdefef")); // abcdef
 console.log(longestSubstring("dvdf")); // vdf
 console.log(longestSubstring("pwwkew")); // kew
-console.log(longestSubstring("")); // undefined
+console.log(longestSubstring("")); // null
 
 // LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 var longestCommonSubstring = function (str1, str2) {
@@ -338,3 +339,203 @@ console.log(longestCommonSubsequence("raven", "havoc")); // av
 console.log(longestCommonSubsequence("abbcc", "dbbcc")); // bc
 console.log(longestCommonSubsequence("ABCD", "ACBAD")); // ACD
 console.log(longestCommonSubsequence("ABCD", "ABCAD")); // ABCD
+
+// Length of Longest Consective Sequence:
+var longestConsective = function (nums) {
+  count = 1;
+  longestCount = null;
+  nums.sort(function (e1, e2) {
+    return e1 - e2;
+  });
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] + 1 === nums[i + 1]) {
+      count++;
+      longestCount = Math.max(count);
+    } else count = 1;
+  }
+  if (nums.length === 0) return 0;
+  return longestCount;
+};
+
+// invoke the function
+console.log(longestConsective([100, 4, 200, 1, 3, 2])); // 4
+console.log(longestConsective([0, 3, 7, 2, 5, 8, 4, 6, 0, 1])); // 9
+console.log(longestConsective([])); // 0
+console.log(longestConsective([9, 1, 4, 7, 3, -1, 0, 5, 8, -1, 6])); // 7
+
+// Implement a function to find the missing element in an array:
+// Given an array nums of N integers,
+// return the smallest positive integer (greater than 0) that does not occur in nums.
+// First Missing Postive:
+var firstMissingPositive = function (nums) {
+  let i = 1;
+  while (i <= nums.length) {
+    if (!nums.includes(i)) return i;
+    i++;
+  }
+  return i;
+};
+// invoke the function
+console.log(firstMissingPositive([1, 2, 0])); // 3
+console.log(firstMissingPositive([3, 4, -1, 1])); // 2
+console.log(firstMissingPositive([7, 8, 9, 11, 12])); // 1
+console.log(firstMissingPositive([0])); // 1
+console.log(firstMissingPositive([1])); // 2
+console.log(firstMissingPositive([2, 1])); // 3
+
+// Missing Number:
+var missingNumber = function (nums) {
+  let missing = null;
+
+  for (let start = 1; start <= nums.length; start++) {
+    if (!nums.includes(start)) {
+      missing = start;
+    }
+  }
+  return missing;
+};
+// invoke the function
+console.log(missingNumber([3, 0, 1])); // 2
+console.log(missingNumber([0, 1])); // 2
+
+// Maximum subarray sum:
+var maxSum = function (nums) {
+  let total = [];
+  function sum(e1, e2) {
+    return e1 + e2;
+  }
+
+  for (i = 0; i < nums.length; i++) {
+    for (j = i + 1; j < nums.length + 1; j++) {
+      total.push(nums.slice(i, j).reduce(sum));
+    }
+  }
+
+  return Math.max(...total);
+};
+// invoke the function
+console.log(maxSum([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // [ 4, -1, 2, 1 ] -> 6
+
+// Maximum subarray product:
+var maxProduct = function (nums) {
+  let total = [];
+  function product(e1, e2) {
+    return e1 * e2;
+  }
+
+  for (i = 0; i < nums.length; i++) {
+    for (j = i + 1; j < nums.length + 1; j++) {
+      total.push(nums.slice(i, j).reduce(product));
+    }
+  }
+
+  return Math.max(...total);
+};
+// invoke the function
+console.log(maxProduct([2, 3, -2, 4])); // [ 2, 3 ] -> 6
+console.log(maxProduct([-2, 0, -1])); // [ 0 ] -> 0
+
+// Count subarrays with score less than k:
+var countSubarrays = function (nums, k) {
+  let lessThan = 0;
+  function sum(e1, e2) {
+    return e1 + e2;
+  }
+
+  for (i = 0; i < nums.length; i++) {
+    for (j = i + 1; j < nums.length + 1; j++) {
+      if (nums.slice(i, j).reduce(sum) * nums.slice(i, j).length < k)
+        lessThan++;
+    }
+  }
+
+  return lessThan;
+};
+// invoke the function
+console.log(countSubarrays([2, 1, 4, 3, 5], 10)); // 6
+
+/* ------------------------------------------------------------------------------------ */
+
+// Delete and sort:
+var deleteAndSort = function (nums) {
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] % 2 === 0) delete nums[i];
+  }
+  return Object.values(nums).sort(function (e1, e2) {
+    return e1 - e2;
+  });
+};
+// invoke the function
+console.log(deleteAndSort([11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])); // [ 1, 3, 5, 7, 9, 11 ]
+
+// Sort people:
+var sortPeople = function (names, heights) {
+  let obj = [];
+  for (let i = 0; i < names.length, i < heights.length; i++) {
+    obj.push({ name: names[i], height: heights[i] });
+  }
+  obj.sort(function (prop1, prop2) {
+    return prop2.height - prop1.height;
+  });
+  //
+  let sorted_names = [];
+  obj.forEach((row) => {
+    sorted_names.push(row.name);
+  });
+  return sorted_names;
+};
+// invoke the function
+console.log(sortPeople(["Mary", "John", "Emma"], [180, 165, 170])); // [ 'Mary', 'Emma', 'John' ]
+/*
+[
+  { name: 'Mary', height: 180 },
+  { name: 'Emma', height: 170 },
+  { name: 'John', height: 165 }
+] */
+
+// Count word and sort:
+var countWord = function (str) {
+  let nums = str
+    .toLowerCase()
+    .replace(/[^A-Za-z ]/g, "")
+    .replace(/ /gi, ",")
+    .split(",");
+
+  // Get object
+  let obj = {};
+  nums.forEach((el) => {
+    if (obj[el]) return obj[el]++;
+    return (obj[el] = 1);
+  });
+
+  // Implement Dictionary
+  let dict = [];
+  for (
+    let i = 0;
+    i < Object.keys(obj).length, i < Object.values(obj).length;
+    i++
+  ) {
+    dict.push({ word: Object.keys(obj)[i], count: Object.values(obj)[i] });
+  }
+  dict.sort(function (prop1, prop2) {
+    return prop1.count - prop2.count;
+  });
+
+  //
+  let sorted_words = [];
+  dict.forEach((row) => {
+    sorted_words.push(row.word);
+  });
+
+  //
+  let x = [];
+  sorted_words.filter((el) => {
+    if (el.length > 0) x.push(el);
+  });
+
+  return x;
+};
+// invoke the function
+console.log(
+  countWord("This is the TEXT. Text, text, text - THIS TEXT! Is this the text?")
+); // [ 'is', 'the', 'this', 'text' ]
