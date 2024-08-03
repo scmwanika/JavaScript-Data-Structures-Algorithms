@@ -1,31 +1,26 @@
 var count_email_domains = function (emails, urls) {
   /* Approach:
-        - Initialize domains with empty array
-        - Extract domain from emails and urls and append to domains array
+        - search for domain in emails array that exactly match domain in urls array
+        - extract only the matching domain from emails array and append to urls array
+        - add the prefix www. while appending to urls array
+
+        Assumption:
+        urls array is large enough to hold email domains
+
+        Data structures:
+        Array, Dictionary
         */
-  let domains = [];
 
   // Traverse emails and remove characters before the domain
-  // Append the remaining characters to domains
+  // Append the remaining characters to urls array and prefix with www.
   emails.filter((el) => {
-    domains.push(el.split("@")[1]);
+    if (urls.includes("www." + el.split("@")[1]))
+      urls.push("www." + el.split("@")[1]);
   });
 
-  // Traverse urls and remove characters before the domain
-  // Append the remaining characters to domains
-  urls.filter((el) => {
-    domains.push(el.split("www.")[1]);
-  });
-
-  // Traverse domains and add prefix to each domain
-  let prefix_domain = [];
-  domains.filter((domain) => {
-    if (urls.includes("www." + domain)) prefix_domain.push("www." + domain);
-  });
-
-  // Get object key count
-  let obj = [];
-  prefix_domain.forEach((domain) => {
+  // Get urls count with a dictionary
+  let obj = {};
+  urls.forEach((domain) => {
     if (obj[domain]) return obj[domain]++;
     return (obj[domain] = 1);
   });
@@ -36,7 +31,7 @@ var count_email_domains = function (emails, urls) {
     domain_count.push(k, v - 1);
   });
 
-  return domain_count; // [ 'www.a.com': 2, 'www.b.com': 1, 'www.c.com': 0 ]
+  return domain_count;
 };
 // invoke the function
 console.log(
@@ -44,18 +39,14 @@ console.log(
     ["foo@a.com", "bar@a.com", "baz@b.com", "qux@d.com"],
     ["www.a.com", "www.b.com", "www.c.com"]
   )
-);
-
-// Missing Two: You are given an array with all the numbers from 1 to N appearing exactly once,
-// except for one number that is missing. How can you find the missing number in O(N) time and
-// 0( 1) space? What if there were two numbers missing?
+); // [ 'www.a.com': 2, 'www.b.com': 1, 'www.c.com': 0 ]
 
 /* ------------------------------------------------------------------------------------ */
 
-// Pairs Sum: -> also 3Sum and more ...
-var pairs_sum = function (nums, k) {
+// 3Sum and more...
+var threeSum = function (nums, target) {
   let res = [];
-  let pair = [];
+  let subseq = [];
 
   // sum subsequences
   function sum(e1, e2) {
@@ -66,19 +57,21 @@ var pairs_sum = function (nums, k) {
     subset.concat(subset.map((set) => [...set, value]));
   //
   nums.reduce(subsequences, [res]).forEach((el) => {
-    if (el.length === 2 && el.reduce(sum) === k) pair.push(el);
+    if (el.length === 3 && el.reduce(sum) === target) subseq.push(el);
   });
 
-  if (pair.length > 0) return pair;
+  if (subseq.length > 0) return subseq;
   return -1;
 };
 // invoke the function
-console.log(pairs_sum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 4, 6 ], [ 3, 7 ], [ 2, 8 ], [ 1, 9 ] ]
-console.log(pairs_sum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 4, 6 ], [ 3, 7 ], [ 1, 9 ], [ 1, 9 ] ]
-console.log(pairs_sum([5, 6, 7, 8, 9], 10)); // -1
-console.log(pairs_sum([4, 5, 6, 6, 7], 11)); // [ [ 5, 6 ], [ 5, 6 ], [ 4, 7 ] ]
+console.log(threeSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 12));
+// [ [ 3, 4, 5 ], [ 2, 4, 6 ], [ 1, 5, 6 ], [ 2, 3, 7 ], [ 1, 4, 7 ], [ 1, 3, 8 ], [ 1, 2, 9 ] ]
+console.log(threeSum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10));
+// [ [ 1, 4, 5 ], [ 1, 4, 5 ], [ 1, 3, 6 ], [ 1, 3, 6 ], [ 1, 1, 8 ] ]
+console.log(threeSum([5, 6, 7, 8, 9], 10)); // -1
+console.log(threeSum([4, 5, 6, 6, 7], 11)); // -1
 
-/* 2Sum:
+/* 2Sum (Pairs Sum):
 Given an array of integers nums and an integer target, return indices of the two numbers 
 such that they add up to target. You may assume that each input would have exactly one
 solution, and you may not use the same element twice.You can return the answer in any order. 
@@ -340,18 +333,21 @@ console.log(longestCommonSubsequence("abbcc", "dbbcc")); // bc
 console.log(longestCommonSubsequence("ABCD", "ACBAD")); // ACD
 console.log(longestCommonSubsequence("ABCD", "ABCAD")); // ABCD
 
+/* ------------------------------------------------------------------------------------ */
+
 // Length of Longest Consective Sequence:
 var longestConsective = function (nums) {
   count = 1;
-  longestCount = null;
+  longestCount = 1;
   nums.sort(function (e1, e2) {
     return e1 - e2;
   });
   for (let i = 0; i < nums.length; i++) {
-    if (nums[i] + 1 === nums[i + 1]) {
+    if (nums[i] - nums[i - 1] === 1) {
       count++;
-      longestCount = Math.max(count);
-    } else count = 1;
+      longestCount = Math.max(longestCount, count);
+    } else if (nums[i] === nums[i - 1]) continue;
+    else count = 1;
   }
   if (nums.length === 0) return 0;
   return longestCount;
@@ -383,20 +379,24 @@ console.log(firstMissingPositive([0])); // 1
 console.log(firstMissingPositive([1])); // 2
 console.log(firstMissingPositive([2, 1])); // 3
 
-// Missing Number:
-var missingNumber = function (nums) {
-  let missing = null;
+/* Missing Two: You are given an array with all the numbers from 1 to N appearing exactly once,
+   except for one number that is missing. How can you find the missing number in O(N) time and
+   0(1) space? What if there were two numbers missing? */
+// Missing Numbers:
+var missingNumbers = function (nums) {
+  let missing = [];
 
   for (let start = 1; start <= nums.length; start++) {
     if (!nums.includes(start)) {
-      missing = start;
+      missing.push(start);
     }
   }
   return missing;
 };
 // invoke the function
-console.log(missingNumber([3, 0, 1])); // 2
-console.log(missingNumber([0, 1])); // 2
+console.log(missingNumbers([3, 0, 1])); // [ 2 ]
+console.log(missingNumbers([0, 1])); // [ 2 ]
+console.log(missingNumbers([0, 1, 3, 5])); // [ 2, 4 ]
 
 // Maximum subarray sum:
 var maxSum = function (nums) {
@@ -539,3 +539,158 @@ var countWord = function (str) {
 console.log(
   countWord("This is the TEXT. Text, text, text - THIS TEXT! Is this the text?")
 ); // [ 'is', 'the', 'this', 'text' ]
+
+/* ------------------------------------------------------------------------------------ */
+
+/* REMOVE DUPLICATES FROM SORTED ARRAY
+Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place
+such that each unique element appears only once. The relative order of the elements should
+be kept the same. Then return the number of unique elements in nums.
+
+Consider the number of unique elements of nums to be k, to get accepted, you need to do the
+following things:
+
+Change the array nums such that the first k elements of nums contain the unique elements in
+the order they were present in nums initially. The remaining elements of nums
+are not important as well as the size of nums.
+
+Return k. */
+var removeDuplicates = function (nums) {
+  if (nums.length === 0) {
+    return 0;
+  }
+
+  let k = 1; // Initialize the count of unique elements to 1
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] !== nums[k - 1]) {
+      nums[k] = nums[i]; // Overwrite the next unique element
+      k++;
+    }
+  }
+
+  return k;
+};
+// invoke the function
+console.log(removeDuplicates([1, 1, 2])); // 2
+console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4])); // 5
+
+/* REMOVE ELEMENT FROM UNSORTED ARRAY
+Given an integer array nums unsorted, remove val in-place.
+Then return the number of elements in nums. */
+var removeElement = function (nums, val) {
+  if (nums.length === 0) {
+    return 0;
+  }
+
+  let k = 0; // Initialize the count of unique elements to 0
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== val) {
+      nums[k] = nums[i]; // Overwrite the next unique element
+      k++;
+    }
+  }
+
+  return nums;
+};
+// invoke the function
+console.log(removeElement([3, 2, 2, 3], 3)); // 2
+console.log(removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2)); // 5
+
+/* ------------------------------------------------------------------------------------ */
+
+// // BALANCED BRACKETS
+
+// // method 1:
+// const balancedBrackets = (str) => {
+//   const stack = [];
+//   let openers = ["{", "[", "("];
+//   let closers = ["}", "]", ")"];
+
+//   const dict = {
+//     "{": "}",
+//     "[": "]",
+//     "(": ")",
+//   };
+
+//   for (let i = 0; i < str.length; i++) {
+//     let char = str[i];
+//     if (openers.includes(char)) {
+//       stack.push(char);
+//     } else if (closers.includes(char)) {
+//       //is our stack empty?
+
+//       if (!stack.length) {
+//         return false;
+//       }
+//       //does our popped element not match the corresponding element?
+//       else if (dict[stack.pop()] !== char) {
+//         return false;
+//       }
+//     }
+//   }
+
+//   return stack.length === 0;
+// };
+
+// // method 2:
+// var balancedBrackets2 = function (s) {
+//   // add code
+//   let stack = [];
+//   let map = {
+//     "(": ")",
+//     "[": "]",
+//     "{": "}",
+//   };
+
+//   for (let i = 0; i < s.length; i++) {
+//     // If character is an opening brace add it to a stack
+//     if (s[i] === "(" || s[i] === "{" || s[i] === "[") {
+//       stack.push(s[i]);
+//     }
+//     //if closing brace, pop from stack
+//     else {
+//       let lastEle = stack.pop();
+//       //Return false if the element popped doesn’t match the corresponding closing brace in the map
+//       if (s[i] !== map[lastEle]) {
+//         return false;
+//       }
+//     }
+//   }
+//   //if stack not empty at end, return false
+//   if (stack.length !== 0) {
+//     return false;
+//   }
+
+//   return true;
+// };
+// // invoke the function
+// var s = "{[]()}";
+// var s = "{[(])}";
+// var s = "{[}";
+// if (isValid(s)) console.log("valid");
+// else console.log("invalid");
+
+// // CHECK IF s2 CONTAINS A PERMUTATION OF s1:
+// var checkInclusion = function (s1, s2) {
+//   if (s2 === s1) return true;
+//   if (s2.includes(s1.split("").reverse().join(""))) return true;
+//   if ([...new Set(s2)].sort().join("") === [...new Set(s1)].sort().join(""))
+//     return true;
+//   return false;
+// };
+// // invoke the function
+// console.log(checkInclusion("ab", "eidbaooo")); // true
+// console.log(checkInclusion("ab", "eidboaoo")); // false
+// console.log(checkInclusion("ab", "ab")); // true
+// console.log(checkInclusion("abc", "bbbca")); // true
+// console.log(checkInclusion("hello", "ooolleoooleh")); // false
+
+// var removeDuplicatess = function (nums) {
+//   for (let i = 0; i < nums.length; i++) {
+//     if (nums[i] === nums[i + 1]) delete nums[i];
+//   }
+//   return Object.entries(nums).length;
+// };
+// // invoke the function
+// console.log(removeDuplicatess([1, 1, 2])); // 2
+// console.log(removeDuplicatess([0, 0, 1, 1, 1, 2, 2, 3, 3, 4])); // 5
