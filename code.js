@@ -598,77 +598,75 @@ console.log(removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2)); // 5
 
 /* ------------------------------------------------------------------------------------ */
 
-// // BALANCED BRACKETS
+// BALANCED BRACKETS
 
-// // method 1:
-// const balancedBrackets = (str) => {
-//   const stack = [];
-//   let openers = ["{", "[", "("];
-//   let closers = ["}", "]", ")"];
+// method 1:
+const balancedBrackets = (str) => {
+  const stack = [];
+  let openers = ["{", "[", "("];
+  let closers = ["}", "]", ")"];
 
-//   const dict = {
-//     "{": "}",
-//     "[": "]",
-//     "(": ")",
-//   };
+  const dict = {
+    "{": "}",
+    "[": "]",
+    "(": ")",
+  };
 
-//   for (let i = 0; i < str.length; i++) {
-//     let char = str[i];
-//     if (openers.includes(char)) {
-//       stack.push(char);
-//     } else if (closers.includes(char)) {
-//       //is our stack empty?
+  for (let i = 0; i < str.length; i++) {
+    let char = str[i];
+    if (openers.includes(char)) {
+      stack.push(char);
+    } else if (closers.includes(char)) {
+      //is our stack empty?
 
-//       if (!stack.length) {
-//         return false;
-//       }
-//       //does our popped element not match the corresponding element?
-//       else if (dict[stack.pop()] !== char) {
-//         return false;
-//       }
-//     }
-//   }
+      if (!stack.length) {
+        return false;
+      }
+      //does our popped element not match the corresponding element?
+      else if (dict[stack.pop()] !== char) {
+        return false;
+      }
+    }
+  }
 
-//   return stack.length === 0;
-// };
+  return stack.length === 0;
+};
 
-// // method 2:
-// var balancedBrackets2 = function (s) {
-//   // add code
-//   let stack = [];
-//   let map = {
-//     "(": ")",
-//     "[": "]",
-//     "{": "}",
-//   };
+// method 2:
+var balancedBrackets2 = function (s) {
+  // add code
+  let stack = [];
+  let map = {
+    "(": ")",
+    "[": "]",
+    "{": "}",
+  };
 
-//   for (let i = 0; i < s.length; i++) {
-//     // If character is an opening brace add it to a stack
-//     if (s[i] === "(" || s[i] === "{" || s[i] === "[") {
-//       stack.push(s[i]);
-//     }
-//     //if closing brace, pop from stack
-//     else {
-//       let lastEle = stack.pop();
-//       //Return false if the element popped doesn’t match the corresponding closing brace in the map
-//       if (s[i] !== map[lastEle]) {
-//         return false;
-//       }
-//     }
-//   }
-//   //if stack not empty at end, return false
-//   if (stack.length !== 0) {
-//     return false;
-//   }
+  for (let i = 0; i < s.length; i++) {
+    // If character is an opening brace add it to a stack
+    if (s[i] === "(" || s[i] === "{" || s[i] === "[") {
+      stack.push(s[i]);
+    }
+    //if closing brace, pop from stack
+    else {
+      let lastEle = stack.pop();
+      //Return false if the element popped doesn’t match the corresponding closing brace in the map
+      if (s[i] !== map[lastEle]) {
+        return false;
+      }
+    }
+  }
+  //if stack not empty at end, return false
+  if (stack.length !== 0) {
+    return false;
+  }
 
-//   return true;
-// };
-// // invoke the function
-// var s = "{[]()}";
-// var s = "{[(])}";
-// var s = "{[}";
-// if (isValid(s)) console.log("valid");
-// else console.log("invalid");
+  return true;
+};
+// invoke the function
+console.log(balancedBrackets2("{[]()}")); // true
+console.log(balancedBrackets2("{[(])}")); // false
+console.log(balancedBrackets2("{[}")); // false
 
 // // CHECK IF s2 CONTAINS A PERMUTATION OF s1:
 // var checkInclusion = function (s1, s2) {
