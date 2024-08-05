@@ -172,6 +172,7 @@ console.log(factorial(5));
 
 // Objects and Object-Oriented Programming
 // Defining and using the Checking object
+// Object Oriented Programming (checking balance): Method 1
 function Checking(amount) {
   this.balance = amount;
   this.deposit = deposit;
@@ -192,7 +193,40 @@ function withdraw(amount) {
 function toString() {
   return "Balance: " + this.balance;
 }
+// invoke the function
 var account = new Checking(500);
+account.deposit(1000);
+console.log(account.toString()); // Balance: 1500
+account.withdraw(750);
+console.log(account.toString()); // Balance: 750
+account.withdraw(800); // "Insufficient funds"
+console.log(account.toString()); // Balance: 750
+
+/* ------------------------------------------------------------------------------------ */
+
+// Object Oriented Programming (checking balance): Method 2
+class Checking_Balance {
+  // Encapsulate class methods
+  constructor(balance) {
+    this.balance = balance;
+  }
+  deposit(amount) {
+    this.balance += amount;
+  }
+  withdraw(amount) {
+    if (amount <= this.balance) {
+      this.balance -= amount;
+    }
+    if (amount > this.balance) {
+      console.log("Insufficient funds");
+    }
+  }
+  toString() {
+    return "Balance: " + this.balance;
+  }
+}
+// invoke the function
+var account = new Checking_Balance(500);
 account.deposit(1000);
 console.log(account.toString()); // Balance: 1500
 account.withdraw(750);

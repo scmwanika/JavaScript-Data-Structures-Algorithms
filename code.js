@@ -43,7 +43,16 @@ console.log(
 
 /* ------------------------------------------------------------------------------------ */
 
-// 3Sum and more...
+// Split Array into chunks:
+var splitArray = function (nums, chunksize) {
+  return new Array(Math.ceil(nums.length / chunksize))
+    .fill()
+    .map(() => nums.splice(0, chunksize));
+};
+// invoke the function
+console.log(splitArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3));
+
+// 3Sum and more........................to be improved for unsorted
 var threeSum = function (nums, target) {
   let res = [];
   let subseq = [];
@@ -53,21 +62,43 @@ var threeSum = function (nums, target) {
     return e1 + e2;
   }
 
+  // don't use the element twice............................
+  let unique = [];
+  nums.filter((el) => {
+    if (unique.includes(el)) unique.push("x");
+    else unique.push(el);
+  });
+  //
+
   let subsequences = (subset, value) =>
     subset.concat(subset.map((set) => [...set, value]));
   //
-  nums.reduce(subsequences, [res]).forEach((el) => {
+  unique.reduce(subsequences, [res]).forEach((el) => {
     if (el.length === 3 && el.reduce(sum) === target) subseq.push(el);
   });
 
-  if (subseq.length > 0) return subseq;
+  // return indices instead...
+  let indices = [];
+  subseq.filter((arr) => {
+    for (let i = 0; i < unique.length; i++) {
+      if (arr.includes(unique[i])) indices.push(i);
+    }
+  });
+  // chunks of 3
+  let result = new Array(Math.ceil(indices.length / 3))
+    .fill()
+    .map(() => indices.splice(0, 3));
+
+  if (result.length > 0) return result;
   return -1;
+
+  // if (subseq.length > 0) return subseq;
+  // return -1;
 };
 // invoke the function
 console.log(threeSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 12));
-// [ [ 3, 4, 5 ], [ 2, 4, 6 ], [ 1, 5, 6 ], [ 2, 3, 7 ], [ 1, 4, 7 ], [ 1, 3, 8 ], [ 1, 2, 9 ] ]
-console.log(threeSum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10));
-// [ [ 1, 4, 5 ], [ 1, 4, 5 ], [ 1, 3, 6 ], [ 1, 3, 6 ], [ 1, 1, 8 ] ]
+// [ [ 2, 3, 4 ], [ 1, 3, 5 ], [ 0, 4, 5 ], [ 1, 2, 6 ], [ 0, 3, 6 ], [ 0, 2, 7 ], [ 0, 1, 8 ] ]
+console.log(threeSum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 0, 3, 4 ], [ 0, 2, 5 ] ]
 console.log(threeSum([5, 6, 7, 8, 9], 10)); // -1
 console.log(threeSum([4, 5, 6, 6, 7], 11)); // -1
 
@@ -692,3 +723,58 @@ console.log(balancedBrackets2("{[}")); // false
 // // invoke the function
 // console.log(removeDuplicatess([1, 1, 2])); // 2
 // console.log(removeDuplicatess([0, 0, 1, 1, 1, 2, 2, 3, 3, 4])); // 5
+
+// Given two strings, write a method to decide if one is a palindrome of the other. */
+var isPalindromes = function (str1, str2) {
+  let merge_str = str1 + str2;
+  // Then make the string case-insensitive by converting to lowercase
+  merge_str = merge_str.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
+  for (let i = 0, j = merge_str.length - 1; i < j; i++, j--) {
+    if (merge_str[i] != merge_str[j]) return false;
+  }
+  return true;
+};
+// invoke the function
+console.log(isPalindromes("stop", "pots")); // true
+
+// Is Reverse
+var isReverse = function (str) {
+  // Then make the string case-insensitive by converting to lowercase
+  str = str.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
+  for (let i = 0, j = str.length - 1; i < j; i++, j--) {
+    if (str[i] != str[j]) return false;
+  }
+  return true;
+};
+// invoke the function
+console.log(isReverse("refer")); // true
+
+// Object Oriented Programming (checking balance):
+class Checking_Balance {
+  // Encapsulate class methods
+  constructor(balance) {
+    this.balance = balance;
+  }
+  deposit(amount) {
+    this.balance += amount;
+  }
+  withdraw(amount) {
+    if (amount <= this.balance) {
+      this.balance -= amount;
+    }
+    if (amount > this.balance) {
+      console.log("Insufficient funds");
+    }
+  }
+  toString() {
+    return "Balance: " + this.balance;
+  }
+}
+// invoke the function
+var account = new Checking_Balance(500);
+account.deposit(1000);
+console.log(account.toString()); // Balance: 1500
+account.withdraw(750);
+console.log(account.toString()); // Balance: 750
+account.withdraw(800); // "Insufficient funds"
+console.log(account.toString()); // Balance: 750
