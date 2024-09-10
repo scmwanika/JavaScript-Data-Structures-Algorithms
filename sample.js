@@ -29,10 +29,10 @@ console.log(isPalindromePermutation("rrfee")); // true
 console.log(isPalindromePermutation("taco cat")); // true
 
 /* STRING COMPRESSION: 
-Implement a method to perform basic string compression using the counts of repeated 
-characters. For example, the string aabcccccaaa would become a2blc5a3. If the "compressed" 
-string would not become smaller than the original string, your method should return the 
-original string. You can assume the string has only uppercase and lowercase letters */
+  Implement a method to perform basic string compression using the counts of repeated 
+  characters. For example, the string aabcccccaaa would become a2blc5a3. If the "compressed" 
+  string would not become smaller than the original string, your method should return the 
+  original string. You can assume the string has only uppercase and lowercase letters */
 
 var stringCompression1 = function (s) {
   s = s.toLowerCase().replace(/[^a-z]/g, "");
@@ -59,7 +59,7 @@ console.log(stringCompression1("aab")); // aab
 var stringCompression2 = (s) => {
   let obj = {};
   s.toLowerCase()
-    .replace(/[^a-z0-9]/g, "")
+    .replace(/[^a-z]/g, "")
     .split("")
     .forEach((el) => {
       if (obj[el]) {
@@ -91,8 +91,8 @@ var missingElement = function (nums1, nums2) {
 console.log(missingElement([1, 2, 3, 4, 5], [1, 3, 5])); // [ 2, 4 ]
 
 /* GROUP ANAGRAMS: 
-Write a method to sort an array of strings so that all the anagrams are next to each other.
-*/
+  Write a method to sort an array of strings so that all the anagrams are next to each other.
+  */
 var groupAnagrams = function (nums) {
   let obj = {};
   nums.forEach((el) => {
@@ -118,12 +118,12 @@ console.log(groupAnagrams(["321", "213", "897", "456", "987", "798"]));
 // [['321', '213'], ['897', '987', '798'], ['456']]"
 
 /* MISSING INT: 
-Given an input file with four billion non-negative integers, provide an algorithm to 
-generate an integer that is not contained in the file. Assume you have 1 GB of memory 
-available for this task.
-FOLLOW UP
-What if you have only 10 MB of memory? Assume that all the values are distinct and we now 
-have no more than one billion non-negative integers. */
+  Given an input file with four billion non-negative integers, provide an algorithm to 
+  generate an integer that is not contained in the file. Assume you have 1 GB of memory 
+  available for this task.
+  FOLLOW UP
+  What if you have only 10 MB of memory? Assume that all the values are distinct and we now 
+  have no more than one billion non-negative integers. */
 var missingInt = function (nums) {
   let missing = [];
 
@@ -142,12 +142,12 @@ console.log(missingInt([1, 2, 3, 4, 6, 7, 8, 9, 10, 11])); // [ 5 ]
 console.log(missingInt([1, 2, 3, 4, 6, 7, 7, 9, 10, 11])); // [ 5, 8 ]
 
 /* PEAKS AND VALLEYS:
-In an array of integers, a "peak" is an element which is greater than or equal to the 
-adjacent integers and a "valley" is an element which is less than or equal to the adjacent 
-integers.
-For example, in the array [5, 1, 3, 2, 3], [5, 3, 3] are peaks and [1, 2] are valleys. 
-Given an array of integers, sort the array into an alternating sequence of peaks and valleys.
-*/
+  In an array of integers, a "peak" is an element which is greater than or equal to the 
+  adjacent integers and a "valley" is an element which is less than or equal to the adjacent 
+  integers.
+  For example, in the array [5, 1, 3, 2, 3], [5, 3, 3] are peaks and [1, 2] are valleys. 
+  Given an array of integers, sort the array into an alternating sequence of peaks and valleys.
+  */
 var peaksAndValleys = function (arr) {
   if (arr.length === 0) return -1;
   // sort the array
@@ -225,13 +225,13 @@ console.log(
   ])
 );
 /*
-    [
-      [ 32, 27, 15, 10 ],
-      [ 33, 29, 25, 20 ],
-      [ 39, 37, 35, 30 ],
-      [ 50, 48, 45, 40 ]
-    ]
-*/
+      [
+        [ 32, 27, 15, 10 ],
+        [ 33, 29, 25, 20 ],
+        [ 39, 37, 35, 30 ],
+        [ 50, 48, 45, 40 ]
+      ]
+  */
 
 // Maximum subarray sum:
 var maxSum = function (nums) {
@@ -287,12 +287,12 @@ var subStringsSubarrays = function (str) {
 };
 // invoke the function
 console.log(subStringsSubarrays("dog")); // [ 'd', 'do', 'dog', 'o', 'og', 'g' ]
-console.log(subStringsSubarrays([1, 4, 2, 5])); // [[1, 4], [1, 4, 2, 5], [4, 2], [2, 5]],
+console.log(subStringsSubarrays([1, 4, 2, 5]));
 /*
-[
-  [ 1 ], [ 1, 4 ], [ 1, 4, 2 ], [ 1, 4, 2, 5 ], [ 4 ], [ 4, 2 ], [ 4, 2, 5 ], [ 2 ], [ 2, 5 ], [ 5 ]
-]
-*/
+  [
+    [ 1 ], [ 1, 4 ], [ 1, 4, 2 ], [ 1, 4, 2, 5 ], [ 4 ], [ 4, 2 ], [ 4, 2, 5 ], [ 2 ], [ 2, 5 ], [ 5 ]
+  ]
+  */
 
 // Subsequences and Subsets:
 var subSequencesSubsets = function (str) {
@@ -304,8 +304,8 @@ var subSequencesSubsets = function (str) {
 // invoke the function
 console.log(subSequencesSubsets("dog"));
 /*
-[ [], [ 'd' ], [ 'o' ], [ 'd', 'o' ], [ 'g' ], [ 'd', 'g' ], [ 'o', 'g' ], [ 'd', 'o', 'g' ] ]
-*/
+  [ [], [ 'd' ], [ 'o' ], [ 'd', 'o' ], [ 'g' ], [ 'd', 'g' ], [ 'o', 'g' ], [ 'd', 'o', 'g' ] ]
+  */
 
 // EVEN LENGTH SUBSTRINGS:
 var evenLengthSubstring = function (arr) {
@@ -319,7 +319,8 @@ var evenLengthSubstring = function (arr) {
   for (i = 0; i < arr.length; i++) {
     for (j = i + 1; j < arr.length + 1; j++) {
       if (arr.slice(i, j).length % 2 === 0)
-        res.push(arr.slice(i, j).reduce(sum)); // [ 5, 12, 6, 7 ]
+        res.push(arr.slice(i, j).reduce(sum));
+      // [[1, 4], [1, 4, 2, 5], [4, 2], [2, 5]] -> [ 5, 12, 6, 7 ]
     }
   }
 
@@ -327,7 +328,7 @@ var evenLengthSubstring = function (arr) {
   return -1;
 };
 // invoke the function
-console.log(evenLengthSubstring([1, 4, 2, 5])); // [ 5, 12, 6, 7 ] -> 30
+console.log(evenLengthSubstring([1, 4, 2, 5])); // -> 30
 
 // RIGHT ROTATE STRING BY K PLACES:
 var rightRotateString = function (str, k) {
@@ -406,39 +407,30 @@ console.log(
 
 // WORD WEIGHT:
 var wordWeight = function (s, n) {
-  let alphabet = "abcdefghijklmnopqrstuvwxyz";
-  let weight = "";
-  let sum1 = 0;
-  let sum2 = 0;
-
-  for (let char of s.toLowerCase()) weight += alphabet.indexOf(char) + 1;
-
-  // Step1:
-  if (n === 1) {
+    let alphabet = "abcdefghijklmnopqrstuvwxyz";
+    let weight = "";
+    let sum1 = 0;
+    let sum2 = 0;
+  
+    for (let char of s.toLowerCase()) weight += alphabet.indexOf(char) + 1;
+  
     weight.split("").forEach((item) => {
       sum1 += +item;
     });
-    return sum1; // 35
-  }
-
-  // Step2:
-  if (n === 2) {
-    weight.split("").forEach((item) => {
-      sum1 += +item;
-    });
+  
     sum1
       .toString()
       .split("")
       .forEach((item) => {
         sum2 += +item;
       });
-    return sum2; // 8
-  }
-
-  return -1;
-};
-// invoke the function
-console.log(wordWeight("Turing", 2)); // 8
+  
+    if (n === 1) return sum1;
+    if (n === 2) return sum2;
+    return -1;
+  };
+  // invoke the function
+  console.log(wordWeight("Turing", 2)); // 8
 
 // PAIRING:
 var countPairs = function (nums) {
@@ -483,17 +475,18 @@ var countCharacters = function (string) {
     });
   //return obj;
   /*
-      {
-        t: 2, h: 2, e: 3, q: 1, u: 2, i: 1, c: 1, k: 1, b: 1, r: 2, o: 4, w: 1, n: 1,
-        f: 1, x: 1, j: 1, m: 1, p: 1, s: 1, v: 1, l: 1, a: 1, z: 1, y: 1, d: 1, g: 1
-      }
-  */
+        {
+          t: 2, h: 2, e: 3, q: 1, u: 2, i: 1, c: 1, k: 1, b: 1, r: 2, o: 4, w: 1, n: 1,
+          f: 1, x: 1, j: 1, m: 1, p: 1, s: 1, v: 1, l: 1, a: 1, z: 1, y: 1, d: 1, g: 1
+        }
+    */
 
   //return Math.max(...Object.values(obj)); // 4
 
   return Object.keys(obj)
     .filter((char) => {
       return obj[char] === Math.max(...Object.values(obj));
+      //if(obj[char] === Math.max(...Object.values(obj))) return char
     })
     .join();
 };

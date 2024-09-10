@@ -1,3 +1,8 @@
+/* Given a list of emails and URLs, return a dictionary, where each key is a URL and the
+   value is how many emails have the same domain.
+   Note that the domains begin with "www", whereas the emails do not, and that emails with
+   domains not in the list of URLs should be ignored. */
+
 var count_email_domains = function (emails, urls) {
   /* Approach:
         - search for domain in emails array that exactly match domain in urls array
@@ -52,7 +57,7 @@ var splitArray = function (nums, chunksize) {
 // invoke the function
 console.log(splitArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3));
 
-// 3Sum and more........................to be improved for unsorted
+// 3Sum and more
 var threeSum = function (nums, target) {
   let res = [];
   let subseq = [];
@@ -61,39 +66,29 @@ var threeSum = function (nums, target) {
   function sum(e1, e2) {
     return e1 + e2;
   }
-
-  // don't use the element twice............................
+  // don't use the element twice
   let unique = [];
   nums.filter((el) => {
     if (unique.includes(el)) unique.push("x");
     else unique.push(el);
   });
-  //
-
-  let subsequences = (subset, value) =>
-    subset.concat(subset.map((set) => [...set, value]));
+  // define helper function
+  function subsequences(e1, e2) {
+    let arr = e1.map((set) => [...set, e2]);
+    return e1.concat(arr);
+  }
   //
   unique.reduce(subsequences, [res]).forEach((el) => {
-    if (el.length === 3 && el.reduce(sum) === target) subseq.push(el);
+    if (el.length === 3 && el.reduce(sum) === target)
+      subseq.push([
+        unique.indexOf(el[0]),
+        unique.indexOf(el[1]),
+        unique.indexOf(el[2]),
+      ]);
   });
 
-  // return indices instead...
-  let indices = [];
-  subseq.filter((arr) => {
-    for (let i = 0; i < unique.length; i++) {
-      if (arr.includes(unique[i])) indices.push(i);
-    }
-  });
-  // chunks of 3
-  let result = new Array(Math.ceil(indices.length / 3))
-    .fill()
-    .map(() => indices.splice(0, 3));
-
-  if (result.length > 0) return result;
+  if (subseq.length > 0) return subseq;
   return -1;
-
-  // if (subseq.length > 0) return subseq;
-  // return -1;
 };
 // invoke the function
 console.log(threeSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 12));
@@ -126,14 +121,37 @@ console.log(twoSum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 1, 9 ], [ 1, 9 
 console.log(twoSum([5, 6, 7, 8, 9], 10)); // -1
 console.log(twoSum([4, 5, 6, 6, 7], 11)); // [ [ 4, 7 ], [ 5, 6 ], [ 5, 6 ] ]
 
-// Count Two's:
+// Count Two's and Three's:
 var count_twos = function (nums) {
-  nums = nums.join("").replace(/[^2]/g, "");
+  nums = nums.join("").replace(/[^23]/g, "");
 
   return nums.length;
 };
 // invoke the function
-console.log(count_twos([2, 12, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29])); // 13
+console.log(
+  count_twos([2, 3, 12, 13, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])
+); // 17
+
+//
+var countTarget = function (nums, target) {
+  let obj = {};
+  nums
+    .join("")
+    .split("")
+    .forEach((el) => {
+      if (obj[el]) return obj[el]++;
+      return (obj[el] = 1);
+    });
+
+  return Object.entries(obj).filter((el) => {
+    return el.includes(target.toString());
+    //if (el.includes(target.toString())) return el;
+  })[0][1];
+};
+// invoke the function
+console.log(
+  countTarget([2, 3, 12, 13, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], 2)
+); // 13
 
 // Majority Element -> Is an element which takes up more than half of the items in the array:
 var majority_element = function (nums) {
@@ -157,20 +175,48 @@ console.log(majority_element([1, 2, 5, 9, 5, 9, 5, 5, 5])); // 5
 console.log(majority_element([3, 1, 7, 1, 3, 7, 3, 7, 1, 7, 7])); // -1
 
 // Multi Search:
+// method -> 1.....
 var multi_search = function (str, substr) {
   let idx = [];
-
   substr.forEach((el) => {
-    if (str.includes(el)) idx.push(str.indexOf(el));
+    if (str.includes(el))
+      idx.push([...new Set([str.indexOf(el), str.lastIndexOf(el)])]);
     else idx.push(-1);
   });
-
   return idx;
 };
 // invoke the function
 console.log(
   multi_search("mississippi", ["is", "ppi", "hi", "sis", "i", "ssippi"])
-); // [ 1, 8, -1, 3, 1, 5 ]
+); // [ [ 1, 4 ], [ 8 ], -1, [ 3 ], [ 1, 10 ], [ 5 ] ]
+
+// method -> 2.....
+var multi_search = function (str, substr) {
+  let idx = [];
+  substr.forEach((el) => {
+    if (str.includes(el)) idx.push([str.indexOf(el), str.lastIndexOf(el)]);
+    else idx.push(-1);
+  });
+
+  //
+  let uniqueIdx = [];
+  idx.filter((el) => {
+    if (typeof el !== "object") {
+      uniqueIdx.push(el);
+    } else {
+      if (typeof el === "object") {
+        if (el[0] === el[1]) uniqueIdx.push([el[0]]);
+        else uniqueIdx.push([el[0], el[1]]);
+      }
+    }
+  });
+
+  return uniqueIdx;
+};
+// invoke the function
+console.log(
+  multi_search("mississippi", ["is", "ppi", "hi", "sis", "i", "ssippi"])
+); // [ [ 1, 4 ], [ 8 ], -1, [ 3 ], [ 1, 10 ], [ 5 ] ]
 
 // Word frequencies:
 var word_frequencies = function (book, word) {
@@ -184,7 +230,7 @@ var word_frequencies = function (book, word) {
       return (obj[el] = 1);
     });
 
-  let freq;
+  let freq = null;
   Object.entries(obj).filter((el) => {
     if (el.includes(word)) freq = el;
   });
@@ -247,116 +293,93 @@ console.log(subSequencesSubsets([])); // [ ] -> -1
 
 // LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 var longestSubstring = function (str) {
-  let res = null;
   let unique_substr = null;
-  let len = [];
+  let dict = [];
 
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
       unique_substr = [...new Set(str.slice(i, j))].join("");
 
       // Length of each substr
-      if (str.includes(unique_substr)) len.push(unique_substr.length);
-
-      // Substring with maximum length
-      if (
-        str.includes(unique_substr) &&
-        unique_substr.length === Math.max(...len)
-      )
-        res = unique_substr;
+      if (str.includes(unique_substr))
+        dict.push({ unique_substr: unique_substr, len: unique_substr.length });
+      // descending sort by len
+      dict.sort(function (prop1, prop2) {
+        return prop2.len - prop1.len;
+      });
     }
   }
-  return res;
+  if (str.length === 0) return str;
+  return Object.values(dict[0])[0];
 };
 // invoke the function
 console.log(longestSubstring("abbbcabcdefef")); // abcdef
 console.log(longestSubstring("dvdf")); // vdf
-console.log(longestSubstring("pwwkew")); // kew
-console.log(longestSubstring("")); // null
+console.log(longestSubstring("pwwkew")); // wke
+console.log(longestSubstring("")); // ""
 
 // LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 var longestCommonSubstring = function (str1, str2) {
-  let res = null;
-  let substrs1 = [];
-  let substrs2 = [];
   let comsubstr = null;
-  let len = [];
+  let dict = [];
 
   // String 1 and String 2
   for (i = 0; i < str1.length, i < str2.length; i++) {
     for (j = i + 1; j < str1.length + 1, j < str2.length + 1; j++) {
-      substrs1.push(str1.slice(i, j));
-      substrs2.push(str2.slice(i, j));
-    }
-  }
-
-  // Common unique substring
-  for (let substr1 of substrs1) {
-    for (let substr2 of substrs2) {
-      if (substr2.includes(substr1)) {
-        comsubstr = [...new Set(substr1)].join("");
-
-        // Length of each substr
-        len.push(comsubstr.length);
-
-        // Substring with maximum length
-        if (comsubstr.length === Math.max(...len)) res = comsubstr;
+      // Common unique substring
+      if (str2.slice(i, j).includes(str1.slice(i, j))) {
+        comsubstr = [...new Set(str1.slice(i, j))].join("");
+        dict.push({ comsubstr: comsubstr, len: comsubstr.length });
+        // descending sort by len
+        dict.sort(function (prop1, prop2) {
+          return prop2.len - prop1.len;
+        });
       }
     }
   }
-
-  return res;
+  return Object.values(dict[0])[0];
 };
 // invoke the function
 console.log(longestCommonSubstring("raven", "havoc")); // av
 console.log(longestCommonSubstring("abbcc", "dbbcc")); // bc
-console.log(longestCommonSubstring("ABCD", "ACBAD")); // D
+console.log(longestCommonSubstring("ABCD", "ACBAD")); // A
 console.log(longestCommonSubstring("ABCD", "ABCAD")); // ABC
 
 // LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS (Dynamic Programming):
-var longestCommonSubsequence = function (str1, str2) {
-  let res = null;
+var longestCommonSubsequence = function (text1, text2) {
   let subseqs1 = [];
   let subseqs2 = [];
   let comsubseq = null;
-  let len = [];
+  let dict = [];
 
-  // Subsequence 1
-  let subs1 = (subsets, value) =>
-    subsets.concat(subsets.map((set) => [...set, value]));
-  str1
+  // define helper function
+  function subsequences(e1, e2) {
+    let arr = e1.map((set) => [...set, e2]);
+    return e1.concat(arr);
+  }
+
+  text1
     .split("")
-    .reduce(subs1, [subseqs1])
+    .reduce(subsequences, [subseqs1])
     .filter((el) => {
       subseqs1.push(el.join(""));
     });
 
-  // Subsequence 2
-  let subs2 = (subsets, value) =>
-    subsets.concat(subsets.map((set) => [...set, value]));
-  str2
+  text2
     .split("")
-    .reduce(subs2, [subseqs2])
+    .reduce(subsequences, [subseqs2])
     .filter((el) => {
-      subseqs2.push(el.join(""));
-    });
-
-  // Common unique subsequence
-  for (let subseq1 of subseqs1) {
-    for (let subseq2 of subseqs2) {
-      if (subseq2.includes(subseq1)) {
-        comsubseq = [...new Set(subseq1)].join("");
-
-        // Length of each subseq
-        len.push(comsubseq.length);
-
-        // Subsequence with maximum length
-        if (comsubseq.length === Math.max(...len)) res = comsubseq;
+      // Common unique subsequence
+      if (subseqs1.includes(el.join(""))) {
+        comsubseq = [...new Set(el)].join("");
+        dict.push({ comsubseq: comsubseq, len: comsubseq.length });
+        // descending sort by len
+        dict.sort(function (prop1, prop2) {
+          return prop2.len - prop1.len;
+        });
       }
-    }
-  }
-
-  return res;
+    });
+  return Object.values(dict[0])[0];
 };
 // invoke the function
 console.log(longestCommonSubsequence("raven", "havoc")); // av
@@ -368,8 +391,8 @@ console.log(longestCommonSubsequence("ABCD", "ABCAD")); // ABCD
 
 // Length of Longest Consective Sequence:
 var longestConsective = function (nums) {
-  count = 1;
-  longestCount = 1;
+  let count = 1;
+  let longestCount = 1;
   nums.sort(function (e1, e2) {
     return e1 - e2;
   });
@@ -431,40 +454,55 @@ console.log(missingNumbers([0, 1, 3, 5])); // [ 2, 4 ]
 
 // Maximum subarray sum:
 var maxSum = function (nums) {
-  let total = [];
+  let dict = [];
+
   function sum(e1, e2) {
     return e1 + e2;
   }
-
+  //
   for (i = 0; i < nums.length; i++) {
     for (j = i + 1; j < nums.length + 1; j++) {
-      total.push(nums.slice(i, j).reduce(sum));
+      dict.push({
+        subarray: nums.slice(i, j),
+        total: nums.slice(i, j).reduce(sum),
+      });
+      dict.sort(function (prop1, prop2) {
+        return prop2.total - prop1.total;
+      });
     }
   }
-
-  return Math.max(...total);
+  return Object.values(dict[0])[0];
 };
 // invoke the function
 console.log(maxSum([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // [ 4, -1, 2, 1 ] -> 6
+console.log(maxSum([-2, 0, -1])); // [ 0 ] -> 0
+console.log(maxSum([-2, -3, -1])); // [ -1 ] -> -1
 
 // Maximum subarray product:
 var maxProduct = function (nums) {
-  let total = [];
+  let dict = [];
+
   function product(e1, e2) {
     return e1 * e2;
   }
-
+  //
   for (i = 0; i < nums.length; i++) {
     for (j = i + 1; j < nums.length + 1; j++) {
-      total.push(nums.slice(i, j).reduce(product));
+      dict.push({
+        subarray: nums.slice(i, j),
+        total: nums.slice(i, j).reduce(product),
+      });
+      dict.sort(function (prop1, prop2) {
+        return prop2.total - prop1.total;
+      });
     }
   }
-
-  return Math.max(...total);
+  return Object.values(dict[0])[0];
 };
 // invoke the function
 console.log(maxProduct([2, 3, -2, 4])); // [ 2, 3 ] -> 6
-console.log(maxProduct([-2, 0, -1])); // [ 0 ] -> 0
+console.log(maxProduct([-2, -3, -1])); // [ -2, -3 ] -> 6
+console.log(maxProduct([-2, 0, -1])); // [ -2, 0 ] -> 0
 
 // Count subarrays with score less than k:
 var countSubarrays = function (nums, k) {
@@ -499,7 +537,7 @@ var deleteAndSort = function (nums) {
 // invoke the function
 console.log(deleteAndSort([11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])); // [ 1, 3, 5, 7, 9, 11 ]
 
-// Sort people:
+// Sort people by height (Descending Sort):
 var sortPeople = function (names, heights) {
   let obj = [];
   for (let i = 0; i < names.length, i < heights.length; i++) {
@@ -524,7 +562,7 @@ console.log(sortPeople(["Mary", "John", "Emma"], [180, 165, 170])); // [ 'Mary',
   { name: 'John', height: 165 }
 ] */
 
-// Count word and sort:
+// Count word and sort (Ascending Sort):
 var countWord = function (str) {
   let nums = str
     .toLowerCase()
@@ -539,15 +577,17 @@ var countWord = function (str) {
     return (obj[el] = 1);
   });
 
-  // Implement Dictionary
+  // Implement Dictionary from obj
   let dict = [];
   for (
     let i = 0;
     i < Object.keys(obj).length, i < Object.values(obj).length;
     i++
   ) {
-    dict.push({ word: Object.keys(obj)[i], count: Object.values(obj)[i] });
+    if (Object.keys(obj)[i].length > 0)
+      dict.push({ word: Object.keys(obj)[i], count: Object.values(obj)[i] });
   }
+  // sort by values(count)
   dict.sort(function (prop1, prop2) {
     return prop1.count - prop2.count;
   });
@@ -555,21 +595,71 @@ var countWord = function (str) {
   //
   let sorted_words = [];
   dict.forEach((row) => {
+    //
     sorted_words.push(row.word);
   });
 
-  //
-  let x = [];
-  sorted_words.filter((el) => {
-    if (el.length > 0) x.push(el);
-  });
-
-  return x;
+  return sorted_words;
 };
 // invoke the function
 console.log(
   countWord("This is the TEXT. Text, text, text - THIS TEXT! Is this the text?")
 ); // [ 'is', 'the', 'this', 'text' ]
+
+// Given two strings, write a method to decide if one is a palindrome of the other. */
+var isPalindromes = function (str1, str2) {
+  let merge_str = str1 + str2;
+  // Then make the string case-insensitive by converting to lowercase
+  merge_str = merge_str.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
+  for (let i = 0, j = merge_str.length - 1; i < j; i++, j--) {
+    if (merge_str[i] != merge_str[j]) return false;
+  }
+  return true;
+};
+// invoke the function
+console.log(isPalindromes("stop", "pots")); // true
+
+// Is Reverse
+var isReverse = function (str) {
+  // Then make the string case-insensitive by converting to lowercase
+  str = str.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
+  for (let i = 0, j = str.length - 1; i < j; i++, j--) {
+    if (str[i] != str[j]) return false;
+  }
+  return true;
+};
+// invoke the function
+console.log(isReverse("refer")); // true
+
+// Object Oriented Programming (checking balance):
+class Checking_Balance {
+  // Encapsulate class methods
+  constructor(balance) {
+    this.balance = balance;
+  }
+  deposit(amount) {
+    this.balance += amount;
+  }
+  withdraw(amount) {
+    if (amount <= this.balance) {
+      this.balance -= amount;
+    }
+    if (amount > this.balance) {
+      console.log("Insufficient funds");
+    }
+  }
+  toString() {
+    return "Balance: " + this.balance;
+  }
+}
+// invoke the function
+var account = new Checking_Balance(500);
+account.deposit(1000);
+console.log(account.toString()); // Balance: 1500
+account.withdraw(750);
+console.log(account.toString()); // Balance: 750
+account.withdraw(800); // "Insufficient funds"
+console.log(account.toString()); // Balance: 750
 
 /* ------------------------------------------------------------------------------------ */
 
@@ -713,68 +803,3 @@ console.log(balancedBrackets2("{[}")); // false
 // console.log(checkInclusion("ab", "ab")); // true
 // console.log(checkInclusion("abc", "bbbca")); // true
 // console.log(checkInclusion("hello", "ooolleoooleh")); // false
-
-// var removeDuplicatess = function (nums) {
-//   for (let i = 0; i < nums.length; i++) {
-//     if (nums[i] === nums[i + 1]) delete nums[i];
-//   }
-//   return Object.entries(nums).length;
-// };
-// // invoke the function
-// console.log(removeDuplicatess([1, 1, 2])); // 2
-// console.log(removeDuplicatess([0, 0, 1, 1, 1, 2, 2, 3, 3, 4])); // 5
-
-// Given two strings, write a method to decide if one is a palindrome of the other. */
-var isPalindromes = function (str1, str2) {
-  let merge_str = str1 + str2;
-  // Then make the string case-insensitive by converting to lowercase
-  merge_str = merge_str.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
-  for (let i = 0, j = merge_str.length - 1; i < j; i++, j--) {
-    if (merge_str[i] != merge_str[j]) return false;
-  }
-  return true;
-};
-// invoke the function
-console.log(isPalindromes("stop", "pots")); // true
-
-// Is Reverse
-var isReverse = function (str) {
-  // Then make the string case-insensitive by converting to lowercase
-  str = str.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
-  for (let i = 0, j = str.length - 1; i < j; i++, j--) {
-    if (str[i] != str[j]) return false;
-  }
-  return true;
-};
-// invoke the function
-console.log(isReverse("refer")); // true
-
-// Object Oriented Programming (checking balance):
-class Checking_Balance {
-  // Encapsulate class methods
-  constructor(balance) {
-    this.balance = balance;
-  }
-  deposit(amount) {
-    this.balance += amount;
-  }
-  withdraw(amount) {
-    if (amount <= this.balance) {
-      this.balance -= amount;
-    }
-    if (amount > this.balance) {
-      console.log("Insufficient funds");
-    }
-  }
-  toString() {
-    return "Balance: " + this.balance;
-  }
-}
-// invoke the function
-var account = new Checking_Balance(500);
-account.deposit(1000);
-console.log(account.toString()); // Balance: 1500
-account.withdraw(750);
-console.log(account.toString()); // Balance: 750
-account.withdraw(800); // "Insufficient funds"
-console.log(account.toString()); // Balance: 750

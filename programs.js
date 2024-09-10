@@ -1091,28 +1091,19 @@ exports.wordWeight = function (s, n) {
 
   for (let char of s.toLowerCase()) weight += alphabet.indexOf(char) + 1;
 
-  // Step1:
-  if (n === 1) {
-    weight.split("").forEach((item) => {
-      sum1 += +item;
-    });
-    return sum1; //
-  }
+  weight.split("").forEach((item) => {
+    sum1 += +item;
+  });
 
-  // Step2:
-  if (n === 2) {
-    weight.split("").forEach((item) => {
-      sum1 += +item;
+  sum1
+    .toString()
+    .split("")
+    .forEach((item) => {
+      sum2 += +item;
     });
-    sum1
-      .toString()
-      .split("")
-      .forEach((item) => {
-        sum2 += +item;
-      });
-    return sum2; //
-  }
 
+  if (n === 1) return sum1;
+  if (n === 2) return sum2;
   return -1;
 };
 
@@ -1261,106 +1252,83 @@ exports.lengthOfLongestSubstring = function (s) {
 
 // LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 exports.longestSubstring = function (str) {
-  let res = null;
   let unique_substr = null;
-  let len = [];
+  let dict = [];
 
   for (i = 0; i < str.length; i++) {
     for (j = i + 1; j < str.length + 1; j++) {
       unique_substr = [...new Set(str.slice(i, j))].join("");
 
       // Length of each substr
-      if (str.includes(unique_substr)) len.push(unique_substr.length);
-
-      // Substring with maximum length
-      if (
-        str.includes(unique_substr) &&
-        unique_substr.length === Math.max(...len)
-      )
-        res = unique_substr;
+      if (str.includes(unique_substr))
+        dict.push({ unique_substr: unique_substr, len: unique_substr.length });
+      // descending sort by len
+      dict.sort(function (prop1, prop2) {
+        return prop2.len - prop1.len;
+      });
     }
   }
-  return res;
+  if (str.length === 0) return str;
+  return Object.values(dict[0])[0];
 };
 
 // LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 exports.longestCommonSubstring = function (str1, str2) {
-  let res = null;
-  let substrs1 = [];
-  let substrs2 = [];
   let comsubstr = null;
-  let len = [];
+  let dict = [];
 
   // String 1 and String 2
   for (i = 0; i < str1.length, i < str2.length; i++) {
     for (j = i + 1; j < str1.length + 1, j < str2.length + 1; j++) {
-      substrs1.push(str1.slice(i, j));
-      substrs2.push(str2.slice(i, j));
-    }
-  }
-
-  // Common unique substring
-  for (let substr1 of substrs1) {
-    for (let substr2 of substrs2) {
-      if (substr2.includes(substr1)) {
-        comsubstr = [...new Set(substr1)].join("");
-
-        // Length of each substr
-        len.push(comsubstr.length);
-
-        // Substring with maximum length
-        if (comsubstr.length === Math.max(...len)) res = comsubstr;
+      // Common unique substring
+      if (str2.slice(i, j).includes(str1.slice(i, j))) {
+        comsubstr = [...new Set(str1.slice(i, j))].join("");
+        dict.push({ comsubstr: comsubstr, len: comsubstr.length });
+        // descending sort by len
+        dict.sort(function (prop1, prop2) {
+          return prop2.len - prop1.len;
+        });
       }
     }
   }
-
-  return res;
+  return Object.values(dict[0])[0];
 };
 
 // LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS (Dynamic Programming):
-exports.longestCommonSubsequence = function (str1, str2) {
-  let res = null;
+exports.longestCommonSubsequence = function (text1, text2) {
   let subseqs1 = [];
   let subseqs2 = [];
   let comsubseq = null;
-  let len = [];
+  let dict = [];
 
-  // Subsequence 1
-  let subs1 = (subsets, value) =>
-    subsets.concat(subsets.map((set) => [...set, value]));
-  str1
+  // define helper function
+  function subsequences(e1, e2) {
+    let arr = e1.map((set) => [...set, e2]);
+    return e1.concat(arr);
+  }
+
+  text1
     .split("")
-    .reduce(subs1, [subseqs1])
+    .reduce(subsequences, [subseqs1])
     .filter((el) => {
       subseqs1.push(el.join(""));
     });
 
-  // Subsequence 2
-  let subs2 = (subsets, value) =>
-    subsets.concat(subsets.map((set) => [...set, value]));
-  str2
+  text2
     .split("")
-    .reduce(subs2, [subseqs2])
+    .reduce(subsequences, [subseqs2])
     .filter((el) => {
-      subseqs2.push(el.join(""));
-    });
-
-  // Common unique subsequence
-  for (let subseq1 of subseqs1) {
-    for (let subseq2 of subseqs2) {
-      if (subseq2.includes(subseq1)) {
-        comsubseq = [...new Set(subseq1)].join("");
-
-        // Length of each subseq
-        len.push(comsubseq.length);
-
-        // Subsequence with maximum length
-        if (comsubseq.length === Math.max(...len)) res = comsubseq;
+      // Common unique subsequence
+      if (subseqs1.includes(el.join(""))) {
+        comsubseq = [...new Set(el)].join("");
+        dict.push({ comsubseq: comsubseq, len: comsubseq.length });
+        // descending sort by len
+        dict.sort(function (prop1, prop2) {
+          return prop2.len - prop1.len;
+        });
       }
-    }
-  }
-
-  return res;
+    });
+  return Object.values(dict[0])[0];
 };
 
 /* ------------------------------------------------------------------------------------ */
