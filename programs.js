@@ -1268,8 +1268,10 @@ exports.longestSubstring = function (str) {
       });
     }
   }
-  if (str.length === 0) return str;
-  return Object.values(dict[0])[0];
+  if (str.length === 0) return 0;
+  return Object.values(dict[0])[1];
+  // if (str.length === 0) return str;
+  // return Object.values(dict[0])[0];
 };
 
 // LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):

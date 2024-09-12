@@ -498,16 +498,16 @@ describe("PIG LATIN CONVERTER", () => {
 // LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS:
 describe("LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS", () => {
   test("should return 0", () => {
-    expect(programs.lengthOfLongestSubstring("")).toBe(0);
+    expect(programs.longestSubstring("")).toBe(0);
   });
   test("should return 3", () => {
-    expect(programs.lengthOfLongestSubstring("dvdf")).toBe(3);
+    expect(programs.longestSubstring("dvdf")).toBe(3);
   });
   test("should return 6", () => {
-    expect(programs.lengthOfLongestSubstring("abbbcabcdefef")).toBe(6);
+    expect(programs.longestSubstring("abbbcabcdefef")).toBe(6);
   });
   test("should return 3", () => {
-    expect(programs.lengthOfLongestSubstring("pwwkew")).toBe(3);
+    expect(programs.longestSubstring("pwwkew")).toBe(3);
   });
 });
 

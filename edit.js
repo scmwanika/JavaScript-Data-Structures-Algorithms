@@ -78,6 +78,35 @@
 // // [ [], [ 'd' ], [ 'o' ], [ 'd', 'o' ], [ 'g' ], [ 'd', 'g' ], [ 'o', 'g' ], [ 'd', 'o', 'g' ] ]
 // // [ '', 'd', 'o', 'do', 'g', 'dg', 'og', 'dog' ]
 
+// // LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
+// var longestSubstring = function (str) {
+//   let unique_substr = null;
+//   let dict = [];
+
+//   for (i = 0; i < str.length; i++) {
+//     for (j = i + 1; j < str.length + 1; j++) {
+//       unique_substr = [...new Set(str.slice(i, j))].join("");
+
+//       // Length of each substr
+//       if (str.includes(unique_substr))
+//         dict.push({ unique_substr: unique_substr, len: unique_substr.length });
+//       // descending sort by len
+//       dict.sort(function (prop1, prop2) {
+//         return prop2.len - prop1.len;
+//       });
+//     }
+//   }
+//   if (str.length === 0) return 0;
+//   return Object.values(dict[0])[1];
+//   // if (str.length === 0) return str;
+//   // return Object.values(dict[0])[0];
+// };
+// // invoke the function
+// console.log(longestSubstring("abbbcabcdefef")); // 6 -> abcdef
+// console.log(longestSubstring("dvdf")); // 3 -> vdf
+// console.log(longestSubstring("pwwkew")); // 3 -> wke
+// console.log(longestSubstring("")); // 0 -> ""
+
 // 3Sum and more
 var threeSum = function (nums, target) {
   let res = [];
@@ -92,16 +121,23 @@ var threeSum = function (nums, target) {
     let arr = e1.map((set) => [...set, e2]);
     return e1.concat(arr);
   }
+  // sort nums
+  nums.sort(function (e1, e2) {
+    return e1 - e2;
+  });
   //
   nums.reduce(subsequences, [res]).forEach((el) => {
-    if (el.length === 3 && el.reduce(sum) === target) {
-      el.sort(function (e1, e2) {
-        return e1 - e2;
-      });
-      subseq.push(el);
-    }
+    if (el.length === 3 && el.reduce(sum) === target) subseq.push(el);
   });
-  return subseq;
+  //
+  let unique = [];
+  for (i = 0; i < subseq.length; i++) {
+    if ([...new Set(subseq[i].concat(subseq[i + 1]))].length === 3)
+      unique.push(subseq[i]);
+  }
+  if (nums.length === 3)
+    if (nums[0] === 0 && nums[1] === 0 && nums[2] === 0) return [[0, 0, 0]];
+  return unique.sort();
 };
 // invoke the function
 console.log(threeSum([-1, 0, 1, 2, -1, -4], 0)); // [ [ -1, 0, 1 ], [ -1, 0, 1 ], [ -1, -1, 2 ] ]
