@@ -107,39 +107,94 @@
 // console.log(longestSubstring("pwwkew")); // 3 -> wke
 // console.log(longestSubstring("")); // 0 -> ""
 
-// 3Sum and more
-var threeSum = function (nums, target) {
-  let res = [];
-  let subseq = [];
+// // 3Sum and more
+// var threeSum = function (nums, target) {
+//   let res = [];
+//   let subseq = [];
 
-  // sum subsequences
-  function sum(e1, e2) {
-    return e1 + e2;
-  }
-  // define helper function
-  function subsequences(e1, e2) {
-    let arr = e1.map((set) => [...set, e2]);
-    return e1.concat(arr);
-  }
-  // sort nums
-  nums.sort(function (e1, e2) {
-    return e1 - e2;
-  });
-  //
-  nums.reduce(subsequences, [res]).forEach((el) => {
-    if (el.length === 3 && el.reduce(sum) === target) subseq.push(el);
-  });
-  //
-  let unique = [];
-  for (i = 0; i < subseq.length; i++) {
-    if ([...new Set(subseq[i].concat(subseq[i + 1]))].length === 3)
-      unique.push(subseq[i]);
-  }
-  if (nums.length === 3)
-    if (nums[0] === 0 && nums[1] === 0 && nums[2] === 0) return [[0, 0, 0]];
-  return unique.sort();
-};
-// invoke the function
-console.log(threeSum([-1, 0, 1, 2, -1, -4], 0)); // [ [ -1, 0, 1 ], [ -1, 0, 1 ], [ -1, -1, 2 ] ]
-console.log(threeSum([0, 1, 1], 0)); // [ ]
-console.log(threeSum([0, 0, 0], 0)); // [ [ 0, 0, 0 ] ]
+//   // sum subsequences
+//   function sum(e1, e2) {
+//     return e1 + e2;
+//   }
+//   // define helper function
+//   function subsequences(e1, e2) {
+//     let arr = e1.map((set) => [...set, e2]);
+//     return e1.concat(arr);
+//   }
+//   // sort nums
+//   nums.sort(function (e1, e2) {
+//     return e1 - e2;
+//   });
+//   //
+//   nums.reduce(subsequences, [res]).forEach((el) => {
+//     if (el.length === 3 && el.reduce(sum) === target) subseq.push(el);
+//   });
+//   //
+//   let unique = [];
+//   for (i = 0; i < subseq.length; i++) {
+//     if ([...new Set(subseq[i].concat(subseq[i + 1]))].length === 3)
+//       unique.push(subseq[i]);
+//   }
+//   if (nums.length === 3)
+//     if (nums[0] === 0 && nums[1] === 0 && nums[2] === 0) return [[0, 0, 0]];
+//   return unique.sort();
+// };
+// // invoke the function
+// console.log(threeSum([-1, 0, 1, 2, -1, -4], 0)); // [ [ -1, 0, 1 ], [ -1, 0, 1 ], [ -1, -1, 2 ] ]
+// console.log(threeSum([0, 1, 1], 0)); // [ ]
+// console.log(threeSum([0, 0, 0], 0)); // [ [ 0, 0, 0 ] ]
+
+// let a = ['q','w','e','r','t','y'];
+// let b = ['e','r','t'];
+// console.log(a.join("").includes(b.join("")))
+
+// // Shopping Cart:
+// class ShoppingCart {
+//   // Encapsulate class methods
+//   constructor(total, items) {
+//     this.total = total;
+//     this.items = items;
+//   }
+//   add_item(item_name, quantity, price) {
+//     this.total += quantity * price;
+//     this.items += quantity;
+//   }
+//   remove_item(item_name, quantity, price) {
+//     this.total -= quantity * price;
+//     this.items -= quantity;
+//   }
+//   checkout(cash_paid) {
+//     const balance = cash_paid - this.total;
+//     if (cash_paid < this.total) console.log("Cash paid not enough");
+//     console.log(balance);
+//   }
+//   toString() {
+//     return { Total: this.total, Items: this.items };
+//   }
+// }
+// // class Shop inherits class ShoppingCart:
+// class Shop extends ShoppingCart {
+//   constructor(quantity) {
+//     super();
+//     this.quantity = quantity;
+//   }
+//   // Polymorphism
+//   // Override the method "remove_item"
+//   remove_item() {
+//     this.quantity -= 1;
+//   }
+//   toString() {
+//     return this.quantity;
+//   }
+// }
+// // invoke the function
+// var products = new ShoppingCart(0, 0);
+// products.add_item("rice", 5, 2500);
+// console.log(products.toString());
+// products.remove_item("rice", 3, 2500);
+// console.log(products.toString());
+// products.checkout(4000);
+
+// var products = new Shop(100);
+// products.remove_item();
+// console.log(products.toString());

@@ -407,30 +407,30 @@ console.log(
 
 // WORD WEIGHT:
 var wordWeight = function (s, n) {
-    let alphabet = "abcdefghijklmnopqrstuvwxyz";
-    let weight = "";
-    let sum1 = 0;
-    let sum2 = 0;
-  
-    for (let char of s.toLowerCase()) weight += alphabet.indexOf(char) + 1;
-  
-    weight.split("").forEach((item) => {
-      sum1 += +item;
+  let alphabet = "abcdefghijklmnopqrstuvwxyz";
+  let weight = "";
+  let sum1 = 0;
+  let sum2 = 0;
+
+  for (let char of s.toLowerCase()) weight += alphabet.indexOf(char) + 1;
+
+  weight.split("").forEach((item) => {
+    sum1 += +item;
+  });
+
+  sum1
+    .toString()
+    .split("")
+    .forEach((item) => {
+      sum2 += +item;
     });
-  
-    sum1
-      .toString()
-      .split("")
-      .forEach((item) => {
-        sum2 += +item;
-      });
-  
-    if (n === 1) return sum1;
-    if (n === 2) return sum2;
-    return -1;
-  };
-  // invoke the function
-  console.log(wordWeight("Turing", 2)); // 8
+
+  if (n === 1) return sum1;
+  if (n === 2) return sum2;
+  return -1;
+};
+// invoke the function
+console.log(wordWeight("Turing", 2)); // 8
 
 // PAIRING:
 var countPairs = function (nums) {
@@ -438,7 +438,7 @@ var countPairs = function (nums) {
 
   // sum elements
   function sum(e1, e2) {
-    return +e1 + +e2;
+    return e1 + e2;
   }
 
   nums.forEach((el) => {
@@ -456,11 +456,14 @@ var countPairs = function (nums) {
 
   // total pairs
   if (pairs.reduce(sum) === 0) return -1; // "none"
-  else return pairs.reduce(sum);
+  return pairs.reduce(sum);
 };
 // invoke the function
 console.log(countPairs([5, 8, 5, 8, 8, 8])); // 3 pairs
+console.log(countPairs([5, 8, 5, 8, 8])); // 2 pairs
 console.log(countPairs([1, 2, 3, 4])); // -1
+console.log(countPairs([5, 8, 8, 8, 8, 9])); // 2 pairs
+console.log(countPairs([5, 7, 8, 8, 8, 8])); // 2 pairs
 
 // The count of characters in a string:
 var countCharacters = function (string) {
@@ -545,8 +548,8 @@ var duplicateAndMissing = function (nums) {
   });
 
   // find duplicate
-  let dup = Object.keys(obj).filter((x) => {
-    return obj[x] > 1;
+  let dup = Object.keys(obj).filter((k) => {
+    return obj[k] > 1;
   });
 
   // sort in descending order
@@ -582,10 +585,9 @@ console.log(
 // The count of a character in a string:
 var countCharacter = function (char, string) {
   let count = 0;
-  string = string.replace(/ /gi, "").split("");
-
-  for ([idx, el] of string.entries())
-    if (el.toLowerCase() === char.toLowerCase()) count++;
+  for (i = 0; i < string.length; i++) {
+    if (string.toLowerCase()[i] === char.toLowerCase()) count++;
+  }
   if (count > 0) return count;
   return -1;
 };
@@ -596,12 +598,12 @@ console.log(
 ); // -1
 
 // The count of a word in a string:
-var countWord = function (char, string) {
+var countWord = function (word, string) {
   let count = 0;
-  string = string.replace(/ /gi, ",").split(",");
-
-  for ([idx, el] of string.entries())
-    if (el.toLowerCase() === char.toLowerCase()) count++;
+  string = string.toLowerCase().replace(/ /gi, ",").split(",");
+  for (i = 0; i < string.length; i++) {
+    if (string[i] === word.toLowerCase()) count++;
+  }
   if (count > 0) return count;
   return -1;
 };
@@ -698,8 +700,8 @@ var findDuplicate = function (nums) {
   });
 
   // Get numbers with count > 1
-  let numbers = Object.keys(obj).filter((x) => {
-    return obj[x] > 1;
+  let numbers = Object.keys(obj).filter((k) => {
+    return obj[k] > 1;
   });
 
   // Convert numbers to datatype "number"

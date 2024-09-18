@@ -656,9 +656,8 @@ console.log(solution([1, 2, 4, 6, 3, 7, 8])); // 5
 
 // (i) Implement Quick Sort Algorithm:
 function quickSort(nums) {
-  if (nums.length == 0) {
-    return [];
-  }
+  if (nums.length <= 1) return nums;
+
   let left_of_pivote = [];
   let pivot = nums[0];
   let right_of_pivot = [];
@@ -677,8 +676,12 @@ console.log(quickSort([1, 6, 3, 4, 5, 1, 0, 4, 8])); // [0, 1, 1, 3, 4, 4, 5, 6,
 end to hold B. Write a method to merge B into A in sorted order. */
 // compare the arrays element by element and return the concatenated result
 var mergeArrays = function (arrA, arrB) {
-  let [sortedArr, leftIndex, rightIndex] = [[], 0, 0];
-  while (leftIndex < arrA.length && rightIndex < arrB.length) {
+  let sortedArr = [];
+  for (
+    leftIndex = 0, rightIndex = 0;
+    leftIndex < arrA.length && rightIndex < arrB.length;
+
+  ) {
     if (arrA[leftIndex] < arrB[rightIndex]) {
       sortedArr.push(arrA[leftIndex]);
       leftIndex++;
@@ -691,11 +694,11 @@ var mergeArrays = function (arrA, arrB) {
 };
 //
 var mergeSort = function (originalArr) {
-  if (originalArr.length <= 1) {
-    return originalArr;
-  }
-  let [middle] = [Math.floor(originalArr.length / 2)];
-  let [arrA, arrB] = [originalArr.slice(0, middle), originalArr.slice(middle)];
+  if (originalArr.length <= 1) return originalArr;
+
+  let middle = Math.floor(originalArr.length / 2);
+  let arrA = originalArr.slice(0, middle);
+  let arrB = originalArr.slice(middle);
   // from previous function
   return mergeArrays(mergeSort(arrA), mergeSort(arrB));
 };
@@ -713,10 +716,11 @@ Output: 8 (the index of 5 in the array) */
 // BINARY SEARCH (return the index of an element searched in a sorted array):
 // (iii) Implement Binary Search Algorithm:
 function binarySearch(arr, data) {
-  let lowestIdx = 0;
-  let highestIdx = arr.length - 1;
+  for (
+    let lowestIdx = 0, highestIdx = arr.length - 1;
+    lowestIdx <= highestIdx;
 
-  while (lowestIdx <= highestIdx) {
+  ) {
     let midIdx = Math.floor((highestIdx + lowestIdx) / 2);
     if (arr[midIdx] < data) {
       lowestIdx = midIdx + 1;

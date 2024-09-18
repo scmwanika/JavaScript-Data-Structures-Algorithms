@@ -57,6 +57,30 @@ var splitArray = function (nums, chunksize) {
 // invoke the function
 console.log(splitArray([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3));
 
+/* 2Sum (Pairs Sum):
+Given an array of integers nums and an integer target, return indices of the two numbers 
+such that they add up to target. You may assume that each input would have exactly one
+solution, and you may not use the same element twice.You can return the answer in any order. 
+*/
+var twoSum = function (nums, target) {
+  let pair = [];
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] === target) {
+        pair.push([nums[i], nums[j]]);
+        //pair.push([i, j]);
+      }
+    }
+  }
+  if (pair.length > 0) return pair;
+  return -1;
+};
+// invoke the function
+console.log(twoSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 1, 9 ], [ 2, 8 ], [ 3, 7 ], [ 4, 6 ] ]
+console.log(twoSum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 1, 9 ], [ 1, 9 ], [ 3, 7 ], [ 4, 6 ] ]
+console.log(twoSum([5, 6, 7, 8, 9], 10)); // -1
+console.log(twoSum([4, 5, 6, 6, 7], 11)); // [ [ 4, 7 ], [ 5, 6 ], [ 5, 6 ] ]
+
 // 3Sum and more
 var threeSum = function (nums, target) {
   let res = [];
@@ -97,61 +121,31 @@ console.log(threeSum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 0, 3, 4 ], [ 
 console.log(threeSum([5, 6, 7, 8, 9], 10)); // -1
 console.log(threeSum([4, 5, 6, 6, 7], 11)); // -1
 
-/* 2Sum (Pairs Sum):
-Given an array of integers nums and an integer target, return indices of the two numbers 
-such that they add up to target. You may assume that each input would have exactly one
-solution, and you may not use the same element twice.You can return the answer in any order. 
-*/
-var twoSum = function (nums, target) {
-  let pair = [];
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      if (nums[i] + nums[j] === target) {
-        pair.push([nums[i], nums[j]]);
-        //pair.push([i, j]);
-      }
-    }
-  }
-  if (pair.length > 0) return pair;
+// Count Two's:
+var count_twos = function (nums, target) {
+  let pattern = new RegExp(target.toString(), "gi");
+  let arr = nums.join("").match(pattern);
+  if (arr !== null) return arr.length;
   return -1;
 };
 // invoke the function
-console.log(twoSum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 1, 9 ], [ 2, 8 ], [ 3, 7 ], [ 4, 6 ] ]
-console.log(twoSum([1, 1, 3, 4, 5, 6, 7, 8, 9, 10], 10)); // [ [ 1, 9 ], [ 1, 9 ], [ 3, 7 ], [ 4, 6 ] ]
-console.log(twoSum([5, 6, 7, 8, 9], 10)); // -1
-console.log(twoSum([4, 5, 6, 6, 7], 11)); // [ [ 4, 7 ], [ 5, 6 ], [ 5, 6 ] ]
+console.log(
+  count_twos([2, 3, 12, 13, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], 2)
+); // 13
 
 // Count Two's and Three's:
-var count_twos = function (nums) {
-  nums = nums.join("").replace(/[^23]/g, "");
-
-  return nums.length;
+var count_twos = function (nums, target) {
+  let pattern1 = new RegExp(target.toString()[0], "gi");
+  let pattern2 = new RegExp(target.toString()[1], "gi");
+  let arr1 = nums.join("").match(pattern1);
+  let arr2 = nums.join("").match(pattern2);
+  if (arr1 !== null && arr2 !== null) return arr1.length + arr2.length;
+  return -1;
 };
 // invoke the function
 console.log(
-  count_twos([2, 3, 12, 13, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])
+  count_twos([2, 3, 12, 13, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30], 23)
 ); // 17
-
-//
-var countTarget = function (nums, target) {
-  let obj = {};
-  nums
-    .join("")
-    .split("")
-    .forEach((el) => {
-      if (obj[el]) return obj[el]++;
-      return (obj[el] = 1);
-    });
-
-  return Object.entries(obj).filter((el) => {
-    return el.includes(target.toString());
-    //if (el.includes(target.toString())) return el;
-  })[0][1];
-};
-// invoke the function
-console.log(
-  countTarget([2, 3, 12, 13, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], 2)
-); // 13
 
 // Majority Element -> Is an element which takes up more than half of the items in the array:
 var majority_element = function (nums) {
@@ -175,7 +169,6 @@ console.log(majority_element([1, 2, 5, 9, 5, 9, 5, 5, 5])); // 5
 console.log(majority_element([3, 1, 7, 1, 3, 7, 3, 7, 1, 7, 7])); // -1
 
 // Multi Search:
-// method -> 1.....
 var multi_search = function (str, substr) {
   let idx = [];
   substr.forEach((el) => {
@@ -184,34 +177,6 @@ var multi_search = function (str, substr) {
     else idx.push(-1);
   });
   return idx;
-};
-// invoke the function
-console.log(
-  multi_search("mississippi", ["is", "ppi", "hi", "sis", "i", "ssippi"])
-); // [ [ 1, 4 ], [ 8 ], -1, [ 3 ], [ 1, 10 ], [ 5 ] ]
-
-// method -> 2.....
-var multi_search = function (str, substr) {
-  let idx = [];
-  substr.forEach((el) => {
-    if (str.includes(el)) idx.push([str.indexOf(el), str.lastIndexOf(el)]);
-    else idx.push(-1);
-  });
-
-  //
-  let uniqueIdx = [];
-  idx.filter((el) => {
-    if (typeof el !== "object") {
-      uniqueIdx.push(el);
-    } else {
-      if (typeof el === "object") {
-        if (el[0] === el[1]) uniqueIdx.push([el[0]]);
-        else uniqueIdx.push([el[0], el[1]]);
-      }
-    }
-  });
-
-  return uniqueIdx;
 };
 // invoke the function
 console.log(
@@ -248,48 +213,6 @@ console.log(
 console.log(
   word_frequencies("The quick brown fox jumps over fox the lazy dog", "they")
 ); // -1
-
-// Contiguous sequence with the largest sum:
-var largest_sequence = function (nums) {
-  let res = null;
-  let total = [];
-  let largest_total = [];
-
-  // sum subsequences
-  function sum(e1, e2) {
-    return e1 + e2;
-  }
-
-  for (i = 0; i < nums.length; i++) {
-    for (j = i + 1; j < nums.length + 1; j++) {
-      total.push(nums.slice(i, j).reduce(sum));
-      largest_total = Math.max(...total);
-
-      if (nums.slice(i, j).reduce(sum) === largest_total)
-        res = nums.slice(i, j);
-    }
-  }
-  return res;
-};
-// invoke the function
-console.log(largest_sequence([2, -8, 3, -2, 4, -10])); // [ 3, -2, 4 ] -> 5
-
-// Contiguous subsequence with the largest sum:
-var subSequencesSubsets = function (nums) {
-  let res = [];
-
-  nums.filter((el) => {
-    if (el > 0) res.push(el);
-  });
-
-  if (res.length > 0) return res;
-  if (nums.length === 0) return -1;
-  return Math.max(...nums);
-};
-// invoke the function
-console.log(subSequencesSubsets([2, -8, 3, -2, 4, -10])); // [ 2, 3, 4 ] -> 9
-console.log(subSequencesSubsets([-2, -8, -3, -2, -4, -10])); // [ -2 ] -> -2
-console.log(subSequencesSubsets([])); // [ ] -> -1
 
 // LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
 var longestSubstring = function (str) {
@@ -452,6 +375,7 @@ console.log(missingNumbers([3, 0, 1])); // [ 2 ]
 console.log(missingNumbers([0, 1])); // [ 2 ]
 console.log(missingNumbers([0, 1, 3, 5])); // [ 2, 4 ]
 
+// Contiguous sequence with the largest sum:
 // Maximum subarray sum:
 var maxSum = function (nums) {
   let dict = [];
@@ -477,6 +401,7 @@ var maxSum = function (nums) {
 console.log(maxSum([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // [ 4, -1, 2, 1 ] -> 6
 console.log(maxSum([-2, 0, -1])); // [ 0 ] -> 0
 console.log(maxSum([-2, -3, -1])); // [ -1 ] -> -1
+console.log(maxSum([2, -8, 3, -2, 4, -10])); // [ 3, -2, 4 ] -> 5
 
 // Maximum subarray product:
 var maxProduct = function (nums) {
@@ -566,8 +491,8 @@ console.log(sortPeople(["Mary", "John", "Emma"], [180, 165, 170])); // [ 'Mary',
 var countWord = function (str) {
   let nums = str
     .toLowerCase()
-    .replace(/[^A-Za-z ]/g, "")
-    .replace(/ /gi, ",")
+    .replace(/[^a-z ]/g, "")
+    .replace(/ /g, ",")
     .split(",");
 
   // Get object
@@ -720,42 +645,7 @@ console.log(removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2)); // 5
 /* ------------------------------------------------------------------------------------ */
 
 // BALANCED BRACKETS
-
-// method 1:
-const balancedBrackets = (str) => {
-  const stack = [];
-  let openers = ["{", "[", "("];
-  let closers = ["}", "]", ")"];
-
-  const dict = {
-    "{": "}",
-    "[": "]",
-    "(": ")",
-  };
-
-  for (let i = 0; i < str.length; i++) {
-    let char = str[i];
-    if (openers.includes(char)) {
-      stack.push(char);
-    } else if (closers.includes(char)) {
-      //is our stack empty?
-
-      if (!stack.length) {
-        return false;
-      }
-      //does our popped element not match the corresponding element?
-      else if (dict[stack.pop()] !== char) {
-        return false;
-      }
-    }
-  }
-
-  return stack.length === 0;
-};
-
-// method 2:
 var balancedBrackets2 = function (s) {
-  // add code
   let stack = [];
   let map = {
     "(": ")",
