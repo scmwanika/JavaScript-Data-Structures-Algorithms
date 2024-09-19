@@ -524,8 +524,8 @@ exports.findDuplicate = function (nums) {
   });
 
   // Get numbers with count > 1
-  let numbers = Object.keys(obj).filter((x) => {
-    return obj[x] > 1;
+  let numbers = Object.keys(obj).filter((k) => {
+    return obj[k] > 1;
   });
 
   // Convert numbers to datatype "number"
@@ -895,21 +895,20 @@ exports.countSubstring = function (char, string) {
 // The count of a character in a string:
 exports.countCharacter = function (char, string) {
   let count = 0;
-  string = string.replace(/ /gi, "").split("");
-
-  for ([idx, el] of string.entries())
-    if (el.toLowerCase() === char.toLowerCase()) count++;
+  for (i = 0; i < string.length; i++) {
+    if (string.toLowerCase()[i] === char.toLowerCase()) count++;
+  }
   if (count > 0) return count;
   return -1;
 };
 
 // The count of a word in a string:
-exports.countWord = function (char, string) {
+exports.countWord = function (word, string) {
   let count = 0;
-  string = string.replace(/ /gi, ",").split(",");
-
-  for ([idx, el] of string.entries())
-    if (el.toLowerCase() === char.toLowerCase()) count++;
+  string = string.toLowerCase().replace(/ /gi, ",").split(",");
+  for (i = 0; i < string.length; i++) {
+    if (string[i] === word.toLowerCase()) count++;
+  }
   if (count > 0) return count;
   return -1;
 };
@@ -1016,8 +1015,8 @@ exports.mostVowels = function (words) {
   });
   //
   return Object.keys(obj)
-    .filter((x) => {
-      return obj[x] === Math.max(...Object.values(obj));
+    .filter((k) => {
+      return obj[k] === Math.max(...Object.values(obj));
     })
     .join(""); // aeiou -> word with the most vowels
 };
