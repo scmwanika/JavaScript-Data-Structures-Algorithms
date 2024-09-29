@@ -171,10 +171,10 @@ console.log(peaksAndValleys([5, 3, 1, 2, 3])); // [5, 1, 3, 2, 3]
 
 // Search Sorted Matrix:
 var searchSortedMatrix = function (matrix, target) {
-  for (row = 0, col = matrix[0].length - 1; row < matrix.length && col > 0; ) {
+  for (row = 0, col = matrix[0].length - 1; row < matrix.length, col > 0; ) {
     if (matrix[row][col] === target) return true; // [row, col]
+    if (matrix[row][col] < target) row++;
     if (matrix[row][col] > target) col--;
-    else row++;
   }
   return false;
 };

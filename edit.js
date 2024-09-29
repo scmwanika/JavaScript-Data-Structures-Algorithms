@@ -2,44 +2,42 @@
 // console.log(url.split(".")[1] + "." + url.split(".")[2]); // a.com
 
 // // The count of a substring in a string:
-// var countSubstring = function (char, string) {
-//   let pattern = new RegExp(char, "gi");
+// var countSubstring = function (string, substr) {
+//   let pattern = new RegExp(substr, "gi");
 //   let arr = string.match(pattern);
-//   //return arr
 //   if (arr !== null) return arr.length;
 //   return -1;
 // };
 // // invoke the function
 // console.log(
-//   countSubstring("the", "The quick brown fox jumps over the lazy dog")
+//   countSubstring("The quick brown fox jumps over the lazy dog", "the")
 // ); // 2
 // console.log(
-//   countSubstring("th", "The quick brown fox jumps over the lazy dog")
+//   countSubstring("The quick brown fox jumps over the lazy dog", "th")
 // ); // 2
 // console.log(
-//   countSubstring("they", "The quick brown fox jumps over the lazy dog")
+//   countSubstring("The quick brown fox jumps over the lazy dog", "they")
 // ); // -1
 
 // // The count of a subarray in an array:
-// var countSubArray = function (char, string) {
-//   let pattern = new RegExp(char, "gi");
-//   let arr = string.toString().match(pattern);
-//   //return arr
+// var countSubArray = function (array, subarr) {
+//   let pattern = new RegExp(subarr, "gi");
+//   let arr = array.toString().match(pattern);
 //   if (arr !== null) return arr.length;
 //   return -1;
 // };
 // // invoke the function
 // console.log(
-//   countSubArray([1, 2, 3], [[2, 3, 4], [1, 3, 0], [1, 2, 3], [2], [1, 2, 3]])
+//   countSubArray([[2, 3, 4], [1, 3, 0], [1, 2, 3], [2], [1, 2, 3]], [1, 2, 3])
 // ); // 2
 // console.log(
-//   countSubArray([1, 2, 3, 4], [[2, 3, 4], [1, 3, 0], [1, 2, 3], [2], [1, 2, 3]])
+//   countSubArray([[2, 3, 4], [1, 3, 0], [1, 2, 3], [2], [1, 2, 3]], [1, 2, 3, 4])
 // ); // -1
 // console.log(
-//   countSubArray([1, 2], [[2, 3, 4], [1, 3, 0], [1, 2, 3], [2], [1, 2, 3]])
+//   countSubArray([[2, 3, 4], [1, 3, 0], [1, 2, 3], [2], [1, 2, 3]], [1, 2])
 // ); // 2
 // console.log(
-//   countSubArray([1, 0], [[2, 3, 4], [1, 3, 0], [1, 2, 3], [2], [1, 2, 3]])
+//   countSubArray([[2, 3, 4], [1, 3, 0], [1, 2, 3], [2], [1, 2, 3]], [1, 0])
 // ); // -1
 
 // // Multi Search:
@@ -144,57 +142,42 @@
 // console.log(threeSum([0, 1, 1], 0)); // [ ]
 // console.log(threeSum([0, 0, 0], 0)); // [ [ 0, 0, 0 ] ]
 
-// let a = ['q','w','e','r','t','y'];
-// let b = ['e','r','t'];
-// console.log(a.join("").includes(b.join("")))
-
-// // Shopping Cart:
-// class ShoppingCart {
-//   // Encapsulate class methods
-//   constructor(total, items) {
-//     this.total = total;
-//     this.items = items;
-//   }
-//   add_item(item_name, quantity, price) {
-//     this.total += quantity * price;
-//     this.items += quantity;
-//   }
-//   remove_item(item_name, quantity, price) {
-//     this.total -= quantity * price;
-//     this.items -= quantity;
-//   }
-//   checkout(cash_paid) {
-//     const balance = cash_paid - this.total;
-//     if (cash_paid < this.total) console.log("Cash paid not enough");
-//     console.log(balance);
-//   }
-//   toString() {
-//     return { Total: this.total, Items: this.items };
-//   }
-// }
-// // class Shop inherits class ShoppingCart:
-// class Shop extends ShoppingCart {
-//   constructor(quantity) {
-//     super();
-//     this.quantity = quantity;
-//   }
-//   // Polymorphism
-//   // Override the method "remove_item"
-//   remove_item() {
-//     this.quantity -= 1;
-//   }
-//   toString() {
-//     return this.quantity;
-//   }
+// var test = function (nums) {
+//     nums.sort(function(e1, e2){
+//         return e1[1] - e2[1];
+//     })
+//     return nums
 // }
 // // invoke the function
-// var products = new ShoppingCart(0, 0);
-// products.add_item("rice", 5, 2500);
-// console.log(products.toString());
-// products.remove_item("rice", 3, 2500);
-// console.log(products.toString());
-// products.checkout(4000);
+// console.log(test([['y',10],['z',3],['x',6]]))
 
-// var products = new Shop(100);
-// products.remove_item();
-// console.log(products.toString());
+// let string = "House2@ s"
+// console.log(string.replace(/[^a-zA-Z0-9]/g,"")) // House2s
+
+// Sort Words By Count (Ascending Sort):
+var sortWordsByCount = function (str) {
+  let nums = str
+    .toLowerCase()
+    .replace(/[^a-z ]/g, "")
+    .replace(/ /g, ",")
+    .split(",");
+
+  // Get object
+  let obj = {};
+  nums.forEach((el) => {
+    if (obj[el]) return obj[el]++;
+    return (obj[el] = 1);
+  });
+
+  // processing max, min, duplicates, unique
+  return Object.entries(obj).filter(([k, v]) => {
+    if (v === Math.max(...Object.values(obj))) return k;
+  })[0][0];
+};
+// invoke the function
+console.log(
+  sortWordsByCount(
+    "This is the TEXT. Text, text, text - THIS TEXT! Is this the text?"
+  )
+); // text
+console.log(sortWordsByCount("The quick brown fox jumps over the lazy dog")); // the

@@ -655,9 +655,7 @@ console.log(solution([1, 2, 4, 6, 3, 7, 8])); // 5
 // SORTING AND SEARCHING ALGORITHMS
 
 // (i) Implement Quick Sort Algorithm:
-function quickSort(nums) {
-  if (nums.length <= 1) return nums;
-
+var quickSort = function (nums) {
   let left_of_pivote = [];
   let pivot = nums[0];
   let right_of_pivot = [];
@@ -666,20 +664,24 @@ function quickSort(nums) {
     if (nums[i] < pivot) left_of_pivote.push(nums[i]);
     else right_of_pivot.push(nums[i]);
   }
+
+  if (nums.length <= 1) return nums;
   return quickSort(left_of_pivote).concat(pivot, quickSort(right_of_pivot));
-}
+};
 // invoke the function
 console.log(quickSort([1, 6, 3, 4, 5, 1, 0, 4, 8])); // [0, 1, 1, 3, 4, 4, 5, 6, 8]
 
 // (ii) Implement Merge Sort Algorithm:
 /* Sorted Merge: You are given two sorted arrays, A and B, where A has a large enough buffer at the
-end to hold B. Write a method to merge B into A in sorted order. */
-// compare the arrays element by element and return the concatenated result
+  end to hold B. Write a method to merge B into A in sorted order.
+
+compare the arrays element by element and return the concatenated result */
 var mergeArrays = function (arrA, arrB) {
   let sortedArr = [];
+
   for (
     leftIndex = 0, rightIndex = 0;
-    leftIndex < arrA.length && rightIndex < arrB.length;
+    leftIndex < arrA.length, rightIndex < arrB.length;
 
   ) {
     if (arrA[leftIndex] < arrB[rightIndex]) {
@@ -690,48 +692,44 @@ var mergeArrays = function (arrA, arrB) {
       rightIndex++;
     }
   }
+
   return sortedArr.concat(arrA.slice(leftIndex)).concat(arrB.slice(rightIndex));
 };
 //
 var mergeSort = function (originalArr) {
-  if (originalArr.length <= 1) return originalArr;
-
   let middle = Math.floor(originalArr.length / 2);
   let arrA = originalArr.slice(0, middle);
   let arrB = originalArr.slice(middle);
+
   // from previous function
+  if (originalArr.length <= 1) return originalArr;
   return mergeArrays(mergeSort(arrA), mergeSort(arrB));
 };
 // invoke the function
-var originalArr = [1, 6, 3, 4, 5, 1, 0, 4, 8];
-console.log(mergeSort(originalArr)); // [0, 1, 1, 3, 4, 4, 5, 6, 8]
+console.log(mergeSort([1, 6, 3, 4, 5, 1, 0, 4, 8])); // [0, 1, 1, 3, 4, 4, 5, 6, 8]
 
 // (iii) Implement Binary Search Algorithm:
 /* Search in Rotated Array: Given a sorted array of n integers that has been rotated an unknown
-number of times, write code to find an element in the array. You may assume that the array was
-originally sorted in increasing order.
-EXAMPLE
-lnput: find 5 in {15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14}
-Output: 8 (the index of 5 in the array) */
-// BINARY SEARCH (return the index of an element searched in a sorted array):
-// (iii) Implement Binary Search Algorithm:
-function binarySearch(arr, data) {
+  number of times, write code to find an element in the array. You may assume that the array was
+  originally sorted in increasing order.
+  EXAMPLE
+  lnput: find 5 in {15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14}
+  Output: 8 (the index of 5 in the array)
+
+BINARY SEARCH (return the index of an element searched in a sorted array) */
+var binarySearch = function (arr, data) {
   for (
     let lowestIdx = 0, highestIdx = arr.length - 1;
     lowestIdx <= highestIdx;
 
   ) {
     let midIdx = Math.floor((highestIdx + lowestIdx) / 2);
-    if (arr[midIdx] < data) {
-      lowestIdx = midIdx + 1;
-    } else if (arr[midIdx] > data) {
-      highestIdx = midIdx - 1;
-    } else {
-      return midIdx;
-    }
+    if (arr[midIdx] === data) return midIdx;
+    if (arr[midIdx] < data) lowestIdx = midIdx + 1;
+    if (arr[midIdx] > data) highestIdx = midIdx - 1;
   }
   return -1;
-}
+};
 // invoke the function
 console.log(binarySearch([15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14], 5)); // 8
 console.log(binarySearch([1, 2, 3, 4, 5], 5)); // 4

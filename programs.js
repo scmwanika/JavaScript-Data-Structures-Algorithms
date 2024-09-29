@@ -1274,20 +1274,19 @@ exports.longestSubstring = function (str) {
 };
 
 // LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
-exports.longestCommonSubstring = function (str1, str2) {
-  let comsubstr = null;
+exports.longestCommonSubstring = function (string1, string2) {
+  let unique = null;
   let dict = [];
-
-  // String 1 and String 2
-  for (i = 0; i < str1.length, i < str2.length; i++) {
-    for (j = i + 1; j < str1.length + 1, j < str2.length + 1; j++) {
-      // Common unique substring
-      if (str2.slice(i, j).includes(str1.slice(i, j))) {
-        comsubstr = [...new Set(str1.slice(i, j))].join("");
-        dict.push({ comsubstr: comsubstr, len: comsubstr.length });
-        // descending sort by len
+  //
+  for (i = 0; i < string1.length; i++) {
+    for (j = i + 1; j < string1.length + 1; j++) {
+      // remove duplicates from substring
+      unique = [...new Set(string1.slice(i, j))].join("");
+      if (string2.includes(unique)) {
+        dict.push({ substring: unique, substringLen: unique.length });
+        // sort dict in descending order by substringLen
         dict.sort(function (prop1, prop2) {
-          return prop2.len - prop1.len;
+          return prop2.substringLen - prop1.substringLen;
         });
       }
     }

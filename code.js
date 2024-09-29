@@ -242,20 +242,19 @@ console.log(longestSubstring("pwwkew")); // wke
 console.log(longestSubstring("")); // ""
 
 // LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
-var longestCommonSubstring = function (str1, str2) {
-  let comsubstr = null;
+var longestCommonSubstring = function (string1, string2) {
+  let unique = null;
   let dict = [];
-
-  // String 1 and String 2
-  for (i = 0; i < str1.length, i < str2.length; i++) {
-    for (j = i + 1; j < str1.length + 1, j < str2.length + 1; j++) {
-      // Common unique substring
-      if (str2.slice(i, j).includes(str1.slice(i, j))) {
-        comsubstr = [...new Set(str1.slice(i, j))].join("");
-        dict.push({ comsubstr: comsubstr, len: comsubstr.length });
-        // descending sort by len
+  //
+  for (i = 0; i < string1.length; i++) {
+    for (j = i + 1; j < string1.length + 1; j++) {
+      // remove duplicates from substring
+      unique = [...new Set(string1.slice(i, j))].join("");
+      if (string2.includes(unique)) {
+        dict.push({ substring: unique, substringLen: unique.length });
+        // sort dict in descending order by substringLen
         dict.sort(function (prop1, prop2) {
-          return prop2.len - prop1.len;
+          return prop2.substringLen - prop1.substringLen;
         });
       }
     }
@@ -487,8 +486,28 @@ console.log(sortPeople(["Mary", "John", "Emma"], [180, 165, 170])); // [ 'Mary',
   { name: 'John', height: 165 }
 ] */
 
-// Count word and sort (Ascending Sort):
-var countWord = function (str) {
+// Ascending Multilevel Sorting -> sort by grade then by age
+var multiLevelSorting = function (students) {
+  return students.sort(function (prop1, prop2) {
+    return prop1.grade > prop2.grade || prop1.age - prop2.age;
+  });
+};
+// invoke the function
+console.log(
+  multiLevelSorting([
+    { name: "John", grade: "A", age: 15 },
+    { name: "Jane", grade: "B", age: 12 },
+    { name: "Dave", grade: "B", age: 10 },
+  ])
+);
+/*[
+  { name: 'John', grade: 'A', age: 15 },
+  { name: 'Dave', grade: 'B', age: 10 },
+  { name: 'Jane', grade: 'B', age: 12 }
+]*/
+
+// Sort Words By Count (Ascending Sort):
+var sortWordsByCount = function (str) {
   let nums = str
     .toLowerCase()
     .replace(/[^a-z ]/g, "")
@@ -502,34 +521,27 @@ var countWord = function (str) {
     return (obj[el] = 1);
   });
 
-  // Implement Dictionary from obj
-  let dict = [];
-  for (
-    let i = 0;
-    i < Object.keys(obj).length, i < Object.values(obj).length;
-    i++
-  ) {
-    if (Object.keys(obj)[i].length > 0)
-      dict.push({ word: Object.keys(obj)[i], count: Object.values(obj)[i] });
-  }
-  // sort by values(count)
-  dict.sort(function (prop1, prop2) {
-    return prop1.count - prop2.count;
+  // sort entries by values
+  let res = Object.entries(obj);
+  res.sort(function (arr1, arr2) {
+    return arr1[1] - arr2[1];
   });
-
-  //
+  // retrieve entries by keys
   let sorted_words = [];
-  dict.forEach((row) => {
-    //
-    sorted_words.push(row.word);
+  res.forEach((el) => {
+    if (el[0].length > 0) sorted_words.push(el[0]);
   });
 
   return sorted_words;
 };
 // invoke the function
 console.log(
-  countWord("This is the TEXT. Text, text, text - THIS TEXT! Is this the text?")
+  sortWordsByCount(
+    "This is the TEXT. Text, text, text - THIS TEXT! Is this the text?"
+  )
 ); // [ 'is', 'the', 'this', 'text' ]
+console.log(sortWordsByCount("The quick brown fox jumps over the lazy dog"));
+// [ 'quick', 'brown', 'fox', 'jumps', 'over', 'lazy', 'dog', 'the' ]
 
 // Given two strings, write a method to decide if one is a palindrome of the other. */
 var isPalindromes = function (str1, str2) {
@@ -585,6 +597,57 @@ account.withdraw(750);
 console.log(account.toString()); // Balance: 750
 account.withdraw(800); // "Insufficient funds"
 console.log(account.toString()); // Balance: 750
+
+// Shopping Cart:
+class ShoppingCart {
+  // Encapsulate class methods
+  constructor(total, items) {
+    this.total = total;
+    this.items = items;
+  }
+  add_item(item_name, quantity, price) {
+    this.total += quantity * price;
+    this.items += quantity;
+  }
+  remove_item(item_name, quantity, price) {
+    this.total -= quantity * price;
+    this.items -= quantity;
+  }
+  checkout(cash_paid) {
+    const balance = cash_paid - this.total;
+    if (cash_paid < this.total) console.log("Cash paid not enough");
+    console.log(balance);
+  }
+  toString() {
+    return { Total: this.total, Items: this.items };
+  }
+}
+// class Shop inherits class ShoppingCart:
+class Shop extends ShoppingCart {
+  constructor(quantity) {
+    super();
+    this.quantity = quantity;
+  }
+  // Polymorphism
+  // Override the method "remove_item"
+  remove_item() {
+    this.quantity -= 1;
+  }
+  toString() {
+    return this.quantity;
+  }
+}
+// invoke the function
+var products = new ShoppingCart(0, 0);
+products.add_item("rice", 5, 2500);
+console.log(products.toString());
+products.remove_item("rice", 3, 2500);
+console.log(products.toString());
+products.checkout(4000);
+
+var products = new Shop(100);
+products.remove_item();
+console.log(products.toString());
 
 /* ------------------------------------------------------------------------------------ */
 
