@@ -149,19 +149,20 @@ console.log(missingInt([1, 2, 3, 4, 6, 7, 7, 9, 10, 11])); // [ 5, 8 ]
   Given an array of integers, sort the array into an alternating sequence of peaks and valleys.
   */
 var peaksAndValleys = function (arr) {
-  if (arr.length === 0) return -1;
   // sort the array
   arr.sort(function (e1, e2) {
     return e1 - e2;
   });
 
-  let new_arr = [];
-  let [start, stop] = [0, arr.length - 1];
+  let new_arr = [],
+    start = 0,
+    stop = arr.length - 1;
 
   while (start < stop) {
     new_arr.push(arr[stop--], arr[start++]);
   }
 
+  if (arr.length === 0) return -1;
   // If array length is odd then print the last middle element.
   if (arr.length % 2 === 0) return new_arr;
   return new_arr.concat(arr[start]);
@@ -470,7 +471,7 @@ var countCharacters = function (string) {
   let obj = {};
   string
     .toLowerCase()
-    .replace(/ /gi, "")
+    .replace(/ /g, "")
     .split("")
     .forEach((el) => {
       if (obj[el]) return obj[el]++;
@@ -525,15 +526,16 @@ console.log(balancedDigit([1, 2, 3, 4], [11])); // 1
 var reorderArray = function (x, y) {
   let arr = [];
   let res = [];
-  for (let i = 0, j = 0; i < x.length, j < y.length; i++, j++) {
-    //
-    arr[y[i]] = [x[i], arr[y[i]]].flat();
-    arr = arr.flat();
+  for (let i = 0; i < x.length, i < y.length; i++) {
+    arr[y[i]] = [x[i], arr[y[i]]];
   }
   //
-  arr.forEach((el) => {
-    if (typeof el === "number") res.push(el);
-  });
+  arr
+    .flat()
+    .flat()
+    .forEach((el) => {
+      if (typeof el === "number") res.push(el);
+    });
   return res;
 };
 // invoke the function
@@ -600,7 +602,7 @@ console.log(
 // The count of a word in a string:
 var countWord = function (word, string) {
   let count = 0;
-  string = string.toLowerCase().replace(/ /gi, ",").split(",");
+  string = string.toLowerCase().split(" ");
   for (i = 0; i < string.length; i++) {
     if (string[i] === word.toLowerCase()) count++;
   }
@@ -615,12 +617,9 @@ console.log(countWord("they", "The quick brown fox jumps over the lazy dog")); /
 // Reverse string:
 var reverseString = function (str) {
   let reversedString = [];
-  str
-    .replace(/ /gi, ",")
-    .split(",")
-    .forEach((word) => {
-      reversedString.unshift(word);
-    });
+  str.split(" ").forEach((word) => {
+    reversedString.unshift(word);
+  });
   return reversedString.join(" ");
 };
 // invoke the function
@@ -648,12 +647,9 @@ console.log(reverseArray2([4, 2, 6, 5, 9])); // [ 9, 5, 6, 2, 4 ]
 // Length of the last word:
 var lastWordLength = function (str) {
   let reversedString = [];
-  str
-    .replace(/ /gi, ",")
-    .split(",")
-    .forEach((word) => {
-      reversedString.unshift(word);
-    });
+  str.split(" ").forEach((word) => {
+    reversedString.unshift(word);
+  });
   return reversedString[0].length;
 };
 // invoke the function

@@ -188,8 +188,7 @@ var word_frequencies = function (book, word) {
   let obj = {};
   book
     .toLowerCase()
-    .replace(/ /gi, ",")
-    .split(",")
+    .split(" ")
     .forEach((el) => {
       if (obj[el]) return obj[el]++;
       return (obj[el] = 1);
@@ -511,8 +510,7 @@ var sortWordsByCount = function (str) {
   let nums = str
     .toLowerCase()
     .replace(/[^a-z ]/g, "")
-    .replace(/ /g, ",")
-    .split(",");
+    .split(" ");
 
   // Get object
   let obj = {};
