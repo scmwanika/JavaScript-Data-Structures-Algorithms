@@ -764,7 +764,7 @@ exports.rotateArrayRight = function (nums, k) {
 };
 
 // MAXIMUM SUM SUBARRAY: -> MTD 1
-var maxSubarraySum = function (nums) {
+exports.maxSubarraySum = function (nums) {
   let presubsum = 0,
     cursubsum = 0;
 
@@ -775,11 +775,11 @@ var maxSubarraySum = function (nums) {
   if (Math.max(...nums) < 0) return Math.max(...nums);
   return cursubsum;
 };
-// invoke the function
-console.log(maxSubarraySum([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // [ 4, -1, 2, 1 ] -> 6
-console.log(maxSubarraySum([-2, 0, -1])); // [ 0 ] -> 0
-console.log(maxSubarraySum([-2, -3, -1])); // [ -1 ] -> -1
-console.log(maxSubarraySum([2, -8, 3, -2, 4, -10])); // [ 3, -2, 4 ] -> 5
+// // invoke the function
+// console.log(maxSubarraySum([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // [ 4, -1, 2, 1 ] -> 6
+// console.log(maxSubarraySum([-2, 0, -1])); // [ 0 ] -> 0
+// console.log(maxSubarraySum([-2, -3, -1])); // [ -1 ] -> -1
+// console.log(maxSubarraySum([2, -8, 3, -2, 4, -10])); // [ 3, -2, 4 ] -> 5
 
 // MAXIMUM SUBARRAY SUM: -> MTD 2
 var maxSubarraySum2 = function (nums) {
@@ -801,7 +801,7 @@ console.log(maxSubarraySum2([-2, -3, -1])); // [ -1 ] -> -1
 console.log(maxSubarraySum2([2, -8, 3, -2, 4, -10])); // [ 3, -2, 4 ] -> 5
 
 // COUNT SUBARRAYS WHOSE ELEMENTS ADD UP TO K:
-var countSubarrays = function (nums, k) {
+exports.countSubarrays = function (nums, k) {
   let count = 0;
   for (let i = 0; i < nums.length; i++) {
     let sum = 0;
@@ -812,11 +812,11 @@ var countSubarrays = function (nums, k) {
   }
   return count;
 };
-// invoke the function
-console.log(countSubarrays([-2], -2)); // 1
-console.log(countSubarrays([-2, -1], -1)); // 1
-console.log(countSubarrays([-2, -1, -1], -1)); // 2
-console.log(countSubarrays([-1, -2, -1], -1)); // 2
+// // invoke the function
+// console.log(countSubarrays([-2], -2)); // 1
+// console.log(countSubarrays([-2, -1], -1)); // 1
+// console.log(countSubarrays([-2, -1, -1], -1)); // 2
+// console.log(countSubarrays([-1, -2, -1], -1)); // 2
 
 // IS ADDITIVE SEQUENCE:
 exports.isAdditiveSeries = function (arr) {
@@ -1100,12 +1100,12 @@ exports.pigLatinConverter = function (str) {
   let start = str.match(/[aeiouAEIOU]/);
   let end = str.indexOf(start[0]); // [ 'a', index: 2, input: 'chatter', groups: undefined ]
 
-  if ("aeiou".includes(str[0])) return str + "way";
+  if ("aeiouAEIOU".includes(str[0])) return str + "way";
   return str.slice(end) + str.slice(0, end) + "ay";
 };
-// invoke the function
-console.log(pigLatinConverter("chatter")) // atterchay
-console.log(pigLatinConverter("Chatter")) // atterChay
+// // invoke the function
+// console.log(pigLatinConverter("chatter")) // atterchay
+// console.log(pigLatinConverter("Chatter")) // atterChay
 
 /* ------------------------------------------------------------------------------------ */
 
@@ -1166,7 +1166,7 @@ exports.longestCommonSubstring = function (string1, string2) {
       // Common unique substring
       if (string2.includes(substr1)) {
         count = Math.max(count, substr1.length);
-        if (count === substr1.length) res = [substr1, count];
+        if (count === substr1.length) res = substr1;
       }
     }
   }
@@ -1198,7 +1198,7 @@ exports.longestCommonSubsequence = function (text1, text2) {
           // Common unique subsequence
           if (el.join("").includes(subseq1)) {
             count = Math.max(count, subseq1.length);
-            if (count === subseq1.length) result = [subseq1, count];
+            if (count === subseq1.length) result = subseq1;
           }
         });
     });

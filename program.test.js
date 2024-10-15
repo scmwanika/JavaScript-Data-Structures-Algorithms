@@ -397,29 +397,29 @@ describe("PEAKS AND VALLEYS", () => {
 // MAXIMUM SUM SUBARRAY:
 describe("MAXIMUM SUM SUBARRAY", () => {
   test("should return 6", () => {
-    expect(programs.maxSum([-2, 1, -3, 4, -1, 2, 1, -5, 4])).toStrictEqual(6);
+    expect(programs.maxSubarraySum([-2, 1, -3, 4, -1, 2, 1, -5, 4])).toStrictEqual(6);
   });
   test("should return -1", () => {
-    expect(programs.maxSum([-2, -1, -3])).toStrictEqual(-1);
+    expect(programs.maxSubarraySum([-2, -1, -3])).toStrictEqual(-1);
   });
   test("should return -2", () => {
-    expect(programs.maxSum([-2])).toStrictEqual(-2);
+    expect(programs.maxSubarraySum([-2])).toStrictEqual(-2);
   });
 });
 
-// NUMBER OF SUBARRAYS EQUAL TO SUM
-describe("NUMBER OF SUBARRAYS EQUAL TO SUM", () => {
+// COUNT SUBARRAYS WHOSE ELEMENTS ADD UP TO K
+describe("COUNT SUBARRAYS WHOSE ELEMENTS ADD UP TO K", () => {
   test("should return 1", () => {
-    expect(programs.subarraySum([-2], -2)).toStrictEqual(1);
+    expect(programs.countSubarrays([-2], -2)).toStrictEqual(1);
   });
   test("should return 1", () => {
-    expect(programs.subarraySum([-2, -1], -1)).toStrictEqual(1);
+    expect(programs.countSubarrays([-2, -1], -1)).toStrictEqual(1);
   });
   test("should return 2", () => {
-    expect(programs.subarraySum([-2, -1, -1], -1)).toStrictEqual(2);
+    expect(programs.countSubarrays([-2, -1, -1], -1)).toStrictEqual(2);
   });
   test("should return 2", () => {
-    expect(programs.subarraySum([-1, -2, -1], -1)).toStrictEqual(2);
+    expect(programs.countSubarrays([-1, -2, -1], -1)).toStrictEqual(2);
   });
 });
 
@@ -473,13 +473,13 @@ describe("SWITCH REVERSER", () => {
 // PIG LATIN CONVERTER
 describe("PIG LATIN CONVERTER", () => {
   test("should return andelaway", () => {
-    expect(programs.pigLatinConverter("Andela")).toBe("andelaway");
+    expect(programs.pigLatinConverter("Andela")).toBe("Andelaway");
   });
   test("should return illway", () => {
-    expect(programs.pigLatinConverter("WILL")).toBe("illway");
+    expect(programs.pigLatinConverter("WILL")).toBe("ILLWay");
   });
   test("should return electricianway", () => {
-    expect(programs.pigLatinConverter("Electrician")).toBe("electricianway");
+    expect(programs.pigLatinConverter("Electrician")).toBe("Electricianway");
   });
   test("should return ogday", () => {
     expect(programs.pigLatinConverter("dog")).toBe("ogday");
