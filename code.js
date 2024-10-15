@@ -213,100 +213,89 @@ console.log(
   word_frequencies("The quick brown fox jumps over fox the lazy dog", "they")
 ); // -1
 
-// LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
+// LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS:
 var longestSubstring = function (str) {
-  let unique_substr = null;
-  let dict = [];
-
-  for (i = 0; i < str.length; i++) {
-    for (j = i + 1; j < str.length + 1; j++) {
-      unique_substr = [...new Set(str.slice(i, j))].join("");
-
-      // Length of each substr
-      if (str.includes(unique_substr))
-        dict.push({ unique_substr: unique_substr, len: unique_substr.length });
-      // descending sort by len
-      dict.sort(function (prop1, prop2) {
-        return prop2.len - prop1.len;
-      });
-    }
-  }
-  if (str.length === 0) return str;
-  return Object.values(dict[0])[0];
-};
-// invoke the function
-console.log(longestSubstring("abbbcabcdefef")); // abcdef
-console.log(longestSubstring("dvdf")); // vdf
-console.log(longestSubstring("pwwkew")); // wke
-console.log(longestSubstring("")); // ""
-
-// LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
-var longestCommonSubstring = function (string1, string2) {
-  let unique = null;
-  let dict = [];
-  //
-  for (i = 0; i < string1.length; i++) {
-    for (j = i + 1; j < string1.length + 1; j++) {
-      // remove duplicates from substring
-      unique = [...new Set(string1.slice(i, j))].join("");
-      if (string2.includes(unique)) {
-        dict.push({ substring: unique, substringLen: unique.length });
-        // sort dict in descending order by substringLen
-        dict.sort(function (prop1, prop2) {
-          return prop2.substringLen - prop1.substringLen;
-        });
+  let uniquesubstr,
+    count = 0,
+    res = null;
+  for (let i = 0; i < str.length; i++) {
+    for (let j = i + 1; j < str.length + 1; j++) {
+      let substr = str.slice(i, j);
+      uniquesubstr = [...new Set(substr.split(""))].join("");
+      // Common unique substring
+      if (str.includes(uniquesubstr)) {
+        count = Math.max(count, uniquesubstr.length);
+        if (count === uniquesubstr.length) res = [uniquesubstr, count];
       }
     }
   }
-  return Object.values(dict[0])[0];
+  if (str.length <= 1) return [str, str.length];
+  return res;
 };
 // invoke the function
-console.log(longestCommonSubstring("raven", "havoc")); // av
-console.log(longestCommonSubstring("abbcc", "dbbcc")); // bc
-console.log(longestCommonSubstring("ABCD", "ACBAD")); // A
-console.log(longestCommonSubstring("ABCD", "ABCAD")); // ABC
+console.log(longestSubstring("abbbcabcdefef")); // [ 'abcdef', 6 ]
+console.log(longestSubstring("dvdf")); // [ 'vdf', 3 ]
+console.log(longestSubstring("pwwkew")); // [ 'kew', 3 ]
+console.log(longestSubstring("")); // [ '', 0 ]
 
-// LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS (Dynamic Programming):
+// LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS:
+var longestCommonSubstring = function (string1, string2) {
+  let count = 0,
+    res = null;
+  for (let i = 0; i < string1.length; i++) {
+    for (let j = i + 1; j < string1.length + 1; j++) {
+      let substr1 = [...new Set(string1.slice(i, j).split(""))].join("");
+      // Common unique substring
+      if (string2.includes(substr1)) {
+        count = Math.max(count, substr1.length);
+        if (count === substr1.length) res = [substr1, count];
+      }
+    }
+  }
+  return res;
+};
+// invoke the function
+console.log(longestCommonSubstring("raven", "havoc")); // [ 'av', 2 ]
+console.log(longestCommonSubstring("abbcc", "dbbcc")); // [ 'bc', 2 ]
+console.log(longestCommonSubstring("ABCD", "ACBAD")); // [ 'D', 1 ]
+console.log(longestCommonSubstring("ABCD", "ABCAD")); // [ 'ABC', 3 ]
+
+// LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS:
 var longestCommonSubsequence = function (text1, text2) {
-  let subseqs1 = [];
-  let subseqs2 = [];
-  let comsubseq = null;
-  let dict = [];
+  let res = [],
+    count = 0,
+    result = null;
 
   // define helper function
   function subsequences(e1, e2) {
     let arr = e1.map((set) => [...set, e2]);
     return e1.concat(arr);
   }
-
+  //
   text1
     .split("")
-    .reduce(subsequences, [subseqs1])
+    .reduce(subsequences, [res])
     .filter((el) => {
-      subseqs1.push(el.join(""));
-    });
-
-  text2
-    .split("")
-    .reduce(subsequences, [subseqs2])
-    .filter((el) => {
-      // Common unique subsequence
-      if (subseqs1.includes(el.join(""))) {
-        comsubseq = [...new Set(el)].join("");
-        dict.push({ comsubseq: comsubseq, len: comsubseq.length });
-        // descending sort by len
-        dict.sort(function (prop1, prop2) {
-          return prop2.len - prop1.len;
+      let subseq1 = [...new Set(el)].join("");
+      //
+      text2
+        .split("")
+        .reduce(subsequences, [res])
+        .filter((el) => {
+          // Common unique subsequence
+          if (el.join("").includes(subseq1)) {
+            count = Math.max(count, subseq1.length);
+            if (count === subseq1.length) result = [subseq1, count];
+          }
         });
-      }
     });
-  return Object.values(dict[0])[0];
+  return result;
 };
 // invoke the function
-console.log(longestCommonSubsequence("raven", "havoc")); // av
-console.log(longestCommonSubsequence("abbcc", "dbbcc")); // bc
-console.log(longestCommonSubsequence("ABCD", "ACBAD")); // ACD
-console.log(longestCommonSubsequence("ABCD", "ABCAD")); // ABCD
+console.log(longestCommonSubsequence("raven", "havoc")); // [ 'av', 2 ]
+console.log(longestCommonSubsequence("abbcc", "dbbcc")); // [ 'bc', 2 ]
+console.log(longestCommonSubsequence("ABCD", "ACBAD")); // [ 'ACD', 3 ]
+console.log(longestCommonSubsequence("ABCD", "ABCAD")); // [ 'ABCD', 4 ]
 
 /* ------------------------------------------------------------------------------------ */
 
@@ -318,10 +307,10 @@ var longestConsective = function (nums) {
     return e1 - e2;
   });
   for (let i = 0; i < nums.length; i++) {
-    if (nums[i] - nums[i - 1] === 1) {
+    if (nums[i] === nums[i + 1] - 1) {
       count++;
       longestCount = Math.max(longestCount, count);
-    } else if (nums[i] === nums[i - 1]) continue;
+    } else if (nums[i] === nums[i + 1]) continue;
     else count = 1;
   }
   if (nums.length === 0) return 0;
@@ -546,6 +535,7 @@ var isPalindromes = function (str1, str2) {
   let merge_str = str1 + str2;
   // Then make the string case-insensitive by converting to lowercase
   merge_str = merge_str.replace(/[^A-Za-z0-9]/g, "").toLowerCase();
+  if (str1.length !== str2.length) return false;
   for (let i = 0, j = merge_str.length - 1; i < j; i++, j--) {
     if (merge_str[i] != merge_str[j]) return false;
   }

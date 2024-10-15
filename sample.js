@@ -234,48 +234,6 @@ console.log(
       ]
   */
 
-// Maximum subarray sum:
-var maxSum = function (nums) {
-  let presum = 0;
-  let sum = 0;
-  let accumulator = [];
-  if (Math.max(...nums) < 0) return Math.max(...nums);
-  else
-    nums.forEach((el) => {
-      sum = Math.max(presum, sum + el);
-      accumulator.push(sum);
-    });
-
-  return Math.max(...accumulator);
-};
-// invoke the function
-console.log(maxSum([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // [ 4, -1, 2, 1 ] -> 6
-
-// Count subarrays equal to sum:
-var subarraySum = function (nums, k) {
-  let count = 0;
-
-  // sum elements
-  function sum(e1, e2) {
-    return +e1 + +e2;
-  }
-
-  for (i = 0; i < nums.length; i++) {
-    for (j = i + 1; j < nums.length + 1; j++) {
-      if (nums.slice(i, j).reduce(sum) === k) {
-        count++;
-      }
-    }
-  }
-
-  if (count > 0) return count;
-  return -1;
-};
-// invoke the function
-console.log(subarraySum([-2], -2)); // 1
-console.log(subarraySum([-2, -1], -1)); // 1
-console.log(subarraySum([-2, -1, -1], -1)); // 2
-
 // Substrings and Subarrays:
 var subStringsSubarrays = function (str) {
   let res = [];
@@ -331,7 +289,7 @@ var evenLengthSubstring = function (arr) {
 // invoke the function
 console.log(evenLengthSubstring([1, 4, 2, 5])); // -> 30
 
-// RIGHT ROTATE STRING BY K PLACES:
+// ROTATE STRING RIGHT BY K PLACES:
 var rightRotateString = function (str, k) {
   let result = null;
   k = str.length - k;
@@ -343,7 +301,7 @@ var rightRotateString = function (str, k) {
 // invoke the function
 console.log(rightRotateString("ABCDEFG", 3)); // "EFGABCD"
 
-// RIGHT ROTATE ARRAY BY K PLACES:
+// ROTATE ARRAY RIGHT BY K PLACES:
 var rightRotateArray = function (nums, k) {
   let result = null;
   k = nums.length - k;
@@ -408,22 +366,24 @@ console.log(
 
 // WORD WEIGHT:
 var wordWeight = function (s, n) {
-  let alphabet = "abcdefghijklmnopqrstuvwxyz";
-  let weight = "";
-  let sum1 = 0;
-  let sum2 = 0;
-
-  for (let char of s.toLowerCase()) weight += alphabet.indexOf(char) + 1;
+  let alphabet = "abcdefghijklmnopqrstuvwxyz",
+    weight = "",
+    sum1 = 0,
+    sum2 = 0;
+  s = s.toLowerCase();
+  for (i = 0; i < s.length; i++) {
+    weight = weight + (alphabet.indexOf(s[i]) + 1);
+  }
 
   weight.split("").forEach((item) => {
-    sum1 += +item;
+    sum1 = sum1 + +item;
   });
 
   sum1
     .toString()
     .split("")
     .forEach((item) => {
-      sum2 += +item;
+      sum2 = sum2 + +item;
     });
 
   if (n === 1) return sum1;
@@ -431,7 +391,7 @@ var wordWeight = function (s, n) {
   return -1;
 };
 // invoke the function
-console.log(wordWeight("Turing", 2)); // 8
+console.log(wordWeight("Mwanika", 2)); // 9
 
 // PAIRING:
 var countPairs = function (nums) {

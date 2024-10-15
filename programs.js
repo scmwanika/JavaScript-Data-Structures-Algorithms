@@ -763,23 +763,45 @@ exports.rotateArrayRight = function (nums, k) {
   return merge_array;
 };
 
-// MAXIMUM SUM SUBARRAY:
-exports.maxSum = function (nums) {
-  let presum = 0;
-  let sum = 0;
-  let accumulator = [];
+// MAXIMUM SUM SUBARRAY: -> MTD 1
+var maxSubarraySum = function (nums) {
+  let presubsum = 0,
+    cursubsum = 0;
+
+  nums.forEach((el) => {
+    presubsum = Math.max(0, presubsum + el);
+    cursubsum = Math.max(presubsum, cursubsum);
+  });
   if (Math.max(...nums) < 0) return Math.max(...nums);
-  else
-    nums.forEach((el) => {
-      sum = Math.max(presum, sum + el);
-      accumulator.push(sum);
-    });
-
-  return Math.max(...accumulator);
+  return cursubsum;
 };
+// invoke the function
+console.log(maxSubarraySum([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // [ 4, -1, 2, 1 ] -> 6
+console.log(maxSubarraySum([-2, 0, -1])); // [ 0 ] -> 0
+console.log(maxSubarraySum([-2, -3, -1])); // [ -1 ] -> -1
+console.log(maxSubarraySum([2, -8, 3, -2, 4, -10])); // [ 3, -2, 4 ] -> 5
 
-// NUMBER OF SUBARRAYS EQUAL TO SUM -> method 1:
-exports.subarraySum = function (nums, k) {
+// MAXIMUM SUBARRAY SUM: -> MTD 2
+var maxSubarraySum2 = function (nums) {
+  let maxsum = 0;
+  for (let i = 0; i < nums.length; i++) {
+    let sum = 0;
+    for (let j = i; j < nums.length; j++) {
+      sum = sum + nums[j];
+      maxsum = Math.max(maxsum, sum);
+    }
+  }
+  if (Math.max(...nums) < 0) return Math.max(...nums);
+  return maxsum;
+};
+// invoke the function
+console.log(maxSubarraySum2([-2, 1, -3, 4, -1, 2, 1, -5, 4])); // [ 4, -1, 2, 1 ] -> 6
+console.log(maxSubarraySum2([-2, 0, -1])); // [ 0 ] -> 0
+console.log(maxSubarraySum2([-2, -3, -1])); // [ -1 ] -> -1
+console.log(maxSubarraySum2([2, -8, 3, -2, 4, -10])); // [ 3, -2, 4 ] -> 5
+
+// COUNT SUBARRAYS WHOSE ELEMENTS ADD UP TO K:
+var countSubarrays = function (nums, k) {
   let count = 0;
   for (let i = 0; i < nums.length; i++) {
     let sum = 0;
@@ -790,27 +812,11 @@ exports.subarraySum = function (nums, k) {
   }
   return count;
 };
-
-// COUNT SUBARRAYS EQUAL TO SUM -> method 2:
-exports.subarraySum1 = function (nums, k) {
-  let count = 0;
-
-  // sum elements
-  function sum(e1, e2) {
-    return +e1 + +e2;
-  }
-
-  for (i = 0; i < nums.length; i++) {
-    for (j = i + 1; j < nums.length + 1; j++) {
-      if (nums.slice(i, j).reduce(sum) === k) {
-        count++;
-      }
-    }
-  }
-
-  if (count > 0) return count;
-  return -1;
-};
+// invoke the function
+console.log(countSubarrays([-2], -2)); // 1
+console.log(countSubarrays([-2, -1], -1)); // 1
+console.log(countSubarrays([-2, -1, -1], -1)); // 2
+console.log(countSubarrays([-1, -2, -1], -1)); // 2
 
 // IS ADDITIVE SEQUENCE:
 exports.isAdditiveSeries = function (arr) {
@@ -930,41 +936,38 @@ exports.strStr = function (haystack, needle) {
 };
 
 // LONGEST COMMON PREFIX:
-exports.longestCommonPrefix = function (strs) {
-  let firstCha = [];
-  strs.forEach((el) => {
-    firstCha.push(el[0]);
-  });
-  //
-  if (strs.length === 0) return -1;
-  if ([...new Set(firstCha)].length !== 1) return -1;
-  else
-    for (let i = 0; i < strs[0].length; i++) {
-      for (let j = 0; j < strs.length; j++) {
-        if (strs[0][i] !== strs[j][i]) return strs[0].slice(0, i);
-      }
+var longestCommonPrefix = function (words) {
+  let firstword = words[0];
+  if (words.length <= 1) return -1;
+  for (let i = 0; i < firstword.length; i++) {
+    for (let j = 0; j < words.length; j++) {
+      if (firstword[i] !== words[j][i]) return firstword.slice(0, i);
     }
+  }
 };
+// invoke the function
+console.log(longestCommonPrefix([])); // -1
+console.log(longestCommonPrefix(["floor", "flower", "flood"])); // flo
 
 // LONGEST COMMON SUFFIX:
-exports.longestCommonSuffix = function (strs) {
-  let str = [];
-  let lastCha = [];
-  strs.forEach((el) => {
-    str.push(el.split("").reverse().join(""));
-    lastCha.push(el[el.length - 1]);
+var longestCommonSuffix = function (words) {
+  let nwords = [];
+  words.forEach((word) => {
+    nwords.push(word.split("").reverse().join(""));
   });
-  //
-  if (str.length === 0) return -1;
-  if ([...new Set(lastCha)].length !== 1) return -1;
-  else
-    for (let i = 0; i < str[0].length; i++) {
-      for (let j = 0; j < str.length; j++) {
-        if (str[0][i] !== str[j][i])
-          return str[0].slice(0, i).split("").reverse().join("");
-      }
+
+  let firstword = nwords[0];
+  if (nwords.length <= 1) return -1;
+  for (let i = 0; i < firstword.length; i++) {
+    for (let j = 0; j < nwords.length; j++) {
+      if (firstword[i] !== nwords[j][i])
+        return firstword.slice(0, i).split("").reverse().join("");
     }
+  }
 };
+// invoke the function
+console.log(longestCommonSuffix([])); // -1
+console.log(longestCommonSuffix(["feeder", "flower", "water"])); // er
 
 /* ------------------------------------------------------------------------------------ */
 
@@ -1094,19 +1097,21 @@ exports.switchReverser = function (a) {
   first vowel to the end of the word then add "ay",
 - if the word starts with a vowel, simply add "way" to the end of the word. */
 exports.pigLatinConverter = function (str) {
-  str = str.toLowerCase();
-  let start = str.match(/[aeiou]/gi);
-  let end = str.indexOf(start[0]);
+  let start = str.match(/[aeiouAEIOU]/);
+  let end = str.indexOf(start[0]); // [ 'a', index: 2, input: 'chatter', groups: undefined ]
 
   if ("aeiou".includes(str[0])) return str + "way";
-  else return str.substring(end) + str.substring(0, end) + "ay";
+  return str.slice(end) + str.slice(0, end) + "ay";
 };
+// invoke the function
+console.log(pigLatinConverter("chatter")) // atterchay
+console.log(pigLatinConverter("Chatter")) // atterChay
 
 /* ------------------------------------------------------------------------------------ */
 
 // LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS (Using Pointers):
 exports.lengthOfLongestSubstring = function (s) {
-  // initialize exports.iables
+  // initialize variables
   let i = 0;
   let j = 0;
   let longestSub = 0;
@@ -1151,62 +1156,53 @@ exports.longestSubstring = function (str) {
   // return Object.values(dict[0])[0];
 };
 
-// LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS (Dynamic Programming):
+// LONGEST COMMON SUBSTRING WITHOUT REPEATING CHARACTERS:
 exports.longestCommonSubstring = function (string1, string2) {
-  let unique = null;
-  let dict = [];
-  //
-  for (i = 0; i < string1.length; i++) {
-    for (j = i + 1; j < string1.length + 1; j++) {
-      // remove duplicates from substring
-      unique = [...new Set(string1.slice(i, j))].join("");
-      if (string2.includes(unique)) {
-        dict.push({ substring: unique, substringLen: unique.length });
-        // sort dict in descending order by substringLen
-        dict.sort(function (prop1, prop2) {
-          return prop2.substringLen - prop1.substringLen;
-        });
+  let count = 0,
+    res = null;
+  for (let i = 0; i < string1.length; i++) {
+    for (let j = i + 1; j < string1.length + 1; j++) {
+      let substr1 = [...new Set(string1.slice(i, j).split(""))].join("");
+      // Common unique substring
+      if (string2.includes(substr1)) {
+        count = Math.max(count, substr1.length);
+        if (count === substr1.length) res = [substr1, count];
       }
     }
   }
-  return Object.values(dict[0])[0];
+  return res;
 };
 
-// LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS (Dynamic Programming):
+// LONGEST COMMON SUBSEQUENCE WITHOUT REPEATING CHARACTERS:
 exports.longestCommonSubsequence = function (text1, text2) {
-  let subseqs1 = [];
-  let subseqs2 = [];
-  let comsubseq = null;
-  let dict = [];
+  let res = [],
+    count = 0,
+    result = null;
 
   // define helper function
   function subsequences(e1, e2) {
     let arr = e1.map((set) => [...set, e2]);
     return e1.concat(arr);
   }
-
+  //
   text1
     .split("")
-    .reduce(subsequences, [subseqs1])
+    .reduce(subsequences, [res])
     .filter((el) => {
-      subseqs1.push(el.join(""));
-    });
-
-  text2
-    .split("")
-    .reduce(subsequences, [subseqs2])
-    .filter((el) => {
-      // Common unique subsequence
-      if (subseqs1.includes(el.join(""))) {
-        comsubseq = [...new Set(el)].join("");
-        dict.push({ comsubseq: comsubseq, len: comsubseq.length });
-        // descending sort by len
-        dict.sort(function (prop1, prop2) {
-          return prop2.len - prop1.len;
+      let subseq1 = [...new Set(el)].join("");
+      //
+      text2
+        .split("")
+        .reduce(subsequences, [res])
+        .filter((el) => {
+          // Common unique subsequence
+          if (el.join("").includes(subseq1)) {
+            count = Math.max(count, subseq1.length);
+            if (count === subseq1.length) result = [subseq1, count];
+          }
         });
-      }
     });
-  return Object.values(dict[0])[0];
+  return result;
 };
 
 /* ------------------------------------------------------------------------------------ */

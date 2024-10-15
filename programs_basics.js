@@ -656,17 +656,17 @@ console.log(solution([1, 2, 4, 6, 3, 7, 8])); // 5
 
 // (i) Implement Quick Sort Algorithm:
 var quickSort = function (nums) {
-  let left_of_pivote = [];
+  let left_of_pivot = [];
   let pivot = nums[0];
   let right_of_pivot = [];
 
   for (let i = 1; i < nums.length; i++) {
-    if (nums[i] < pivot) left_of_pivote.push(nums[i]);
+    if (nums[i] < pivot) left_of_pivot.push(nums[i]);
     else right_of_pivot.push(nums[i]);
   }
 
   if (nums.length <= 1) return nums;
-  return quickSort(left_of_pivote).concat(pivot, quickSort(right_of_pivot));
+  return quickSort(left_of_pivot).concat(pivot, quickSort(right_of_pivot));
 };
 // invoke the function
 console.log(quickSort([1, 6, 3, 4, 5, 1, 0, 4, 8])); // [0, 1, 1, 3, 4, 4, 5, 6, 8]
@@ -676,34 +676,30 @@ console.log(quickSort([1, 6, 3, 4, 5, 1, 0, 4, 8])); // [0, 1, 1, 3, 4, 4, 5, 6,
   end to hold B. Write a method to merge B into A in sorted order.
 
 compare the arrays element by element and return the concatenated result */
-var mergeArrays = function (arrA, arrB) {
-  let sortedArr = [];
+var mergeArrays = function (numsA, numsB) {
+  let sortedNums = [];
 
-  for (
-    leftIndex = 0, rightIndex = 0;
-    leftIndex < arrA.length, rightIndex < arrB.length;
-
-  ) {
-    if (arrA[leftIndex] < arrB[rightIndex]) {
-      sortedArr.push(arrA[leftIndex]);
-      leftIndex++;
+  for (i = 0, j = 0; i < numsA.length, j < numsB.length; ) {
+    if (numsA[i] < numsB[j]) {
+      sortedNums.push(numsA[i]);
+      i++;
     } else {
-      sortedArr.push(arrB[rightIndex]);
-      rightIndex++;
+      sortedNums.push(numsB[j]);
+      j++;
     }
   }
 
-  return sortedArr.concat(arrA.slice(leftIndex)).concat(arrB.slice(rightIndex));
+  return sortedNums.concat(numsA.slice(i)).concat(numsB.slice(j));
 };
 //
 var mergeSort = function (originalArr) {
-  let middle = Math.floor(originalArr.length / 2);
-  let arrA = originalArr.slice(0, middle);
-  let arrB = originalArr.slice(middle);
+  let pivot = Math.floor(originalArr.length / 2);
+  let numsA = originalArr.slice(0, pivot);
+  let numsB = originalArr.slice(pivot);
 
   // from previous function
   if (originalArr.length <= 1) return originalArr;
-  return mergeArrays(mergeSort(arrA), mergeSort(arrB));
+  return mergeArrays(mergeSort(numsA), mergeSort(numsB));
 };
 // invoke the function
 console.log(mergeSort([1, 6, 3, 4, 5, 1, 0, 4, 8])); // [0, 1, 1, 3, 4, 4, 5, 6, 8]
