@@ -26,8 +26,8 @@ var count_email_domains = function (emails, urls) {
   // Get urls count with a dictionary
   let obj = {};
   urls.forEach((domain) => {
-    if (obj[domain]) return obj[domain]++;
-    return (obj[domain] = 1);
+    if (!obj[domain]) return (obj[domain] = 1);
+    return obj[domain]++;
   });
 
   // Reduce key count by 1

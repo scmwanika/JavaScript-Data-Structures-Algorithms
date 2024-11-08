@@ -526,6 +526,33 @@ console.log(duplicateAndMissing([1, 2, 3, 4, 3])); // [3, 5]
 console.log(duplicateAndMissing([1, 2, 2])); // [2, 3]
 console.log(duplicateAndMissing([1, 2, 3, 2])); // [2, 4]
 
+// N THE SUM OF PRIME PAIR
+var sum_primes = function (n) {
+  // write your code here
+  let primes = [];
+  let res = [];
+
+  // get prime numbers in the range
+  for (let i = 0; i <= n; i++) {
+    var [prime, numSqrt] = [true, Math.sqrt(i)];
+    for (let div = 2; div <= numSqrt; div++) {
+      if (i % div == 0) {
+        prime = false;
+        break;
+      }
+    }
+    if (prime && i > 1) {
+      primes.push(i);
+      //
+      if (primes.includes(n - i)) res.push([n - i, i]);
+    }
+  }
+  res.sort();
+  return res;
+};
+// invoke the function
+console.log(sum_primes(18)); // [ [ 5, 13 ], [ 7, 11 ] ]
+
 // The count of a substring in a string:
 var countSubstring = function (char, string) {
   let pattern = new RegExp(char, "gi");
@@ -674,3 +701,8 @@ var findDuplicate = function (nums) {
 console.log(findDuplicate([1, 2, 3, 4, 3, 4])); // [3, 4]
 console.log(findDuplicate([1, 2, 2])); // [2]
 console.log(findDuplicate([1, 2, 3, 2])); // [2]
+
+
+
+let name = "stephen.crispin.mwanika"
+console.log(name.split(".")[1]) //  crispin

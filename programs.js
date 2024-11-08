@@ -866,28 +866,6 @@ exports.sortEmployeesBySalary = function (employees) {
   └─────────┴─────────┴────────┴─────────────────────┘
   */
 
-// UNIQUE OBJECT ARRAY
-// Creates an array of objects with unique property values (name)
-exports.uniqueObjectArray = function (arr) {
-  let unique = [];
-  arr.forEach((item) => unique.push([item.name, item]));
-  return [...new Map(unique).values()];
-};
-
-/*
-[
-  { name: 'David', salary: 75000, hireDate: 'August 15, 2009' },
-  { name: 'Ana', salary: 80000, hireDate: 'December 12, 2011' },
-  { name: 'John', salary: 90000, hireDate: 'July 1, 2010' }
-]
-*/
-
-exports.uniqueObjectArray2 = function (arr) {
-  let unique = [];
-  arr.forEach((item) => unique.push([item.name, item.salary, item]));
-  return [...new Map(unique).values()];
-};
-
 /* ------------------------------------------------------------------------------------ */
 
 // The count of a substring in a string:
